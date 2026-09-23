@@ -1,0 +1,408 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import LightString from '../components/LightString.astro';
+import { fleet } from '../data/fleet';
+import lake from '../assets/services/lake-dock.jpg';
+import wedding from '../assets/services/wedding.jpg';
+import resort from '../assets/services/resort-aerial.jpg';
+import corporate from '../assets/services/corporate-event.jpg';
+import chicago from '../assets/services/chicago.jpg';
+import celebration from '../assets/services/celebration.jpg';
+import christmasTrolley from '../assets/christmas/christmas-exterior.webp';
+
+const trolley = fleet.find((vehicle) => vehicle.id === 'classic-trolley')!;
+const christmas = fleet.find((vehicle) => vehicle.id === 'christmas-trolley')!;
+const services = [
+	{
+		id: 'weddings', number: '01', nav: 'Weddings', label: 'For the big day',
+		title: 'Wedding Trolley & Guest Transportation',
+		lead: 'Every chapter of your day, beautifully connected.',
+		body: 'A trolley ride gives your wedding party time together between the ceremony, photographs and reception. Add a coach for hotel guests, and plan both routes around the moments that matter.',
+		details: ['Wedding-party travel', 'Photo stops', 'Guest transfers'],
+		image: wedding, alt: 'Flowers and glassware on an outdoor wedding table beneath string lights.',
+		action: 'Plan your wedding ride', type: 'Wedding', layout: 'wedding',
+		more: { label: 'Explore the wedding package', href: '/weddings/' },
+	},
+	{
+		id: 'resort-shuttles', number: '02', nav: 'Resort shuttles', label: 'For the whole weekend',
+		title: 'Lake Geneva Resort & Wedding Shuttles',
+		lead: 'From check-in to the last dance.',
+		body: 'Bring the weekend together with scheduled trips between resorts, hotels and wedding venues. Share your room blocks, guest counts and evening return plans so each pickup has a place on the itinerary.',
+		details: ['Hotel pickups', 'Venue transfers', 'Evening returns'],
+		image: resort, alt: 'Aerial view of a resort beside a golf course and a pond with fountains, surrounded by rolling Wisconsin countryside.',
+		action: 'Arrange your shuttle', type: 'Wedding Guest Shuttle', layout: 'compact',
+	},
+	{
+		id: 'corporate', number: '03', nav: 'Corporate', label: 'For a change of scenery',
+		title: 'Corporate Events & Retreats',
+		lead: 'Bring the team. We’ll connect the stops.',
+		body: 'Make room for conversation on the way to a retreat, conference or company dinner. Coordinate your team’s arrivals and transfers between lodging, meeting spaces and offsite activities around one shared schedule.',
+		details: ['Team retreats', 'Conferences', 'Company dinners'],
+		image: corporate, alt: 'Event guests talking over coffee beside tall windows, with tables set for a meeting in the foreground.',
+		action: 'Plan team transportation', type: 'Corporate Event', layout: 'compact',
+	},
+	{
+		id: 'transfers', number: '04', nav: 'Airport & Chicago', label: 'From city pace to lake days',
+		title: 'Airport & Chicago–Lake Geneva Transfers',
+		lead: 'The getaway begins with the ride.',
+		body: 'Arrange a private transfer between Chicago, your airport and your Lake Geneva destination. Send flight details, passenger numbers and luggage needs so the vehicle and pickup plan fit your group, whether you’re arriving for a weekend or heading home.',
+		details: ['Airport arrivals', 'City-to-lake trips', 'One-way or return'],
+		image: chicago, alt: 'Chicago’s skyline across Lake Michigan in the evening.',
+		action: 'Arrange a private transfer', type: 'Airport Transfer', layout: 'transfer',
+		more: { label: 'We serve Chicago, IL', href: '/chicago-il/' },
+	},
+	{
+		id: 'celebrations', number: '05', nav: 'Celebrations', label: 'For no ordinary occasion',
+		title: 'Private Celebrations & Group Outings',
+		lead: 'Good company deserves a great day out.',
+		body: 'Birthdays, anniversaries, bachelor and bachelorette weekends, reunions or simply a reason to get everyone together. Choose the places you want to go and plan a private ride from the first pickup through the final return.',
+		details: ['Milestone moments', 'Nights out', 'Family & friends'],
+		image: celebration, alt: 'Friends raising their glasses around a candlelit dinner table.',
+		action: 'Plan your group outing', type: 'Private Celebration', layout: 'celebration',
+	},
+];
+const quoteLink = (type: string) => `/contact/?type=${encodeURIComponent(type)}#contact-form`;
+---
+
+<BaseLayout
+	title="Lake Geneva Transportation Services | Weddings, Shuttles & Private Charters"
+	description="Private transportation for Lake Geneva weddings, resort shuttles, corporate retreats, airport and Chicago transfers, and celebrations. Plan your group’s ride."
+	canonical="/services/"
+	showCtaBand={false}
+>
+	<section class="shero">
+		<div class="shero__inner wrap wrap-wide">
+			<div class="shero__copy">
+				<p class="skicker"><span></span> Lake Geneva transportation</p>
+				<h1>Weddings, events<br />& <em>transfers.</em></h1>
+				<p class="shero__lead">Private transportation for the celebrations, escapes and everyday connections that bring people to the lake.</p>
+				<div class="shero__actions">
+					<a class="sbutton" href="/contact/#contact-form">Plan your ride <span aria-hidden="true">↗</span></a>
+					<a class="shero__explore" href="#our-services">Explore our services <span aria-hidden="true">↓</span></a>
+				</div>
+				<p class="shero__note">Your people. Your places. Your own chauffeur.</p>
+			</div>
+			<div class="shero__visual">
+				<figure class="shero__lake">
+					<Image src={lake} alt="A wooden pier reaching into Geneva Lake, Wisconsin, with a leafy shoreline beyond." widths={[640, 960, 1400, 1800]} sizes="(max-width: 760px) 100vw, 55vw" loading="eager" fetchpriority="high" />
+					<figcaption><Icon name="pin" /> A little closer to the lake.</figcaption>
+				</figure>
+				<a class="shero__trolley" href={trolley.detailHref} aria-label="Explore our Classic Trolley">
+					<Image src={trolley.image} alt={trolley.imageAlt} widths={[280, 480]} sizes="(max-width: 760px) 160px, 230px" loading="eager" />
+					<span>A classic way to get there <span aria-hidden="true">↗</span></span>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<nav class="service-index" aria-label="Explore transportation services">
+		<div class="wrap wrap-wide service-index__inner">
+			{services.map((service) => (
+				<a href={`#${service.id}`}>
+					<span class="service-index__number">{service.number}</span>
+					<span>{service.nav}</span>
+					<span class="service-index__arrow" aria-hidden="true">↗</span>
+				</a>
+			))}
+			<a href="#christmas-trolley">
+				<span class="service-index__number">Seasonal</span>
+				<span>Christmas Trolley</span>
+				<span class="service-index__arrow" aria-hidden="true">↗</span>
+			</a>
+		</div>
+	</nav>
+
+	<section class="services wrap wrap-wide" id="our-services" aria-labelledby="services-title">
+		<div class="services__intro">
+			<div>
+				<p class="skicker"><span></span> Our services</p>
+				<h2 id="services-title">Wherever the day<br />takes you.</h2>
+			</div>
+			<p>One celebration or a whole weekend. A close-knit group or a full guest list. Find the service that fits, then make the route your own.</p>
+		</div>
+
+		<div class="stories">
+			{services.map((service) => (
+				<article class:list={['story', `story--${service.layout}`]} id={service.id} aria-labelledby={`${service.id}-title`}>
+					<div class="story__image">
+						<Image src={service.image} alt={service.alt} widths={[480, 760, 1100, 1500]} sizes="(max-width: 760px) calc(100vw - 40px), 600px" loading="lazy" />
+						<span class="story__number" aria-hidden="true">{service.number}</span>
+						{service.layout === 'transfer' && <div class="story__route"><span>Chicago</span><span class="story__route-line" aria-hidden="true"></span><span>Lake Geneva</span></div>}
+					</div>
+					<div class="story__copy">
+						<p class="skicker">{service.label}</p>
+						<h2 id={`${service.id}-title`}>{service.title}</h2>
+						<p class="story__lead">{service.lead}</p>
+						<p class="story__body">{service.body}</p>
+						<ul class="story__details" aria-label="Service highlights">
+							{service.details.map((detail) => <li>{detail}</li>)}
+						</ul>
+						<div class="story__actions">
+							<a class="story__link" href={quoteLink(service.type)}>{service.action} <span aria-hidden="true">↗</span></a>
+							{service.more && <a class="story__secondary" href={service.more.href}>{service.more.label}</a>}
+						</div>
+					</div>
+				</article>
+			))}
+		</div>
+	</section>
+
+	<section class="sseason" id="christmas-trolley" aria-labelledby="season-title">
+		<LightString class="sseason__lights" />
+		<div class="wrap wrap-wide sseason__inner">
+			<figure class="sseason__photo">
+				<Image src={christmasTrolley} alt="The Christmas Trolley at dusk, with strings of colored lights along its roofline and arched windows." widths={[480, 760, 1100, 1448]} sizes="(max-width: 760px) calc(100vw - 40px), 600px" loading="lazy" />
+			</figure>
+			<div class="sseason__copy">
+				<p class="skicker"><span></span> Seasonal service</p>
+				<h2 id="season-title">The <em>Christmas Trolley</em></h2>
+				<p class="sseason__lead">Private holiday lights tours for your group.</p>
+				<p class="sseason__body">Gather everyone aboard a heated trolley decorated inside and out, then tour the lights you most want to see with the stops you choose along the way.</p>
+				<ul class="story__details" aria-label="Christmas Trolley highlights">
+					<li>{christmas.capacityLabel}</li>
+					<li>Heated cabin</li>
+					<li>Lights inside &amp; out</li>
+					<li>Limited dates</li>
+				</ul>
+				<div class="story__actions">
+					<a class="sbutton sbutton--gold" href="/christmas-trolley/">Explore the Christmas Trolley <span aria-hidden="true">↗</span></a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="fleet-note">
+		<div class="wrap wrap-wide fleet-note__inner">
+			<div>
+				<p class="skicker"><span></span> Meet your ride</p>
+				<h2>A little charm.<br />Or a little more room.</h2>
+			</div>
+			<div class="fleet-note__copy">
+				<p>Classic trolleys, comfortable coaches, private sprinters and party buses. Choose a setting that suits your people, and we’ll review the fit for your route.</p>
+				<div class="fleet-note__links">
+					<a href="/fleet/#trolley">Trolleys <span aria-hidden="true">↗</span></a>
+					<a href="/fleet/#coach-bus">Coaches <span aria-hidden="true">↗</span></a>
+					<a href="/fleet/#limo-van">Sprinters <span aria-hidden="true">↗</span></a>
+					<a href="/fleet/#party-bus">Party buses <span aria-hidden="true">↗</span></a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="sclosing" aria-labelledby="plan-title">
+		<div class="wrap wrap-wide sclosing__inner">
+			<div class="sclosing__invitation">
+				<p class="skicker">Let’s make a plan</p>
+				<h2 id="plan-title">You bring the people.<br /><em>We’ll plan the ride.</em></h2>
+				<p>Tell us what you have in mind. We’ll help turn the stops, schedules and headcounts into one clear itinerary.</p>
+				<a class="btn-gold" href="/contact/#contact-form">Start planning your trip <span aria-hidden="true">↗</span></a>
+			</div>
+			<ol class="sclosing__steps">
+				<li><span aria-hidden="true">01</span><div><h3>Share your day</h3><p>Send the date, passenger count, pickup point and places you want to go.</p></div></li>
+				<li><span aria-hidden="true">02</span><div><h3>Find the right fit</h3><p>Review vehicle availability and a quote built around your route and hours.</p></div></li>
+				<li><span aria-hidden="true">03</span><div><h3>Bring it all together</h3><p>Confirm the stops, loading points and timing before your group travels.</p></div></li>
+			</ol>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.skicker {
+		display: flex; align-items: center; gap: 14px; margin: 0 0 23px;
+		color: var(--gold-deep); font-size: 10px; font-weight: 500; letter-spacing: .25em;
+		line-height: 1.6; text-transform: uppercase;
+	}
+	.skicker > span { width: 30px; height: 1px; background: currentColor; }
+	.shero { overflow: hidden; background: #f3f0e8; }
+	.shero__inner { display: grid; grid-template-columns: .95fr 1.05fr; align-items: center; gap: 48px; padding-block: 60px 68px; }
+	.shero__copy { padding-block: 22px; }
+	.shero h1 { margin: 0; color: var(--lake-deep); font: 500 clamp(54px, 5.4vw, 78px)/1.03 var(--serif); letter-spacing: -.035em; }
+	.shero h1 em { color: var(--gold-deep); font-weight: 400; }
+	.shero__lead { max-width: 39ch; margin: 26px 0 30px; color: #5c625f; font-size: 16px; font-weight: 300; line-height: 1.85; }
+	.shero__actions { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; }
+	.sbutton { display: inline-flex; align-items: center; justify-content: space-between; gap: 34px; padding: 17px 23px; background: var(--lake-deep); color: var(--paper); font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; transition: background .2s; }
+	.sbutton:hover { background: var(--lake); }
+	.sbutton > span { font-size: 20px; line-height: 1; }
+	.shero__explore { display: inline-flex; align-items: center; gap: 12px; padding-block: 12px; border-bottom: 1px solid #b9c2bc; color: var(--lake-deep); font-size: 13px; text-decoration: none; }
+	.shero__note { margin: 33px 0 0; color: #696c64; font-size: 12px; letter-spacing: .025em; }
+	.shero__visual { position: relative; min-width: 0; }
+	.shero__lake { position: relative; height: 505px; margin: 0 0 0 26px; overflow: hidden; border-radius: 120px 0 0 0; background: var(--lake); }
+	.shero__lake img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+	.shero__lake figcaption { position: absolute; right: 0; bottom: 0; display: flex; align-items: center; gap: 6px; padding: 14px 18px; background: var(--lake-deep); color: #f4f0e6; font-size: 11px; letter-spacing: .05em; }
+	.shero__lake figcaption :global(svg) { width: 14px; height: 14px; }
+	.shero__trolley { position: absolute; left: -28px; bottom: 42px; display: block; width: 230px; padding: 9px; background: var(--paper); color: var(--lake-deep); box-shadow: 0 8px 28px rgb(15 37 39 / 14%); text-decoration: none; transform: rotate(-4deg); transition: transform .25s; }
+	.shero__trolley:hover { transform: rotate(0); }
+	.shero__trolley img { display: block; width: 100%; height: 135px; object-fit: cover; }
+	.shero__trolley > span { display: flex; justify-content: space-between; gap: 8px; padding: 11px 2px 3px; font-size: 11px; }
+	.service-index { border-bottom: 1px solid var(--line-2); background: var(--paper); }
+	.service-index__inner { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); padding-block: 26px; }
+	.service-index a { display: grid; grid-template-columns: 1fr auto; gap: 8px; padding: 5px 22px; border-left: 1px solid var(--line-2); color: var(--lake-deep); font-size: 14px; text-decoration: none; transition: color .2s; }
+	.service-index a:first-child { padding-left: 0; border-left: 0; }
+	.service-index a:last-child { padding-right: 0; }
+	.service-index a:hover { color: var(--gold-deep); }
+	.service-index__number { grid-column: 1 / -1; color: var(--gold-deep); font-size: 10px; letter-spacing: .15em; }
+	.service-index__arrow { align-self: center; color: var(--gold-deep); }
+	.services { padding-block: 78px 80px; scroll-margin-top: 90px; }
+	.services__intro { display: flex; justify-content: space-between; align-items: flex-end; gap: 50px; margin-bottom: 42px; }
+	.services__intro .skicker { margin-bottom: 15px; }
+	.services__intro h2, .fleet-note h2 { margin: 0; color: var(--lake-deep); font: 500 clamp(34px, 3.4vw, 46px)/1.08 var(--serif); }
+	.services__intro > p { max-width: 41ch; margin: 0 0 4px; color: var(--muted); font-size: 15px; font-weight: 300; line-height: 1.8; }
+	.stories { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
+	.story { min-width: 0; scroll-margin-top: 90px; }
+	.story--wedding, .story--transfer, .story--celebration { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; }
+	.story__image { position: relative; min-width: 0; overflow: hidden; background: #dde3df; }
+	.story__image > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+	/* Wide stories: the copy and min-height set the row; the photo fills it rather than stretching it. */
+	.story--wedding .story__image > img, .story--transfer .story__image > img, .story--celebration .story__image > img { position: absolute; inset: 0; }
+	.story--wedding .story__copy, .story--transfer .story__copy, .story--celebration .story__copy { justify-content: center; }
+	.story__number { position: absolute; top: 22px; left: 22px; display: grid; place-items: center; width: 42px; height: 42px; background: var(--paper); color: var(--lake-deep); font: 500 22px var(--serif); box-shadow: 0 0 0 1px rgb(15 37 39 / 10%), 0 6px 18px rgb(15 37 39 / 18%); }
+	.story__copy { display: flex; flex-direction: column; padding: 46px; }
+	.story__copy .skicker { margin-bottom: 16px; }
+	.story h2 { margin: 0; color: var(--lake-deep); font: 500 clamp(29px, 2.8vw, 39px)/1.12 var(--serif); }
+	.story__lead { margin: 20px 0 11px; color: var(--ink); font: italic 500 21px/1.4 var(--serif); }
+	.story__body { margin: 0; color: var(--muted); font-size: 14.5px; font-weight: 300; line-height: 1.8; }
+	.story__details { display: flex; flex-wrap: wrap; gap: 8px 19px; margin: 24px 0 0; padding: 17px 0 0; border-top: 1px solid var(--line-2); list-style: none; }
+	.story__details li { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; }
+	.story__details li::before { content: ''; width: 3px; height: 3px; background: var(--gold-deep); border-radius: 50%; }
+	.story__actions { display: flex; flex-direction: column; align-items: flex-start; gap: 15px; margin-top: 27px; }
+	.story__link { display: inline-flex; justify-content: space-between; gap: 25px; padding-bottom: 7px; border-bottom: 1px solid var(--gold); color: var(--lake-deep); font-size: 11px; font-weight: 500; letter-spacing: .1em; line-height: 1.6; text-transform: uppercase; text-decoration: none; }
+	.story__link span { font-size: 18px; line-height: 1; }
+	.story__link:hover, .story__secondary:hover { color: var(--gold-deep); }
+	.story__secondary { padding-block: 4px; color: var(--muted); font-size: 12px; text-underline-offset: 4px; }
+	.story--wedding { background: #f1ede4; }
+	.story--wedding .story__image { min-height: 600px; }
+	.story--wedding .story__image img { object-position: center 32%; }
+	.story--compact { display: flex; flex-direction: column; }
+	.story--compact .story__image { height: 300px; }
+	.story--compact .story__copy { flex: 1; padding: 30px 0 0; }
+	.story--compact h2 { font-size: clamp(28px, 2.7vw, 36px); max-width: 22ch; }
+	.story--compact .story__body { max-width: 57ch; }
+	.story--compact .story__actions { margin-top: auto; padding-top: 26px; }
+	.story--transfer { margin-top: 10px; background: var(--lake-deep); }
+	.story--transfer .story__image { grid-column: 2; grid-row: 1; min-height: 530px; }
+	.story--transfer .story__copy { grid-column: 1; grid-row: 1; }
+	.story--transfer h2, .story--transfer .story__lead { color: var(--paper); }
+	.story--transfer .skicker { color: var(--gold-light); }
+	.story--transfer .story__body, .story--transfer .story__details li { color: #d0dada; }
+	.story--transfer .story__link { color: var(--gold-light); }
+	.story--transfer .story__details { border-color: #48606b; }
+	.story--transfer .story__details li::before { background: var(--gold-light); }
+	.story__route { position: absolute; right: 24px; bottom: 24px; left: 24px; display: flex; align-items: center; gap: 15px; padding: 18px; background: rgb(15 39 51 / 94%); color: white; font-size: 11px; letter-spacing: .06em; }
+	.story__route-line { flex: 1; height: 1px; background: var(--gold); }
+	.story--celebration { background: #f1ede4; }
+	.story--celebration .story__image { min-height: 470px; }
+	.story--celebration .story__image img { object-position: 65% center; }
+	.sseason { padding: 0 0 64px; background: #10232c; color: var(--paper); scroll-margin-top: 70px; }
+	.sseason__lights { margin-bottom: 56px; }
+	.sseason__inner { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 64px; }
+	.sseason__photo { margin: 0; }
+	.sseason__photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 0 120px 0 0; }
+	.sseason .skicker { color: var(--gold-light); margin-bottom: 16px; }
+	.sseason h2 { margin: 0; font: 500 clamp(34px, 3.4vw, 46px)/1.08 var(--serif); }
+	.sseason h2 em { color: var(--gold-light); font-weight: 400; }
+	.sseason__lead { margin: 18px 0 11px; font: italic 500 21px/1.4 var(--serif); }
+	.sseason__body { max-width: 50ch; margin: 0; color: #d0dadd; font-size: 14.5px; font-weight: 300; line-height: 1.8; }
+	.sseason .story__details { border-color: #36505a; }
+	.sseason .story__details li { color: #d0dadd; }
+	.sseason .story__details li::before { background: var(--gold-light); }
+	.sbutton--gold { background: var(--grad-gold); color: #241c0e; }
+	.sbutton--gold:hover { background: var(--gold-light); }
+	.fleet-note { padding-block: 48px; border-block: 1px solid var(--line-2); background: #f3f0e8; }
+	.fleet-note__inner { display: grid; grid-template-columns: .9fr 1.1fr; gap: 75px; align-items: center; }
+	.fleet-note .skicker { margin-bottom: 16px; }
+	.fleet-note__copy > p { max-width: 56ch; margin: 0 0 24px; color: var(--muted); font-size: 15px; font-weight: 300; line-height: 1.8; }
+	.fleet-note__links { display: flex; flex-wrap: wrap; gap: 14px 25px; }
+	.fleet-note__links a { display: inline-flex; align-items: center; gap: 12px; padding-block: 10px; border-bottom: 1px solid var(--gold); color: var(--lake-deep); font-size: 13px; text-decoration: none; }
+	.fleet-note__links a:hover { color: var(--gold-deep); }
+	.sclosing { padding: 74px 0; background: #183b3b; color: var(--paper); }
+	.sclosing__inner { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 90px; }
+	.sclosing .skicker { color: var(--gold-light); margin-bottom: 18px; }
+	.sclosing h2 { margin: 0; font: 500 clamp(35px, 3.2vw, 46px)/1.15 var(--serif); }
+	.sclosing h2 em { color: var(--gold-light); font-weight: 400; }
+	.sclosing__invitation > p:not(.skicker) { max-width: 48ch; margin: 23px 0 27px; color: #d1dcda; font-size: 14.5px; font-weight: 300; line-height: 1.8; }
+	.sclosing .btn-gold { padding-inline: 25px; font-size: 11px; letter-spacing: .14em; }
+	.sclosing .btn-gold span { padding-left: 14px; }
+	.sclosing__steps { margin: 0; padding: 0; list-style: none; }
+	.sclosing__steps li { display: flex; gap: 20px; padding-block: 23px; border-bottom: 1px solid #46605c; }
+	.sclosing__steps li:first-child { padding-top: 0; }
+	.sclosing__steps li:last-child { padding-bottom: 0; border-bottom: 0; }
+	.sclosing__steps li > span { padding-top: 3px; color: var(--gold-light); font-size: 11px; letter-spacing: .08em; }
+	.sclosing__steps h3 { margin: 0 0 7px; font: 500 25px/1.15 var(--serif); }
+	.sclosing__steps p { margin: 0; color: #d1dcda; font-size: 13px; font-weight: 300; line-height: 1.75; }
+	@media (width <= 1000px) {
+		.shero__inner { gap: 30px; padding-block: 45px 55px; }
+		.shero h1 { font-size: clamp(45px, 5.8vw, 66px); }
+		.shero__lake { height: 475px; margin-left: 0; border-top-left-radius: 90px; }
+		.shero__trolley { width: 190px; left: -12px; bottom: 48px; }
+		.shero__trolley img { height: 112px; }
+		.service-index a { padding-inline: 14px; font-size: 12px; }
+		.stories { gap: 32px; }
+		.story__copy { padding: 32px; }
+		.story h2 { font-size: 32px; }
+		.story--compact .story__image { height: 240px; }
+		.story--wedding .story__image { min-height: 580px; }
+		.sclosing__inner, .fleet-note__inner, .sseason__inner { gap: 45px; }
+	}
+	@media (width <= 760px) {
+		/* Flatten the copy into the grid so the photo can sit between the headline and the intro. */
+		.shero__inner { grid-template-columns: 1fr; gap: 0; padding-block: 42px 48px; }
+		.shero__copy { display: contents; }
+		.shero__visual { order: 1; margin-top: 30px; }
+		.shero__lead, .shero__actions, .shero__note { order: 2; }
+		.shero h1 { font-size: clamp(48px, 9vw, 70px); }
+		.shero__lead { max-width: 45ch; font-size: 15px; margin-block: 30px 26px; }
+		.shero__note { margin-top: 25px; }
+		/* Mirror the composition: curve top-right, trolley card overhanging the right edge. */
+		.shero__visual { margin-right: 17px; }
+		.shero__lake { height: 365px; margin: 0 20px 0 0; border-radius: 0 85px 0 0; }
+		.shero__lake figcaption { right: auto; left: 0; }
+		.shero__trolley { width: 175px; left: auto; right: -10px; bottom: 45px; transform: rotate(4deg); }
+		.shero__trolley img { height: 105px; }
+		.shero__trolley > span { font-size: 10px; }
+		.service-index__inner { grid-template-columns: repeat(3, minmax(0, 1fr)); padding-block: 16px; gap: 14px 0; }
+		.service-index a { min-height: 60px; padding-inline: 14px; }
+		.service-index a:nth-child(3n + 1) { padding-left: 0; border-left: 0; }
+		.service-index a:nth-child(3n) { padding-right: 0; }
+		.services { padding-block: 48px; }
+		.services__intro { display: block; margin-bottom: 30px; }
+		.services__intro > p { margin: 20px 0 0; }
+		.services__intro h2 br { display: none; }
+		.stories { grid-template-columns: 1fr; gap: 40px; }
+		.story--wedding, .story--transfer, .story--celebration { display: flex; flex-direction: column; }
+		.story__copy { padding: 28px; }
+		.story h2 { font-size: 32px; }
+		.story--wedding .story__image { min-height: 0; height: 365px; }
+		.story--compact .story__image { height: 290px; }
+		.story--compact .story__copy { padding: 26px 0 0; }
+		.story--transfer .story__image { min-height: 0; height: 320px; }
+		.story--transfer { margin-top: 0; }
+		.story--celebration .story__image { min-height: 0; height: 300px; }
+		.story__number { top: 16px; left: 16px; }
+		.story__route { inset-inline: 16px; bottom: 16px; padding-inline: 14px; }
+		.sseason { padding-bottom: 48px; }
+		.sseason__lights { margin-bottom: 40px; }
+		.sseason__inner { grid-template-columns: 1fr; gap: 30px; }
+		.sseason__photo img { border-top-right-radius: 70px; }
+		.fleet-note { padding-block: 40px; }
+		.fleet-note__inner { grid-template-columns: 1fr; gap: 24px; }
+		.fleet-note__links { gap: 10px 25px; }
+		.sclosing { padding-block: 48px; }
+		.sclosing__inner { grid-template-columns: 1fr; gap: 40px; }
+	}
+	@media (width <= 400px) {
+		.shero__actions { gap: 17px; }
+		.shero__lake { height: 325px; }
+		.shero__lake figcaption { padding: 12px; font-size: 10px; }
+		.service-index a { padding-inline: 10px; font-size: 11px; gap: 5px; }
+		.story__copy { padding: 25px 22px; }
+		.story h2 { font-size: 29px; }
+		.story__link { gap: 14px; font-size: 10px; }
+		.story--compact .story__copy { padding-inline: 0; }
+		.sclosing .btn-gold { padding-inline: 18px; letter-spacing: .09em; }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.shero__trolley, .sbutton, .service-index a { transition: none; }
+	}
+</style>

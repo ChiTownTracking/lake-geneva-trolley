@@ -1,0 +1,336 @@
+{
+  "retrieved": "2026-09-23",
+  "images": [
+    {
+      "vehicle": "classic-trolley",
+      "file": "classic-trolley-01.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/classic-exterior.-BibskJf_1G3Ax.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/classic-white-trolley/",
+      "alt": "Classic White Trolley — photo 1",
+      "width": 555,
+      "height": 327
+    },
+    {
+      "vehicle": "classic-trolley",
+      "file": "classic-trolley-02.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/classic-Trolley-interior-frontfacing.CMTQhA7y_Z1IkOUS.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/classic-white-trolley/",
+      "alt": "Classic White Trolley — photo 2",
+      "width": 871,
+      "height": 1806
+    },
+    {
+      "vehicle": "classic-trolley",
+      "file": "classic-trolley-03.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/classic-Trolley-interior-frontfacing2.lROAwIYC_1eScht.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/classic-white-trolley/",
+      "alt": "Classic White Trolley — photo 3",
+      "width": 941,
+      "height": 1671
+    },
+    {
+      "vehicle": "limo-trolley",
+      "file": "limo-trolley-01.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T4-Trolley-Exterior.BpFCw32n_Z1EeMML.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/white-limo-trolley/",
+      "alt": "White Limo Trolley — photo 1",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "vehicle": "limo-trolley",
+      "file": "limo-trolley-02.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T4-Trolley-Exterior-front.CRfVfdxv_ZILkT0.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/white-limo-trolley/",
+      "alt": "White Limo Trolley — photo 2",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "vehicle": "limo-trolley",
+      "file": "limo-trolley-03.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T4-Trolley-Exterior-side.CPo-0N_w_1e86po.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/white-limo-trolley/",
+      "alt": "White Limo Trolley — photo 3",
+      "width": 1870,
+      "height": 841
+    },
+    {
+      "vehicle": "limo-trolley",
+      "file": "limo-trolley-04.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T4-Trolley-Interior-1.De5nKqeI_ZPadQX.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/white-limo-trolley/",
+      "alt": "White Limo Trolley — photo 4",
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "vehicle": "limo-trolley",
+      "file": "limo-trolley-05.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T4-Trolley-Interior-2.el-9oF3v_UqGJy.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/white-limo-trolley/",
+      "alt": "White Limo Trolley — photo 5",
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "vehicle": "limo-trolley",
+      "file": "limo-trolley-06.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T4-Trolley-Interior-Lighting.CPWN-ayT_Z1xhe86.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/white-limo-trolley/",
+      "alt": "White Limo Trolley — photo 6",
+      "width": 1086,
+      "height": 1448
+    },
+    {
+      "vehicle": "christmas-trolley",
+      "file": "christmas-trolley-01.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/christmas-trolley.f19PV2Qu_ZeMmil.webp",
+      "pageUrl": "https://chitowntrolley.com/christmas-trolley/",
+      "alt": "White Christmas trolley illuminated with colorful roofline lights",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "vehicle": "festive-trolley",
+      "file": "festive-trolley-01.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/green-red-festive-trolley.D9mCjRRO_ZWUcEA.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/festive-trolley/",
+      "alt": "Festive Trolley — photo 1",
+      "width": 1422,
+      "height": 980
+    },
+    {
+      "vehicle": "super-coach-bus",
+      "file": "super-coach-bus-01.webp",
+      "assetUrl": "https://chicagosupercoachbus.com/_astro/coach-exterior.CI1Y9gsH_Z181o7S.webp",
+      "pageUrl": "https://chicagosupercoachbus.com/fleet/supercoach",
+      "alt": "The Supercoach bus, luggage bays open",
+      "width": 1028,
+      "height": 685
+    },
+    {
+      "vehicle": "super-coach-bus",
+      "file": "super-coach-bus-02.webp",
+      "assetUrl": "https://chicagosupercoachbus.com/_astro/coach-interior.BA3leC9I_1TPSFw.webp",
+      "pageUrl": "https://chicagosupercoachbus.com/fleet/supercoach",
+      "alt": "Interior of the Supercoach: high back leather reclining seats down both sides of the aisle",
+      "width": 1688,
+      "height": 1125
+    },
+    {
+      "vehicle": "super-coach-bus",
+      "file": "super-coach-bus-03.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/coach-bus-exterior-1.BqKQSyVU_Z1IGhlQ.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/super-coach-bus/",
+      "alt": "Super Coach Bus — photo 1",
+      "width": 1200,
+      "height": 1600
+    },
+    {
+      "vehicle": "super-coach-bus",
+      "file": "super-coach-bus-04.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/coach-bus-exterior-2.BvU0JpAJ_Z2eu7VA.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/super-coach-bus/",
+      "alt": "Super Coach Bus — photo 2",
+      "width": 1200,
+      "height": 1600
+    },
+    {
+      "vehicle": "super-coach-bus",
+      "file": "super-coach-bus-05.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/coach-bus-exterior-3.f8jpMXoG_Z1PB1LR.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/super-coach-bus/",
+      "alt": "Super Coach Bus — photo 3",
+      "width": 1200,
+      "height": 1600
+    },
+    {
+      "vehicle": "super-coach-bus",
+      "file": "super-coach-bus-06.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/interior1.CAgqr3rl_Z1iTQlO.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/super-coach-bus/",
+      "alt": "Super Coach Bus — photo 4",
+      "width": 1200,
+      "height": 1600
+    },
+    {
+      "vehicle": "super-coach-bus",
+      "file": "super-coach-bus-07.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/interior2.BvxBT50p_Z2oAQk0.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/super-coach-bus/",
+      "alt": "Super Coach Bus — photo 5",
+      "width": 1200,
+      "height": 1600
+    },
+    {
+      "vehicle": "super-coach-bus",
+      "file": "super-coach-bus-08.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/interior3.C4OtdmYC_2cAcHC.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/super-coach-bus/",
+      "alt": "Super Coach Bus — photo 6",
+      "width": 1200,
+      "height": 1600
+    },
+    {
+      "vehicle": "super-coach-bus",
+      "file": "super-coach-bus-09.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/coach-bus-washroom-1.DrK9tKNY_Z1rTT0n.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/super-coach-bus/",
+      "alt": "Super Coach Bus — photo 7",
+      "width": 1200,
+      "height": 1600
+    },
+    {
+      "vehicle": "super-coach-bus",
+      "file": "super-coach-bus-10.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/coach-bus-washroom-2.HFFsR48b_1QlXTL.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/super-coach-bus/",
+      "alt": "Super Coach Bus — photo 8",
+      "width": 1200,
+      "height": 1600
+    },
+    {
+      "vehicle": "coach-bus",
+      "file": "coach-bus-01.webp",
+      "assetUrl": "https://chicagosupercoachbus.com/_astro/coach-bus-44.BnWRUazn_10YhhL.webp",
+      "pageUrl": "https://chicagosupercoachbus.com/fleet/coach",
+      "alt": "The Coach Bus, a white full-length coach, seen from the front and side",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "vehicle": "coach-bus",
+      "file": "coach-bus-02.webp",
+      "assetUrl": "https://chicagosupercoachbus.com/_astro/executive-coachbus-39-44-interior.CDS5mRyM_Z2l5OKB.webp",
+      "pageUrl": "https://chicagosupercoachbus.com/fleet/coach",
+      "alt": "Interior of the Coach Bus: rows of black leather high-back reclining seats down both sides of a wood-floored aisle, seatbelts fitted",
+      "width": 1029,
+      "height": 686
+    },
+    {
+      "vehicle": "coach-bus",
+      "file": "coach-bus-03.webp",
+      "assetUrl": "https://chicagosupercoachbus.com/_astro/executive-coachbus-39-44-interior-3.D8NDVd33_1Dfh1s.webp",
+      "pageUrl": "https://chicagosupercoachbus.com/fleet/coach",
+      "alt": "The Coach Bus cabin under its blue ceiling lighting, looking down the aisle to the back row",
+      "width": 1029,
+      "height": 686
+    },
+    {
+      "vehicle": "small-coach-bus",
+      "file": "small-coach-bus-01.webp",
+      "assetUrl": "https://chicagosupercoachbus.com/_astro/coach-bus-28.DobGany7_ZcL24B.webp",
+      "pageUrl": "https://chicagosupercoachbus.com/fleet/small-coach",
+      "alt": "The Small Coach Bus, a white short coach, seen from the front and side",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "vehicle": "small-coach-bus",
+      "file": "small-coach-bus-02.webp",
+      "assetUrl": "https://chicagosupercoachbus.com/_astro/executive-coachbus-22-28-interior.CffLtVzp_ZprWKQ.webp",
+      "pageUrl": "https://chicagosupercoachbus.com/fleet/small-coach",
+      "alt": "Interior of the Small Coach Bus: quilted black and grey reclining seats along a wood-floored aisle",
+      "width": 1088,
+      "height": 726
+    },
+    {
+      "vehicle": "small-coach-bus",
+      "file": "small-coach-bus-03.webp",
+      "assetUrl": "https://chicagosupercoachbus.com/_astro/executive-coachbus-22-28-interior-3.Doxpe5eE_2sKKyC.webp",
+      "pageUrl": "https://chicagosupercoachbus.com/fleet/small-coach",
+      "alt": "The Small Coach Bus cabin under its blue ceiling lighting, quilted seats either side of the aisle",
+      "width": 847,
+      "height": 671
+    },
+    {
+      "vehicle": "party-bus",
+      "file": "party-bus.png",
+      "source": "Owner-supplied replacement",
+      "sourcePath": "C:/Users/abs55/Documents/images/lake/party-bus.png",
+      "width": 1363,
+      "height": 859
+    },
+    {
+      "vehicle": "party-bus",
+      "file": "party-bus-interior.png",
+      "source": "Owner-supplied replacement",
+      "sourcePath": "C:/Users/abs55/Documents/images/lake/party-bus-interior.png",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "vehicle": "limo-van",
+      "file": "limo-van-01.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/limo-van-front.TI3QS1TC_1heU9c.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/limo-vans/",
+      "alt": "Limo Van — photo 1",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "vehicle": "limo-van",
+      "file": "limo-van-02.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/limo-van-back.8keMO8g1_2bEUjr.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/limo-vans/",
+      "alt": "Limo Van — photo 2",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "vehicle": "limo-van",
+      "file": "limo-van-03.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/limo-van-interior.BIWRYfrG_Z1sol5D.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/limo-vans/",
+      "alt": "Limo Van — photo 3",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "vehicle": "executive-sprinter",
+      "file": "executive-sprinter-01.webp",
+      "assetUrl": "https://chicagosupercoachbus.com/_astro/excutive-sprinter.Cyg9XiKl_Mr5Br.webp",
+      "pageUrl": "https://chicagosupercoachbus.com/fleet/executive-sprinter",
+      "alt": "The Executive Sprinter Van, a black high-roof Mercedes-Benz Sprinter, seen from the front and side",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "vehicle": "executive-sprinter",
+      "file": "executive-sprinter-02.webp",
+      "assetUrl": "https://chicagosupercoachbus.com/_astro/excutive-van-interior.DvH8A7lC_Z27kimH.webp",
+      "pageUrl": "https://chicagosupercoachbus.com/fleet/executive-sprinter",
+      "alt": "Interior of the Executive Sprinter Van: black leather seats facing a table, the side door open to the kerb",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "vehicle": "executive-sprinter",
+      "file": "executive-sprinter-03.webp",
+      "assetUrl": "https://chicagosupercoachbus.com/_astro/excutive-van-interior-1.BvjYqR_g_ZIMJUM.webp",
+      "pageUrl": "https://chicagosupercoachbus.com/fleet/executive-sprinter",
+      "alt": "The Executive Sprinter Van from its open side door: a rear bench, facing seats and a fixed table",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "vehicle": "executive-sprinter",
+      "file": "executive-sprinter-04.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/excutive-van-front.DDUERnt6_99NRV.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/executive-van/",
+      "alt": "Executive Van — photo 1",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "vehicle": "executive-sprinter",
+      "file": "executive-sprinter-05.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/excutive-van-side.BbbK1gtz_KD1em.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/executive-van/",
+      "alt": "Executive Van — photo 2",
+      "width": 1448,
+      "height": 1086
+    }
+  ]
+}

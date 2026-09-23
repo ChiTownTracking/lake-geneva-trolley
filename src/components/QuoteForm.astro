@@ -1,0 +1,515 @@
+---
+import { quoteOptions } from '../data/content';
+import VehicleOptions from './VehicleOptions.astro';
+
+interface Props {
+	/** Netlify form name. Determines the confirmation copy. */
+	formName?: 'quote-request' | 'reservation-request';
+	submitLabel?: string;
+	idPrefix?: string;
+}
+
+const { formName = 'quote-request', submitLabel = 'Submit', idPrefix = 'q' } = Astro.props;
+---
+
+<form
+	class="qform"
+	name={formName}
+	method="POST"
+	data-netlify="true"
+	netlify-honeypot="bot-field"
+	data-async-form
+	data-quote-form
+	novalidate={false}
+>
+	<input type="hidden" name="form-name" value={formName} />
+	<p class="honeypot">
+		<label>Do not fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+	</p>
+
+	<div class="step is-open" data-step="1">
+		<button
+			type="button"
+			class="step__head"
+			aria-expanded="true"
+			aria-controls={`${idPrefix}-step-1`}
+			data-step-toggle="1"
+		>
+			<span class="step__num"><span class="step__digit">1</span></span>
+			<span class="step__label">
+				<span class="step__kicker">Step 1 of 3</span>
+				<span class="step__name">Trip Information</span>
+			</span>
+			<span class="step__chev" aria-hidden="true"></span>
+		</button>
+		<div class="step__panel">
+			<div class="step__body" id={`${idPrefix}-step-1`}>
+				<div class="step__inner">
+					<div class="step__grid">
+						<div class="qfield">
+							<label class="field__label" for={`${idPrefix}-vehicle`}>Vehicle</label>
+							<select id={`${idPrefix}-vehicle`} name="vehicle" class="field__control">
+								<option value="" disabled selected>Select vehicle</option>
+								<VehicleOptions includeComingSoon />
+							</select>
+						</div>
+						<div class="qfield">
+							<label class="field__label" for={`${idPrefix}-passengers`}>Number of Passengers</label>
+							<select id={`${idPrefix}-passengers`} name="passengers" class="field__control">
+								<option value="" disabled selected>Select group size</option>
+								{quoteOptions.groupSizes.map((g) => <option value={g}>{g}</option>)}
+							</select>
+						</div>
+						<div class="qfield">
+							<label class="field__label" for={`${idPrefix}-type`}>Event Type</label>
+							<select id={`${idPrefix}-type`} name="type" class="field__control">
+								<option value="" disabled selected>Select event type</option>
+								{quoteOptions.eventTypes.map((t) => <option value={t}>{t}</option>)}
+							</select>
+						</div>
+						<div class="qfield">
+							<label class="field__label" for={`${idPrefix}-hours`}>Time Needed</label>
+							<select id={`${idPrefix}-hours`} name="hours" class="field__control">
+								<option value="" disabled selected>Select duration</option>
+								{quoteOptions.durations.map((d) => <option value={d}>{d}</option>)}
+							</select>
+						</div>
+					</div>
+					<div class="step__nav">
+						<button type="button" class="btn-gold" data-step-next="2">Next</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="step" data-step="2">
+		<button
+			type="button"
+			class="step__head"
+			aria-expanded="false"
+			aria-controls={`${idPrefix}-step-2`}
+			data-step-toggle="2"
+		>
+			<span class="step__num"><span class="step__digit">2</span></span>
+			<span class="step__label">
+				<span class="step__kicker">Step 2 of 3</span>
+				<span class="step__name">Itinerary</span>
+			</span>
+			<span class="step__chev" aria-hidden="true"></span>
+		</button>
+		<div class="step__panel">
+			<div class="step__body" id={`${idPrefix}-step-2`}>
+				<div class="step__inner">
+					<div class="step__grid">
+						<div class="qfield">
+							<label class="field__label" for={`${idPrefix}-date`}>Event Date</label>
+							<input id={`${idPrefix}-date`} name="date" type="date" class="field__control" />
+						</div>
+						<div class="qfield">
+							<label class="field__label" for={`${idPrefix}-time`}>Pickup Time</label>
+							<input id={`${idPrefix}-time`} name="time" type="time" class="field__control" />
+						</div>
+						<div class="qfield">
+							<label class="field__label" for={`${idPrefix}-pickup`}>Pickup Location</label>
+							<input
+								id={`${idPrefix}-pickup`}
+								name="pickup"
+								type="text"
+								placeholder="Hotel, resort or address"
+								class="field__control"
+							/>
+						</div>
+						<div class="qfield">
+							<label class="field__label" for={`${idPrefix}-dropoff`}>Destination</label>
+							<input
+								id={`${idPrefix}-dropoff`}
+								name="dropoff"
+								type="text"
+								placeholder="Venue or final stop"
+								class="field__control"
+							/>
+						</div>
+					</div>
+					<div class="step__nav">
+						<button type="button" class="btn-ghost" data-step-back="1">Back</button>
+						<button type="button" class="btn-gold" data-step-next="3">Next</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="step" data-step="3">
+		<button
+			type="button"
+			class="step__head"
+			aria-expanded="false"
+			aria-controls={`${idPrefix}-step-3`}
+			data-step-toggle="3"
+		>
+			<span class="step__num"><span class="step__digit">3</span></span>
+			<span class="step__label">
+				<span class="step__kicker">Step 3 of 3</span>
+				<span class="step__name">Your Details</span>
+			</span>
+			<span class="step__chev" aria-hidden="true"></span>
+		</button>
+		<div class="step__panel">
+			<div class="step__body" id={`${idPrefix}-step-3`}>
+				<div class="step__inner">
+					<div class="step__grid step__grid--3">
+						<div class="qfield">
+							<label class="field__label" for={`${idPrefix}-name`}>Full Name</label>
+							<input
+								required
+								id={`${idPrefix}-name`}
+								name="name"
+								type="text"
+								autocomplete="name"
+								placeholder="Your full name"
+								class="field__control"
+							/>
+						</div>
+						<div class="qfield">
+							<label class="field__label" for={`${idPrefix}-phone`}>Phone Number</label>
+							<input
+								required
+								id={`${idPrefix}-phone`}
+								name="phone"
+								type="tel"
+								autocomplete="tel"
+								placeholder="Best number to reach you"
+								class="field__control"
+							/>
+						</div>
+						<div class="qfield">
+							<label class="field__label" for={`${idPrefix}-email`}>Email Address</label>
+							<input
+								required
+								id={`${idPrefix}-email`}
+								name="email"
+								type="email"
+								autocomplete="email"
+								placeholder="Your email address"
+								class="field__control"
+							/>
+						</div>
+						<div class="qfield qfield--wide">
+							<label class="field__label" for={`${idPrefix}-message`}>
+								Anything else we should know?
+							</label>
+							<textarea
+								id={`${idPrefix}-message`}
+								name="message"
+								rows="2"
+								placeholder="Extra stops, timing, how you found us"
+								class="field__control"></textarea>
+						</div>
+					</div>
+					<div class="step__nav">
+						<button type="button" class="btn-ghost" data-step-back="2">Back</button>
+						<button type="submit" class="btn-gold">{submitLabel}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<p class="form-status" role="status" aria-live="polite" data-form-status></p>
+</form>
+
+<style>
+	.qform {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.qform :global(.field__control)::placeholder {
+		color: var(--muted);
+		opacity: 0.75;
+	}
+
+	.qfield {
+		display: grid;
+		grid-template-rows: auto minmax(42px, auto);
+		align-content: end;
+		min-width: 0;
+	}
+
+	.qfield--wide {
+		grid-column: 1 / -1;
+	}
+
+	.qfield :global(input),
+	.qfield :global(select) {
+		box-sizing: border-box;
+		width: 100%;
+		min-width: 0;
+		height: 42px;
+		margin: 0;
+		padding-block: 0;
+	}
+
+	.qfield :global(textarea) {
+		box-sizing: border-box;
+		width: 100%;
+		min-width: 0;
+		min-height: 96px;
+		margin: 0;
+		resize: vertical;
+	}
+
+	.qfield :global(input[type='date']),
+	.qfield :global(input[type='time']) {
+		appearance: auto;
+	}
+
+	.step {
+		border-bottom: 1px solid var(--line-2);
+	}
+
+	.step__head {
+		display: flex;
+		align-items: center;
+		gap: 18px;
+		width: 100%;
+		padding: 22px 4px;
+		border: 0;
+		background: transparent;
+		color: var(--ink);
+		font-family: var(--sans);
+		text-align: left;
+		cursor: pointer;
+	}
+
+	.step__num {
+		position: relative;
+		flex: none;
+		width: 36px;
+		height: 36px;
+		border: 1px solid var(--gold);
+		border-radius: 50%;
+		color: var(--gold-deep);
+		font-family: var(--serif);
+		font-size: 18px;
+		transition: background 0.25s, color 0.25s, border-color 0.25s;
+	}
+
+	.step__digit {
+		position: absolute;
+		top: 43%;
+		left: 50%;
+		line-height: 1;
+		transform: translate(-50%, -50%);
+	}
+
+	.step.is-open .step__num {
+		background: var(--grad-gold);
+		color: #fff;
+	}
+
+	.step.is-done:not(.is-open) .step__num {
+		border-color: transparent;
+		background: var(--gold-deep);
+		color: #fff;
+	}
+
+	.step__label {
+		display: flex;
+		flex-direction: column;
+		gap: 3px;
+	}
+
+	.step__kicker {
+		color: var(--gold-deep);
+		font-size: 10.5px;
+		letter-spacing: 0.28em;
+		text-transform: uppercase;
+	}
+
+	.step__name {
+		color: var(--ink);
+		font-family: var(--serif);
+		font-size: 21px;
+		font-weight: 600;
+		line-height: 1.05;
+	}
+
+	.step__chev {
+		flex: none;
+		width: 9px;
+		height: 9px;
+		margin-left: auto;
+		border-right: 1.5px solid var(--gold-deep);
+		border-bottom: 1.5px solid var(--gold-deep);
+		transform: translateY(-2px) rotate(45deg);
+		transition: transform 0.3s;
+	}
+
+	.step.is-open .step__chev {
+		transform: translateY(2px) rotate(-135deg);
+	}
+
+	.step__panel {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 0.35s;
+	}
+
+	.step.is-open .step__panel {
+		grid-template-rows: 1fr;
+	}
+
+	.step__body {
+		min-height: 0;
+		overflow: hidden;
+	}
+
+	.step__inner {
+		padding: 2px 4px 30px;
+	}
+
+	.step__grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 16px 22px;
+	}
+
+	.step__grid--3 {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.step__nav {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 14px;
+		margin-top: 26px;
+	}
+
+	.step__nav :global(.btn-gold),
+	.step__nav :global(.btn-ghost) {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		padding: 11px 30px;
+		font-size: 11.5px;
+		letter-spacing: 0.22em;
+		box-shadow: none;
+	}
+
+	@media (width <= 900px) {
+		.step__grid,
+		.step__grid--3 {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (width <= 560px) {
+		.step__grid,
+		.step__grid--3 {
+			grid-template-columns: 1fr;
+		}
+		.step__head {
+			gap: 14px;
+			padding: 18px 2px;
+		}
+		.step__name {
+			font-size: 19px;
+		}
+		.step__nav {
+			justify-content: stretch;
+		}
+		.step__nav :global(.btn-gold),
+		.step__nav :global(.btn-ghost) {
+			flex: 1;
+			justify-content: center;
+			padding-inline: 16px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.step__panel,
+		.step__chev,
+		.step__num {
+			transition: none;
+		}
+	}
+</style>
+
+<script>
+	document.querySelectorAll<HTMLFormElement>('[data-quote-form]').forEach((form) => {
+		const steps = Array.from(form.querySelectorAll<HTMLElement>('.step'));
+		const find = (id: string) => steps.find((s) => s.dataset.step === id);
+
+		const setOpen = (step: HTMLElement, open: boolean) => {
+			step.classList.toggle('is-open', open);
+			step.querySelector('.step__head')?.setAttribute('aria-expanded', String(open));
+			const body = step.querySelector<HTMLElement>('.step__body');
+			if (body) body.inert = !open;
+		};
+
+		const openStep = (id: string | undefined, focus = true) => {
+			if (!id) return;
+			steps.forEach((step) => setOpen(step, step.dataset.step === id));
+			if (focus) {
+				find(id)
+					?.querySelector<HTMLElement>('.step__body .field__control')
+					?.focus({ preventScroll: true });
+			}
+		};
+
+		form.querySelectorAll<HTMLElement>('[data-step-toggle]').forEach((btn) =>
+			btn.addEventListener('click', () => {
+				const step = find(btn.dataset.stepToggle ?? '');
+				if (!step) return;
+				if (step.classList.contains('is-open')) steps.forEach((s) => setOpen(s, false));
+				else openStep(step.dataset.step, false);
+			}),
+		);
+
+		form.querySelectorAll<HTMLElement>('[data-step-next]').forEach((btn) =>
+			btn.addEventListener('click', () => {
+				btn.closest('.step')?.classList.add('is-done');
+				openStep(btn.dataset.stepNext);
+			}),
+		);
+
+		form.querySelectorAll<HTMLElement>('[data-step-back]').forEach((btn) =>
+			btn.addEventListener('click', () => openStep(btn.dataset.stepBack)),
+		);
+
+		steps.forEach((step) => setOpen(step, step.classList.contains('is-open')));
+
+		// Deep links such as /#getquote?vehicle=Classic%20Trolley or #getquote?type=Wedding
+		// preselect a vehicle or event type. Only existing options are accepted.
+		const applyParam = (name: string) => {
+			const select = form.querySelector<HTMLSelectElement>(`select[name="${name}"]`);
+			const fromHash = new URLSearchParams(location.hash.replace(/^#[^?]*\??/, '')).get(name);
+			const wanted = fromHash ?? new URLSearchParams(location.search).get(name);
+			if (!select || !wanted) return false;
+			const match = Array.from(select.options).find((o) => o.value === wanted);
+			if (!match) return false;
+			select.value = match.value;
+			return Boolean(fromHash);
+		};
+		const applyVehicle = () => {
+			const vehicleSet = applyParam('vehicle');
+			const typeSet = applyParam('type');
+			return vehicleSet || typeSet;
+		};
+
+		if (applyVehicle()) {
+			requestAnimationFrame(() => document.getElementById('getquote')?.scrollIntoView());
+		}
+		window.addEventListener('hashchange', () => {
+			if (applyVehicle()) document.getElementById('getquote')?.scrollIntoView();
+		});
+
+		form.addEventListener('async-form:success', () => {
+			steps.forEach((step) => step.classList.remove('is-done'));
+			openStep('1', false);
+		});
+	});
+</script>

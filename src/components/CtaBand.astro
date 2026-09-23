@@ -1,0 +1,221 @@
+---
+import { contact } from '../data/site';
+import Icon from './Icon.astro';
+
+interface Props {
+	title: string;
+	sub: string;
+	/** 'gold' matches the reference's closing band; 'dark' uses the lake palette. */
+	variant?: 'gold' | 'dark';
+	primaryLabel?: string;
+	primaryHref?: string;
+}
+
+const {
+	title,
+	sub,
+	variant = 'dark',
+	primaryLabel = 'Get a Free Quote',
+	primaryHref = '/#getquote',
+} = Astro.props;
+---
+
+<section class:list={['cta-band', `cta-band--${variant}`]}>
+	<div class="cta-band__inner">
+		<div class="cta-band__copy">
+			<h2 class="cta-band__title">{title}</h2>
+			<p class="cta-band__sub">{sub}</p>
+		</div>
+		<div class="cta-band__actions">
+			<a class="btn-invert cta-band__primary" href={primaryHref}>{primaryLabel}</a>
+			{
+				contact.phoneHref && contact.phoneLabel && (
+					<a class="cta-band__secondary" href={`tel:${contact.phoneHref}`}>
+						<Icon name="phone" />
+						{contact.phoneLabel}
+					</a>
+				)
+			}
+			<a class="cta-band__secondary" href="/reservation/">Start a Reservation</a>
+		</div>
+	</div>
+</section>
+
+<style>
+	.cta-band {
+		padding: 50px 28px;
+		text-align: center;
+	}
+
+	.cta-band--gold {
+		background: var(--grad-gold);
+	}
+
+	.cta-band__inner {
+		max-width: 1180px;
+		margin: 0 auto;
+	}
+
+	.cta-band__title {
+		margin: 0 0 10px;
+		color: var(--paper);
+		font-family: var(--serif);
+		font-size: clamp(26px, 3.4vw, 42px);
+		font-weight: 500;
+	}
+
+	.cta-band__sub {
+		margin: 0 0 32px;
+		color: rgb(253 252 250 / 0.85);
+		font-size: 15px;
+		font-weight: 300;
+		letter-spacing: 0.04em;
+	}
+
+	.cta-band__actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 14px;
+	}
+
+	.cta-band__secondary {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 46px;
+		padding: 14px 30px;
+		border: 1px solid rgb(253 252 250 / 0.72);
+		color: var(--paper) !important;
+		font-size: 11px;
+		font-weight: 500;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		text-decoration: none !important;
+		transition: background 0.22s, border-color 0.22s;
+	}
+
+	.cta-band__secondary :global(svg) {
+		flex: none;
+		width: 16px;
+		height: 16px;
+		margin-right: 10px;
+	}
+
+	.cta-band__secondary:hover {
+		border-color: var(--paper);
+		background: rgb(253 252 250 / 0.12);
+	}
+
+	/* Dark variant - the Lake Geneva reading of the reference's dark band. */
+	.cta-band--dark {
+		position: relative;
+		overflow: hidden;
+		padding-block: 66px;
+		border-top: 1px solid rgb(212 175 106 / 0.7);
+		background: var(--lake-night);
+		text-align: left;
+	}
+
+	.cta-band--dark::after {
+		content: '';
+		position: absolute;
+		top: -160px;
+		right: -90px;
+		width: 430px;
+		height: 430px;
+		border: 1px solid rgb(212 175 106 / 0.14);
+		border-radius: 50%;
+		box-shadow: 0 0 0 54px rgb(212 175 106 / 0.035), 0 0 0 108px rgb(212 175 106 / 0.02);
+		pointer-events: none;
+	}
+
+	.cta-band--dark .cta-band__inner {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+		align-items: center;
+		gap: clamp(44px, 8vw, 100px);
+	}
+
+	.cta-band--dark .cta-band__title {
+		max-width: 760px;
+		margin-bottom: 12px;
+		font-size: clamp(34px, 4.2vw, 50px);
+		line-height: 1.04;
+	}
+
+	.cta-band--dark .cta-band__sub {
+		max-width: 64ch;
+		margin: 0;
+		color: rgb(253 252 250 / 0.72);
+		line-height: 1.7;
+	}
+
+	.cta-band--dark .cta-band__actions {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 12px;
+	}
+
+	.cta-band--dark .cta-band__primary,
+	.cta-band--dark .cta-band__secondary {
+		display: flex;
+		box-sizing: border-box;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		min-height: 50px;
+		padding: 14px 24px;
+	}
+
+	.cta-band--dark .cta-band__secondary {
+		border-color: rgb(212 175 106 / 0.7);
+		color: var(--gold-light) !important;
+	}
+
+	.cta-band--dark .cta-band__secondary:hover {
+		border-color: var(--gold-light);
+		background: rgb(212 175 106 / 0.09);
+	}
+
+	@media (width <= 760px) {
+		.cta-band--dark {
+			padding: 56px 22px;
+			text-align: center;
+		}
+		.cta-band--dark .cta-band__inner {
+			grid-template-columns: 1fr;
+			gap: 32px;
+		}
+		.cta-band--dark .cta-band__sub {
+			margin-inline: auto;
+		}
+		.cta-band--dark .cta-band__actions {
+			width: min(100%, 360px);
+			margin-inline: auto;
+		}
+	}
+
+	@media (width <= 520px) {
+		.cta-band__actions {
+			flex-direction: column;
+			align-items: stretch;
+		}
+		.cta-band__actions a {
+			width: 100%;
+			min-height: 46px;
+			padding-inline: 18px;
+		}
+		.cta-band--dark .cta-band__title {
+			font-size: clamp(31px, 9vw, 40px);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.cta-band__secondary {
+			transition: none;
+		}
+	}
+</style>

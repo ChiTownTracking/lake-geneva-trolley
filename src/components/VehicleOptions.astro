@@ -1,0 +1,17 @@
+---
+import { fleetGroups } from '../data/fleet';
+
+interface Props { includeComingSoon?: boolean; }
+const { includeComingSoon = false } = Astro.props;
+---
+
+{fleetGroups.map((group) => (
+	<optgroup label={group.label}>
+		{group.vehicles.filter((vehicle) => includeComingSoon || vehicle.status !== 'coming-soon').map((vehicle) => (
+			<option value={vehicle.quoteValue}>
+				{vehicle.name} — {vehicle.status === 'coming-soon' ? 'Coming Soon' : vehicle.capacityLabel}{vehicle.status === 'seasonal' ? ' (Seasonal)' : ''}
+			</option>
+		))}
+	</optgroup>
+))}
+<option value="Not sure yet">Not sure yet</option>

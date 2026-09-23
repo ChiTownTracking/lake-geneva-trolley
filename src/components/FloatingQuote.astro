@@ -1,0 +1,88 @@
+---
+import Icon from './Icon.astro';
+---
+
+<a class="fq" href="/#getquote">
+	<Icon name="chat" class="fq__icon" />
+	<span class="fq__label">Get Quote</span>
+</a>
+
+<style>
+	.fq {
+		position: fixed;
+		right: clamp(16px, 2.5vw, 28px);
+		bottom: clamp(16px, 2.5vw, 28px);
+		z-index: 55;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 14px 22px;
+		border: none;
+		border-radius: 999px;
+		background: var(--grad-gold);
+		box-shadow: 0 6px 22px rgb(26 26 26 / 0.22);
+		color: #000;
+		font-family: var(--sans);
+		font-size: 11.5px;
+		font-weight: 500;
+		letter-spacing: 0.2em;
+		line-height: 1;
+		text-transform: uppercase;
+		text-decoration: none;
+		transition: box-shadow 0.3s, transform 0.3s;
+	}
+
+	.fq:hover {
+		box-shadow: 0 10px 30px rgb(184 134 11 / 0.45);
+		transform: translateY(-2px);
+	}
+
+	.fq:focus-visible {
+		outline: 2px solid var(--gold-deep);
+		outline-offset: 4px;
+	}
+
+	.fq__icon {
+		flex: none;
+		width: 16px;
+		height: 16px;
+	}
+
+	:global(html.menu-open) .fq {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	@media (width <= 600px) {
+		.fq {
+			justify-content: center;
+			gap: 0;
+			width: 54px;
+			height: 54px;
+			padding: 0;
+		}
+		.fq__icon {
+			width: 21px;
+			height: 21px;
+		}
+		.fq__label {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			margin: -1px;
+			padding: 0;
+			clip-path: inset(50%);
+			white-space: nowrap;
+			overflow: hidden;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.fq {
+			transition: none;
+		}
+		.fq:hover {
+			transform: none;
+		}
+	}
+</style>

@@ -1,0 +1,84 @@
+---
+import { Image } from 'astro:assets';
+import type { VehiclePhoto } from '../data/fleet-images';
+
+interface Props { id: string; name: string; photos: VehiclePhoto[]; }
+const { id, name, photos } = Astro.props;
+---
+
+<section class="gallery" data-vehicle-gallery aria-label={`${name} photos`}>
+	<div class="gallery__photos">
+		{photos.map((photo, index) => (
+			<figure class="gallery__photo" id={`${id}-photo-${index}`} data-gallery-photo>
+				<Image src={photo.image} alt={photo.alt} widths={[600, 1000, 1400]} sizes="(max-width: 820px) calc(100vw - 48px), 630px" loading={index === 0 ? 'eager' : 'lazy'} />
+				<figcaption>{photo.caption}</figcaption>
+			</figure>
+		))}
+	</div>
+	{photos.length > 1 && (
+		<div class="gallery__controls" data-gallery-controls hidden>
+			<div class="gallery__navigation">
+				<button type="button" data-gallery-prev aria-label="Previous photo">&larr;</button>
+				<p data-gallery-status role="status" aria-live="polite" aria-atomic="true">Photo 1 of {photos.length}</p>
+				<button type="button" data-gallery-next aria-label="Next photo">&rarr;</button>
+			</div>
+			<div class="gallery__thumbnails" role="group" aria-label="Choose a vehicle photo">
+				{photos.map((photo, index) => (
+					<button type="button" data-gallery-thumb={index} aria-pressed={index === 0 ? 'true' : 'false'} aria-controls={`${id}-photo-${index}`} aria-label={`Photo ${index + 1}: ${photo.caption}`} title={photo.caption}>
+						<Image src={photo.image} alt="" width={150} height={112} fit="cover" loading="lazy" />
+					</button>
+				))}
+			</div>
+		</div>
+	)}
+</section>
+
+<script>
+	document.querySelectorAll<HTMLElement>('[data-vehicle-gallery]').forEach((gallery) => {
+		const photos = [...gallery.querySelectorAll<HTMLElement>('[data-gallery-photo]')];
+		const controls = gallery.querySelector<HTMLElement>('[data-gallery-controls]');
+		const thumbnails = [...gallery.querySelectorAll<HTMLButtonElement>('[data-gallery-thumb]')];
+		const status = gallery.querySelector<HTMLElement>('[data-gallery-status]');
+		if (!controls || !status || photos.length < 2) return;
+		let selected = 0;
+		const show = (index: number) => {
+			selected = (index + photos.length) % photos.length;
+			photos.forEach((photo, i) => { photo.hidden = i !== selected; });
+			thumbnails.forEach((button, i) => { button.setAttribute('aria-pressed', String(i === selected)); });
+			const image = photos[selected].querySelector('img');
+			if (image) image.loading = 'eager';
+			status.textContent = `Photo ${selected + 1} of ${photos.length}`;
+		};
+		thumbnails.forEach((button, index) => {
+			button.addEventListener('click', () => show(index));
+			button.addEventListener('keydown', (event) => {
+				const target = event.key === 'ArrowRight' ? index + 1 : event.key === 'ArrowLeft' ? index - 1 : event.key === 'Home' ? 0 : event.key === 'End' ? photos.length - 1 : null;
+				if (target === null) return;
+				event.preventDefault();
+				show(target);
+				thumbnails[selected].focus();
+			});
+		});
+		gallery.querySelector('[data-gallery-prev]')?.addEventListener('click', () => show(selected - 1));
+		gallery.querySelector('[data-gallery-next]')?.addEventListener('click', () => show(selected + 1));
+		show(0);
+		controls.hidden = false;
+	});
+</script>
+
+<style>
+	.gallery { min-width: 0; }
+	.gallery__photos { display: grid; gap: 24px; }
+	.gallery__photo { margin: 0; }
+	.gallery__photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; border-radius: 10px; background: var(--cream); }
+	.gallery__photo figcaption { margin-top: 12px; color: var(--muted); font-size: 13px; text-align: center; line-height: 1.5; }
+	.gallery__navigation { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 12px 0; }
+	.gallery__navigation button { width: 44px; height: 44px; border: 1px solid var(--line-2); background: var(--paper); color: var(--ink); font-size: 22px; cursor: pointer; }
+	.gallery__navigation p { margin: 0; color: var(--muted); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+	.gallery__thumbnails { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+	.gallery__thumbnails button { min-width: 0; min-height: 44px; padding: 3px; border: 2px solid transparent; background: var(--cream); cursor: pointer; }
+	.gallery__thumbnails button[aria-pressed='true'] { border-color: var(--gold-dark); }
+	.gallery__thumbnails img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+	.gallery button:hover { border-color: var(--gold-dark); }
+	.gallery [hidden] { display: none; }
+</style>

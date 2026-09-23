@@ -1,0 +1,123 @@
+---
+import { itinerary } from '../data/content';
+import SectionHeading from './SectionHeading.astro';
+---
+
+<section class="rv itin">
+	<div class="wrap wrap-1180">
+		<SectionHeading
+			eyebrow="How a Day Comes Together"
+			title="One itinerary, from pickup to the last stop"
+			lead="A celebration around Geneva Lake rarely happens at one address. Loading time, travel time and venue access work best when they are planned together rather than arranged ride by ride."
+		/>
+
+		<ol class="itin__list">
+			{
+				itinerary.map((step) => (
+					<li class="itin__item">
+						<span class="itin__num" aria-hidden="true">
+							{step.number}
+						</span>
+						<h3 class="itin__title">{step.title}</h3>
+						<p class="itin__body">{step.body}</p>
+					</li>
+				))
+			}
+		</ol>
+	</div>
+</section>
+
+<style>
+	.itin {
+		padding: 64px 0;
+		background: var(--lake-soft);
+	}
+
+	.itin__list {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 0;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		counter-reset: none;
+	}
+
+	.itin__item {
+		padding: 0 26px;
+		border-left: 1px solid rgb(47 93 112 / 0.22);
+	}
+
+	.itin__item:first-child {
+		padding-left: 0;
+		border-left: 0;
+	}
+
+	.itin__item:last-child {
+		padding-right: 0;
+	}
+
+	.itin__num {
+		display: block;
+		margin-bottom: 14px;
+		/* gold-deep rather than gold-dark: the lighter tone falls under 3:1 here. */
+		color: var(--gold-deep);
+		font-family: var(--serif);
+		font-size: 30px;
+		font-weight: 500;
+		line-height: 1;
+	}
+
+	.itin__title {
+		margin: 0 0 10px;
+		font-family: var(--serif);
+		font-size: 20px;
+		font-weight: 600;
+		line-height: 1.25;
+	}
+
+	.itin__body {
+		margin: 0;
+		color: var(--muted);
+		font-size: 14px;
+		font-weight: 300;
+		line-height: 1.7;
+	}
+
+	@media (width <= 900px) {
+		.itin__list {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 34px 0;
+		}
+		.itin__item:nth-child(odd) {
+			padding-left: 0;
+			border-left: 0;
+		}
+		.itin__item:nth-child(even) {
+			padding-right: 0;
+		}
+	}
+
+	@media (width <= 560px) {
+		.itin {
+			padding: 48px 0;
+		}
+		.itin__list {
+			grid-template-columns: 1fr;
+			gap: 0;
+		}
+		.itin__item {
+			padding: 20px 0;
+			border-left: 0;
+			border-top: 1px solid rgb(47 93 112 / 0.22);
+		}
+		.itin__item:first-child {
+			border-top: 0;
+			padding-top: 0;
+		}
+		.itin__num {
+			margin-bottom: 8px;
+			font-size: 26px;
+		}
+	}
+</style>

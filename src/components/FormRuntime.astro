@@ -1,0 +1,219 @@
+---
+/**
+ * Success dialog plus the one submit handler every form on the site shares.
+ *
+ * Delivery: forms POST url-encoded to `formEndpoint` (Netlify Forms by
+ * default). Success is reported ONLY when the endpoint answers with a 2xx.
+ * Anything else - including a build that has no forms backend wired up - shows
+ * an error and tells the visitor to get in touch another way. During `astro
+ * dev` the request is skipped entirely and the form says so, so a local run can
+ * never be mistaken for a working submission.
+ */
+import { formEndpoint } from '../data/site';
+---
+
+<dialog class="fsp" data-success-dialog>
+	<div class="fsp__panel">
+		<button type="button" class="fsp__close" aria-label="Close" data-success-close>&times;</button>
+		<span class="fsp__icon" aria-hidden="true">&#10003;</span>
+		<p class="fsp__eyebrow">Submission received</p>
+		<p class="fsp__title">Thank you</p>
+		<p class="fsp__message" data-success-message></p>
+		<button type="button" class="btn-gold" data-success-close>Close</button>
+	</div>
+</dialog>
+
+<style>
+	.fsp {
+		width: min(460px, 100% - 32px);
+		max-width: none;
+		margin: auto;
+		padding: 0;
+		border: 1px solid rgb(185 143 58 / 0.45);
+		border-radius: 3px;
+		background: var(--paper);
+		box-shadow: 0 24px 80px rgb(24 20 13 / 0.24);
+		color: var(--ink);
+		overflow: visible;
+	}
+
+	.fsp::backdrop {
+		background: rgb(16 36 46 / 0.6);
+		backdrop-filter: blur(3px);
+	}
+
+	.fsp[open] {
+		animation: fsp-in 0.22s both;
+	}
+
+	.fsp__panel {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 48px 42px 42px;
+		text-align: center;
+	}
+
+	.fsp__close {
+		position: absolute;
+		top: 12px;
+		right: 14px;
+		width: 36px;
+		height: 36px;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: var(--muted);
+		font: 300 28px/1 var(--sans);
+		cursor: pointer;
+	}
+
+	.fsp__close:hover {
+		color: var(--ink);
+	}
+
+	.fsp__icon {
+		display: grid;
+		place-items: center;
+		width: 58px;
+		height: 58px;
+		margin-bottom: 20px;
+		border: 1px solid var(--gold);
+		border-radius: 50%;
+		color: var(--gold-deep);
+		font-size: 27px;
+	}
+
+	.fsp__eyebrow {
+		margin: 0 0 10px;
+		color: var(--gold-deep);
+		font-size: 10px;
+		font-weight: 500;
+		letter-spacing: 0.3em;
+		text-transform: uppercase;
+	}
+
+	.fsp__title {
+		margin: 0;
+		font-family: var(--serif);
+		font-size: clamp(34px, 7vw, 44px);
+		font-weight: 600;
+		line-height: 1;
+	}
+
+	.fsp__message {
+		max-width: 350px;
+		margin: 18px 0 28px;
+		color: var(--muted);
+		font-size: 15px;
+		font-weight: 300;
+		line-height: 1.65;
+	}
+
+	@keyframes fsp-in {
+		from {
+			opacity: 0;
+			transform: translateY(10px) scale(0.985);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+
+	@media (width <= 520px) {
+		.fsp__panel {
+			padding: 44px 24px 34px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.fsp[open] {
+			animation: none;
+		}
+	}
+</style>
+
+<script define:vars={{ endpoint: formEndpoint, isDev: import.meta.env.DEV }}>
+	const messages = {
+		'quote-request': 'Thank you. Your quote request has been submitted.',
+		'wedding-quote-request': 'Thank you. Your wedding quote request has been submitted. Our team will confirm vehicle availability and the details of your itinerary.',
+		'contact-message': 'Thank you. Your message has been submitted.',
+		'reservation-request':
+			'Thank you. Your reservation request has been submitted. This does not confirm availability or a booking.',
+	};
+
+	const ERROR =
+		'Your request could not be sent. Please try again in a moment, or reach out directly.';
+	const DEV_NOTICE =
+		'Development build: nothing was sent. Deploy the site to submit this form for real.';
+
+	const dialog = document.querySelector('[data-success-dialog]');
+	const dialogMessage = dialog?.querySelector('[data-success-message]');
+
+	dialog?.querySelectorAll('[data-success-close]').forEach((btn) =>
+		btn.addEventListener('click', () => dialog.close()),
+	);
+	dialog?.addEventListener('click', (event) => {
+		if (event.target === dialog) dialog.close();
+	});
+
+	const setStatus = (el, text, state) => {
+		el.textContent = text;
+		el.dataset.state = state;
+	};
+
+	const inFlight = new WeakSet();
+
+	document.querySelectorAll('form[data-async-form]').forEach((form) => {
+		form.addEventListener('submit', async (event) => {
+			event.preventDefault();
+			if (inFlight.has(form) || !form.reportValidity()) return;
+
+			const status = form.querySelector('[data-form-status]');
+			const submit = form.querySelector('button[type="submit"]');
+			if (!status || !submit) return;
+
+			if (isDev) {
+				setStatus(status, DEV_NOTICE, 'notice');
+				return;
+			}
+
+			inFlight.add(form);
+			submit.disabled = true;
+			submit.setAttribute('aria-busy', 'true');
+			setStatus(status, 'Sending…', 'sending');
+
+			try {
+				const data = new FormData(form);
+				const name = data.get('form-name');
+				const body = new URLSearchParams();
+				for (const [key, value] of data.entries()) body.append(key, String(value));
+
+				const response = await fetch(endpoint, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: body.toString(),
+				});
+				if (!response.ok) throw new Error(`Form endpoint returned HTTP ${response.status}.`);
+
+				form.reset();
+				const message = messages[name] ?? 'Thank you. Your request has been submitted.';
+				setStatus(status, message, 'success');
+				form.dispatchEvent(new CustomEvent('async-form:success'));
+				if (dialog && dialogMessage) {
+					dialogMessage.textContent = message;
+					dialog.showModal();
+				}
+			} catch (error) {
+				setStatus(status, ERROR, 'error');
+				console.error('Form submission failed.', error);
+			} finally {
+				inFlight.delete(form);
+				submit.disabled = false;
+				submit.removeAttribute('aria-busy');
+			}
+		});
+	});
+</script>

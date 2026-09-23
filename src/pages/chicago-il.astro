@@ -1,0 +1,339 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Faq from '../components/Faq.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { fleet } from '../data/fleet';
+import { contact } from '../data/site';
+import riverNight from '../assets/chicago/river-night.jpg';
+import skylineLake from '../assets/chicago/skyline-lake.jpg';
+import weddingPark from '../assets/chicago/wedding-park.jpg';
+import riverwalk from '../assets/chicago/riverwalk.jpg';
+import airportLanding from '../assets/chicago/airport-landing.jpg';
+import skylineNight from '../assets/chicago/skyline-night.jpg';
+
+const vehicle = (id: string) => fleet.find((item) => item.id === id)!;
+const rides = ['classic-trolley', 'super-coach-bus', 'party-bus', 'executive-sprinter'].map(vehicle);
+const [trolley, coach, partyBus, sprinter] = rides;
+
+// Quote links fill in the form on this page; the form reads the event type from the hash.
+const quoteLink = (type: string) => `#getquote?type=${encodeURIComponent(type)}`;
+
+/** A six-pointed Chicago star, as on the city flag. */
+const star = Array.from({ length: 12 }, (_, i) => {
+	const radius = i % 2 === 0 ? 11 : 5.4;
+	const angle = (Math.PI / 6) * i - Math.PI / 2;
+	return `${(12 + radius * Math.cos(angle)).toFixed(2)},${(12 + radius * Math.sin(angle)).toFixed(2)}`;
+}).join(' ');
+
+const glance = [
+	{ title: 'Pickups across the city', body: 'Hotels, venues, restaurants and home addresses, planned into one route.' },
+	{ title: 'O’Hare & Midway', body: 'Group airport pickups and drop-offs, timed around your flights.' },
+	{ title: 'City to lake', body: 'Private trips between Chicago and Lake Geneva, Wisconsin.' },
+];
+
+const services = [
+	{ title: 'Chicago Weddings', body: 'Ceremony-to-reception rides for the wedding party, photo stops around the city and shuttles for guests staying downtown.', image: weddingPark, alt: 'A bride and groom embracing among autumn trees beside a pond in a Chicago park.', position: '50% 55%', type: 'Wedding', action: 'Plan your wedding ride' },
+	{ title: 'Corporate Events', body: 'Conference shuttles, team outings and client dinners, coordinated around one schedule for the whole group.', image: riverwalk, alt: 'The Dearborn Street bridge over the Chicago Riverwalk, with café umbrellas along the water.', position: '62% center', type: 'Corporate Event', action: 'Plan team transportation' },
+	{ title: 'O’Hare & Midway Transfers', body: 'Airport arrivals and departures for groups, with room for luggage. Share your flight details and we’ll plan the timing.', image: airportLanding, alt: 'A plane coming in to land above runway approach lights at dusk.', position: '42% center', type: 'Airport Transfer', action: 'Arrange an airport transfer' },
+	{ title: 'Nights Out & Celebrations', body: 'Birthdays, bachelor and bachelorette parties, game days and milestone nights, with a private ride between every stop.', image: skylineNight, alt: 'Chicago’s skyline lit up at night across the water.', position: '46% center', type: 'Night Out', action: 'Plan your night out' },
+];
+
+const questions = [
+	{ q: 'Do you offer trolley and bus rentals in Chicago?', a: 'Yes. Lake Geneva Trolley & Bus Rental serves Chicago, Illinois, with private charters for weddings, corporate events, airport transfers and celebrations. Every trip is quoted around your date, your group and your full itinerary.' },
+	{ q: 'Can you pick up at O’Hare or Midway?', a: 'Airport transfers to and from O’Hare and Midway can be arranged for groups. Share your flight numbers, arrival times, passenger count and luggage so the vehicle and pickup plan fit your group.' },
+	{ q: 'Can you take our group from Chicago to Lake Geneva?', a: 'Yes. Private transfers between Chicago and Lake Geneva, Wisconsin, about 80 miles apart, can be planned one way or round trip. Tell us every pickup point and where your group is staying at the lake.' },
+	{ q: 'Which vehicle is right for our group?', a: `It depends on your headcount and plans. The ${trolley.name} seats ${trolley.capacity}, the ${sprinter.name} carries ${sprinter.capacityLabel}, the ${partyBus.name} holds ${partyBus.capacityLabel.toLowerCase()} and the ${coach.name} takes ${coach.capacityLabel}. Share your group size and we’ll suggest the right fit.` },
+	{ q: 'Where in the Chicago area do you pick up?', a: 'Send the full address for every pickup and stop, whether downtown, in a neighborhood or outside the city. We’ll confirm the route and availability for your date.' },
+	{ q: 'How far ahead should we book?', a: 'Get in touch once your date and group size are settled. If your date is coming up soon, you can still ask about availability.' },
+];
+---
+
+<BaseLayout
+	title="Chicago, IL Trolley & Bus Rental | Lake Geneva Trolley & Bus Rental"
+	description="Private trolley and bus rental in Chicago, IL for weddings, corporate events, O’Hare and Midway transfers, nights out, and group trips between Chicago and Lake Geneva."
+	canonical="/chicago-il/"
+	showCtaBand={false}
+>
+	<section class="chero" aria-labelledby="chicago-title">
+		<Image class="chero__image" src={riverNight} alt="" widths={[800, 1200, 1600, 2200]} sizes="100vw" loading="eager" fetchpriority="high" />
+		<div class="chero__shade" aria-hidden="true"></div>
+		<div class="wrap wrap-wide chero__copy">
+			<p class="ckicker"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points={star} /></svg> Serving Chicago, Illinois</p>
+			<h1 id="chicago-title">Chicago Trolley<br /><em>&amp; Bus Rental</em></h1>
+			<p class="chero__lead">Private rides for weddings, corporate events, airport runs and nights out across the city, and for the trip north to Lake Geneva.</p>
+			<div class="chero__actions">
+				<a class="btn-gold" href="#getquote">Get a Chicago Quote</a>
+				<a class="chero__link" href="/fleet/">Explore the fleet <span aria-hidden="true">→</span></a>
+			</div>
+		</div>
+		<p class="chero__caption">The Chicago River at night</p>
+	</section>
+
+	<div class="cflag" aria-hidden="true">
+		<span class="cflag__stars">{Array.from({ length: 4 }, () => <svg viewBox="0 0 24 24"><polygon points={star} /></svg>)}</span>
+	</div>
+
+	<section class="cquote" id="getquote" aria-labelledby="chicago-quote-title">
+		<div class="wrap wrap-wide">
+			<div class="cquote__head">
+				<p class="ckicker ckicker--dark">Request a quote</p>
+				<h2 id="chicago-quote-title">Get a <em>Chicago</em> trolley &amp; bus quote</h2>
+			</div>
+			<QuoteForm idPrefix="chq" />
+			<p class="cquote__note">Pricing depends on the date, the vehicle, how long you need it and every pickup and stop. Share your plans and we’ll put together a quote around them.</p>
+		</div>
+	</section>
+
+	<section class="cfleet" aria-labelledby="chicago-fleet-title">
+		<div class="wrap wrap-wide">
+			<div class="cfleet__head">
+				<div>
+					<p class="ckicker ckicker--dark">Choose your ride</p>
+					<h2 id="chicago-fleet-title">A vehicle for every group size</h2>
+				</div>
+				<a class="cfleet__all" href="/fleet/">See the full fleet <span aria-hidden="true">→</span></a>
+			</div>
+			<ul class="cfleet__grid">
+				{rides.map((ride) => (
+					<li>
+						<a class="cride" href={ride.detailHref}>
+							<Image src={ride.image} alt={ride.imageAlt} widths={[360, 560]} sizes="(max-width: 700px) calc(50vw - 30px), 280px" loading="lazy" />
+							<span class="cride__name">{ride.name}</span>
+							<span class="cride__capacity">{ride.capacityLabel}</span>
+						</a>
+					</li>
+				))}
+			</ul>
+		</div>
+	</section>
+
+	<section class="cintro" aria-labelledby="chicago-intro-title">
+		<div class="wrap wrap-wide cintro__inner">
+			<div>
+				<p class="ckicker ckicker--dark">In the city</p>
+				<h2 id="chicago-intro-title">Private rides across <em>Chicago.</em></h2>
+				<p class="cintro__lead">Lake Geneva Trolley &amp; Bus Rental serves Chicago, too. Whether you’re planning a downtown wedding, moving a conference crowd or collecting friends from O’Hare, we’ll plan the vehicles and the route around your group.</p>
+			</div>
+			<ul class="cintro__glance">
+				{glance.map((item) => (
+					<li>
+						<svg viewBox="0 0 24 24" aria-hidden="true"><polygon points={star} /></svg>
+						<div><h3>{item.title}</h3><p>{item.body}</p></div>
+					</li>
+				))}
+			</ul>
+		</div>
+	</section>
+
+	<section class="cservices" aria-labelledby="chicago-services-title">
+		<div class="wrap wrap-wide">
+			<div class="cservices__head">
+				<p class="ckicker ckicker--dark">Chicago services</p>
+				<h2 id="chicago-services-title">However your group <em>gets around.</em></h2>
+			</div>
+			<div class="cservices__grid">
+				{services.map((service, index) => (
+					<article class="ccard">
+						<figure class="ccard__photo">
+							<Image src={service.image} alt={service.alt} widths={[420, 640, 900]} sizes="(max-width: 700px) calc(100vw - 40px), (max-width: 1100px) calc(50vw - 40px), 290px" loading="lazy" style={`object-position: ${service.position}`} />
+							<span class="ccard__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+						</figure>
+						<h3>{service.title}</h3>
+						<p>{service.body}</p>
+						<a class="ccard__link" href={quoteLink(service.type)}>{service.action} <span aria-hidden="true">↗</span></a>
+					</article>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="croute" aria-labelledby="chicago-route-title">
+		<div class="wrap wrap-wide croute__inner">
+			<figure class="croute__photo">
+				<Image src={skylineLake} alt="Chicago’s skyline rising above Lake Michigan, with sailboats moored along the shore." widths={[480, 760, 1100, 1500]} sizes="(max-width: 860px) calc(100vw - 40px), 560px" loading="lazy" />
+			</figure>
+			<div class="croute__copy">
+				<p class="ckicker">Chicago to Lake Geneva</p>
+				<h2 id="chicago-route-title">From the city<br /><em>to the lake.</em></h2>
+				<p class="croute__lead">Heading north for a wedding weekend, a company retreat or a few days on the water? Travel together from Chicago to Lake Geneva, Wisconsin, with one pickup plan for the whole group.</p>
+				<div class="croute__map">
+					<p class="croute__track"><i aria-hidden="true"></i><span>About 80 miles</span><i aria-hidden="true"></i></p>
+					<ol class="croute__stops">
+						<li><strong>Chicago, IL</strong><span>Downtown, neighborhoods or the airport</span></li>
+						<li><strong>Lake Geneva, WI</strong><span>Resorts, hotels and venues</span></li>
+					</ol>
+				</div>
+				<div class="croute__actions">
+					<a class="btn-gold" href={quoteLink('Group Transportation')}>Plan a City-to-Lake Trip</a>
+					<a class="croute__link" href="/services/">Lake Geneva services <span aria-hidden="true">→</span></a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<Faq eyebrow="Chicago Questions" title="Planning a ride in Chicago" items={questions} />
+
+	<section class="ccta" aria-labelledby="chicago-cta-title">
+		<div class="wrap ccta__inner">
+			<span class="cflag__stars ccta__stars" aria-hidden="true">{Array.from({ length: 4 }, () => <svg viewBox="0 0 24 24"><polygon points={star} /></svg>)}</span>
+			<h2 id="chicago-cta-title">Planning something <em>in Chicago?</em></h2>
+			<p>Send the date, your group size and every stop you have in mind. We’ll put together a quote around your itinerary.</p>
+			<div class="ccta__actions">
+				<a class="btn-gold" href="#getquote">Request a Chicago Quote</a>
+				{contact.phoneHref && <a class="ccta__phone" href={`tel:${contact.phoneHref}`}>Or call {contact.phoneLabel}</a>}
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	/* Chicago flag colors, used for decoration only. */
+	.chero, .cflag, .cintro, .croute, .ccta { --chi-blue: #b3ddf2; --chi-red: #d52b1e; --chi-night: #0f1f28; }
+	.ckicker { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; color: var(--gold-light); font-size: 11px; font-weight: 500; letter-spacing: .26em; line-height: 1.6; text-transform: uppercase; }
+	.ckicker svg { flex: none; width: 14px; height: 14px; fill: var(--chi-red, #d52b1e); }
+	.ckicker--dark { color: var(--gold-deep); }
+	h2 em, h1 em { font-weight: 400; }
+
+	/* Hero */
+	.chero { position: relative; isolation: isolate; display: flex; align-items: center; min-height: clamp(380px, 31vw, 460px); overflow: hidden; background: var(--chi-night); color: var(--paper); }
+	.chero__image { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 62% center; }
+	.chero__shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgb(9 20 27 / 92%) 0%, rgb(9 20 27 / 72%) 38%, rgb(9 20 27 / 20%) 72%, rgb(9 20 27 / 5%)); }
+	.chero__copy { width: 100%; padding-block: 48px; }
+	.chero h1 { margin: 0; font: 500 clamp(42px, 4.6vw, 66px)/1.04 var(--serif); letter-spacing: -.02em; }
+	.chero h1 em { color: var(--gold-light); }
+	.chero__lead { max-width: 52ch; margin: 18px 0 26px; color: #dde5e8; font-size: 16px; font-weight: 300; line-height: 1.8; }
+	.chero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
+	.chero__link, .croute__link { color: var(--paper); font-size: 13px; letter-spacing: .04em; text-underline-offset: 6px; }
+	.chero__link:hover, .croute__link:hover { color: var(--gold-light); }
+	.chero__caption { position: absolute; right: 28px; bottom: 22px; margin: 0; color: rgb(255 255 255 / 70%); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+
+	/* Flag divider: two light-blue stripes around a band of four red stars. */
+	.cflag { display: grid; place-items: center; height: 58px; border-block: 9px solid var(--chi-blue); background: var(--paper); }
+	.cflag__stars { display: flex; gap: 26px; }
+	.cflag__stars svg { width: 22px; height: 22px; fill: var(--chi-red, #d52b1e); }
+
+	/* Intro */
+	.cintro { padding: 84px 0 76px; }
+	.cintro__inner { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); align-items: center; gap: 72px; }
+	.cintro h2, .cservices h2, .cfleet h2 { margin: 0; color: var(--lake-deep); font: 500 clamp(34px, 3.6vw, 50px)/1.08 var(--serif); }
+	.cintro h2 em, .cservices h2 em { color: var(--gold-deep); }
+	.cintro__lead { max-width: 54ch; margin: 22px 0 0; color: var(--muted); font-size: 15.5px; font-weight: 300; line-height: 1.85; }
+	.cintro__glance { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+	.cintro__glance li { display: flex; gap: 18px; padding: 22px 0; border-top: 1px solid var(--line-2); }
+	.cintro__glance li:last-child { border-bottom: 1px solid var(--line-2); }
+	.cintro__glance svg { flex: none; width: 18px; height: 18px; margin-top: 4px; fill: var(--chi-red); }
+	.cintro__glance h3 { margin: 0 0 4px; color: var(--ink); font: 600 21px/1.25 var(--serif); }
+	.cintro__glance p { margin: 0; color: var(--muted); font-size: 14px; font-weight: 300; line-height: 1.7; }
+
+	/* Services */
+	.cservices { padding: 80px 0 88px; background: var(--cream); }
+	.cservices__head { max-width: 640px; margin-bottom: 40px; }
+	.cservices__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+	.ccard { display: flex; flex-direction: column; min-width: 0; }
+	.ccard__photo { position: relative; margin: 0 0 22px; overflow: hidden; background: var(--lake-deep); }
+	.ccard__photo img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; transition: transform .5s ease; }
+	.ccard:hover .ccard__photo img { transform: scale(1.04); }
+	.ccard__photo::after { content: ''; position: absolute; right: 0; bottom: 0; left: 0; height: 5px; background: var(--chi-blue, #b3ddf2); }
+	.ccard__number { position: absolute; top: 16px; left: 16px; display: grid; place-items: center; width: 40px; height: 40px; background: var(--paper); color: var(--lake-deep); font: 500 20px var(--serif); }
+	.ccard h3 { margin: 0 0 10px; color: var(--ink); font: 600 24px/1.2 var(--serif); }
+	.ccard p { margin: 0 0 20px; color: var(--muted); font-size: 14px; font-weight: 300; line-height: 1.75; }
+	.ccard__link { display: inline-flex; align-self: flex-start; gap: 14px; margin-top: auto; padding-bottom: 6px; border-bottom: 1px solid var(--gold); color: var(--lake-deep); font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; }
+	.ccard__link:hover { color: var(--gold-deep); }
+
+	/* City-to-lake route */
+	.croute { padding: 88px 0; background: var(--lake-deep); color: var(--paper); }
+	.croute__inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 72px; }
+	.croute__photo { margin: 0; }
+	.croute__photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3.3; object-fit: cover; border-radius: 0 140px 0 0; }
+	.croute h2 { margin: 0; font: 500 clamp(36px, 3.8vw, 54px)/1.06 var(--serif); }
+	.croute h2 em { color: var(--gold-light); }
+	.croute__lead { max-width: 48ch; margin: 22px 0 34px; color: #d3dde0; font-size: 15px; font-weight: 300; line-height: 1.8; }
+	.croute__map { margin: 0 0 36px; }
+	.croute__track { position: relative; display: flex; align-items: center; justify-content: space-between; margin: 0 0 16px; }
+	.croute__track::before { content: ''; position: absolute; top: 50%; right: 16px; left: 16px; border-top: 2px dashed rgb(240 217 168 / 55%); }
+	.croute__track i { position: relative; width: 16px; height: 16px; border: 2px solid var(--gold-light); border-radius: 50%; background: var(--lake-deep); }
+	.croute__track i:first-child { background: var(--gold-light); }
+	.croute__track span { position: relative; padding: 0 12px; background: var(--lake-deep); color: var(--gold-light); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+	.croute__stops { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 0; padding: 0; list-style: none; }
+	.croute__stops li:last-child { text-align: right; }
+	.croute__stops strong { display: block; font: 500 24px/1.2 var(--serif); }
+	.croute__stops span { display: block; margin-top: 4px; color: #b9c8cc; font-size: 12px; line-height: 1.5; }
+	.croute__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
+
+	/* Quote form */
+	.cquote { padding: 36px 0 60px; scroll-margin-top: 80px; }
+	.cquote__head { margin-bottom: 28px; }
+	.cquote h2 { margin: 0; color: var(--lake-deep); font: 500 clamp(32px, 3.2vw, 44px)/1.1 var(--serif); text-wrap: balance; }
+	.cquote h2 em { color: var(--gold-deep); }
+	.cquote__note { max-width: 78ch; margin: 18px 4px 0; color: var(--muted); font-size: 12.5px; font-weight: 300; line-height: 1.65; }
+
+	/* Fleet */
+	.cfleet { padding: 72px 0 80px; background: var(--cream); }
+	.cfleet__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 40px; margin-bottom: 34px; }
+	.cfleet__all { color: var(--lake-deep); font-size: 13px; text-underline-offset: 6px; }
+	.cfleet__all:hover { color: var(--gold-deep); }
+	.cfleet__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; margin: 0; padding: 0; list-style: none; }
+	.cride { display: block; color: inherit; text-decoration: none; }
+	.cride img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; margin-bottom: 14px; object-fit: cover; background: var(--cream); transition: opacity .2s; }
+	.cride:hover img { opacity: .88; }
+	.cride__name { display: block; color: var(--ink); font: 600 20px/1.25 var(--serif); }
+	.cride:hover .cride__name { color: var(--gold-deep); }
+	.cride__capacity { display: block; margin-top: 4px; color: var(--gold-deep); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+
+	/* Closing call to action */
+	.ccta { padding: 72px 0 76px; background: var(--chi-night); color: var(--paper); text-align: center; }
+	.ccta__stars { justify-content: center; margin-bottom: 26px; }
+	.ccta h2 { margin: 0; font: 500 clamp(34px, 3.8vw, 52px)/1.1 var(--serif); }
+	.ccta h2 em { color: var(--gold-light); }
+	.ccta p { max-width: 50ch; margin: 18px auto 30px; color: #d0dadd; font-size: 15px; font-weight: 300; line-height: 1.8; }
+	.ccta__actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 16px 28px; }
+	.ccta__phone { color: var(--gold-light); font-size: 14px; text-underline-offset: 6px; }
+	.ccta__phone:hover { color: var(--paper); }
+
+	@media (width <= 1100px) {
+		.cservices__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 28px; }
+		.ccard__photo img { aspect-ratio: 4 / 3; }
+		.cintro__inner, .croute__inner { gap: 48px; }
+	}
+	@media (width <= 860px) {
+		.cintro__inner, .croute__inner { grid-template-columns: 1fr; }
+		.croute__photo img { aspect-ratio: 16 / 10; border-top-right-radius: 90px; }
+		/* Flatten the copy into the grid so the photo can sit between the heading and the intro. */
+		.croute__inner { gap: 0; }
+		.croute__copy { display: contents; }
+		.croute__photo { order: 1; margin-top: 30px; }
+		.croute__lead, .croute__map, .croute__actions { order: 2; }
+		.croute__lead { margin-top: 28px; }
+		.cfleet__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 18px; }
+	}
+	@media (width <= 700px) {
+		.chero { align-items: flex-end; min-height: 460px; }
+		.chero__image { object-position: 68% center; }
+		.chero__shade { background: linear-gradient(0deg, rgb(9 20 27 / 94%) 0%, rgb(9 20 27 / 78%) 45%, rgb(9 20 27 / 25%) 80%, rgb(9 20 27 / 10%)); }
+		.chero__copy { padding-block: 84px 40px; }
+		.chero__lead { font-size: 15px; margin-block: 16px 24px; }
+		.chero__caption { top: 18px; right: 20px; bottom: auto; }
+		.cflag { height: 50px; border-block-width: 7px; }
+		.cflag__stars { gap: 20px; }
+		.cflag__stars svg { width: 18px; height: 18px; }
+		.cintro { padding: 56px 0 50px; }
+		.cservices { padding: 56px 0 60px; }
+		.cservices__head { margin-bottom: 30px; }
+		.cservices__grid { grid-template-columns: 1fr; gap: 44px; }
+		.croute { padding: 56px 0; }
+		.croute__stops { gap: 16px; }
+		.croute__stops strong { font-size: 21px; }
+		.cquote { padding: 44px 0 44px; }
+		.cquote__head { margin-bottom: 20px; }
+		.cfleet { padding: 52px 0 56px; }
+		.ccta { padding: 56px 0 60px; }
+	}
+	@media (width <= 400px) {
+		.chero__actions .btn-gold, .croute__actions .btn-gold, .ccta .btn-gold { width: 100%; padding-inline: 16px; text-align: center; }
+		.cride__name { font-size: 18px; }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.ccard__photo img { transition: none; }
+	}
+</style>

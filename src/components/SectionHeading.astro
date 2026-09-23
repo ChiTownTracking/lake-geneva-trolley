@@ -1,0 +1,52 @@
+---
+interface Props {
+	eyebrow: string;
+	/** Rendered as the visible heading; use <slot> for mixed markup instead. */
+	title?: string;
+	lead?: string;
+	align?: 'center' | 'left';
+	id?: string;
+	as?: 'h2' | 'h3';
+}
+
+const { eyebrow, title, lead, align = 'center', id, as: Tag = 'h2' } = Astro.props;
+---
+
+<div class:list={['sh', `sh--${align}`]}>
+	<div class:list={['eyebrow', { center: align === 'center' }]}>
+		<span class="eyebrow__rule"></span>
+		<span class="eyebrow__label">{eyebrow}</span>
+		<span class="eyebrow__rule eyebrow__rule--r"></span>
+	</div>
+	<Tag class:list={['h-section', 'sh__title', { 'text-center': align === 'center' }]} id={id}>
+		{title}<slot />
+	</Tag>
+	{lead && <p class="sh__lead">{lead}</p>}
+</div>
+
+<style>
+	.sh {
+		margin-bottom: 40px;
+	}
+
+	.sh--center {
+		text-align: center;
+	}
+
+	.sh__title {
+		margin: 16px 0 0;
+	}
+
+	.sh__lead {
+		max-width: 64ch;
+		margin: 16px 0 0;
+		color: var(--muted);
+		font-size: 15px;
+		font-weight: 300;
+		line-height: 1.7;
+	}
+
+	.sh--center .sh__lead {
+		margin-inline: auto;
+	}
+</style>

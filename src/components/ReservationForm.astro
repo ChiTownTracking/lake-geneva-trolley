@@ -1,0 +1,173 @@
+---
+import { quoteOptions } from '../data/content';
+import VehicleOptions from './VehicleOptions.astro';
+---
+
+<form class="rform" name="reservation-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-async-form data-reservation-form>
+	<input type="hidden" name="form-name" value="reservation-request" />
+	<p class="honeypot" aria-hidden="true">
+		<label>Do not fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+	</p>
+	<p class="rform__required"><span aria-hidden="true">*</span> Required fields</p>
+
+	<fieldset class="rform__section">
+		<legend class="rform__legend"><span>01</span> Customer Information</legend>
+		<div class="rform__grid">
+			<label class="field field--full">
+				<span class="field__label">Full Name <span aria-hidden="true">*</span></span>
+				<input required id="r-name" name="name" type="text" autocomplete="name" placeholder="Your full name" class="field__control" />
+			</label>
+			<label class="field">
+				<span class="field__label">Phone Number <span aria-hidden="true">*</span></span>
+				<input required id="r-phone" name="phone" type="tel" autocomplete="tel" placeholder="Best number to reach you" class="field__control" />
+			</label>
+			<label class="field">
+				<span class="field__label">Email <span aria-hidden="true">*</span></span>
+				<input required id="r-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" class="field__control" />
+			</label>
+		</div>
+	</fieldset>
+
+	<fieldset class="rform__section">
+		<legend class="rform__legend"><span>02</span> Trip Information</legend>
+		<div class="rform__grid">
+			<label class="field field--full">
+				<span class="field__label">Event <span aria-hidden="true">*</span></span>
+				<select required id="r-type" name="type" class="field__control">
+					<option value="" disabled selected>Select event type</option>
+					{quoteOptions.eventTypes.map((event) => <option value={event}>{event}</option>)}
+				</select>
+			</label>
+			<label class="field">
+				<span class="field__label">Pickup Date <span aria-hidden="true">*</span></span>
+				<input required id="r-date" name="date" type="date" class="field__control" />
+			</label>
+			<label class="field">
+				<span class="field__label">Pickup Time <span aria-hidden="true">*</span></span>
+				<input required id="r-time" name="time" type="time" class="field__control" />
+			</label>
+			<label class="field">
+				<span class="field__label">End Time</span>
+				<input id="r-end-time" name="end-time" type="time" class="field__control" />
+			</label>
+			<label class="field field--full">
+				<span class="field__label">Pickup Location <span aria-hidden="true">*</span></span>
+				<input required id="r-pickup" name="pickup" type="text" placeholder="Street address, city and ZIP" class="field__control" />
+			</label>
+			<label class="field field--full">
+				<span class="field__label">Drop-off Location <span aria-hidden="true">*</span></span>
+				<input required id="r-dropoff" name="dropoff" type="text" placeholder="Street address, city and ZIP" class="field__control" />
+			</label>
+			<label class="field field--full">
+				<span class="field__label">Message</span>
+				<textarea id="r-message" name="message" rows="4" placeholder="Extra stops, timing and anything else we should know about your trip." class="field__control"></textarea>
+			</label>
+		</div>
+	</fieldset>
+
+	<fieldset class="rform__section">
+		<legend class="rform__legend"><span>03</span> Vehicle &amp; Service</legend>
+		<div class="rform__grid">
+			<label class="field">
+				<span class="field__label">Time Needed <span aria-hidden="true">*</span></span>
+				<select required id="r-hours" name="hours" class="field__control">
+					<option value="" disabled selected>Select service length</option>
+					{quoteOptions.durations.map((duration) => <option value={duration}>{duration}</option>)}
+				</select>
+			</label>
+			<label class="field">
+				<span class="field__label">Requested Vehicle <span aria-hidden="true">*</span></span>
+				<select required id="r-vehicle" name="vehicle" class="field__control">
+					<option value="" disabled selected>Select a vehicle</option>
+					<VehicleOptions />
+				</select>
+			</label>
+			<label class="field">
+				<span class="field__label">Number of Passengers <span aria-hidden="true">*</span></span>
+				<input required id="r-passengers" name="passengers" type="number" min="1" step="1" inputmode="numeric" placeholder="Your group size" class="field__control" />
+			</label>
+		</div>
+	</fieldset>
+
+	<fieldset class="rform__section">
+		<legend class="rform__legend"><span>04</span> Quote &amp; Billing Details</legend>
+		<div class="rform__grid">
+			<label class="field">
+				<span class="field__label">Price Quote</span>
+				<input name="price-quote" type="text" placeholder="Quoted amount or email reference" class="field__control" />
+			</label>
+			<label class="field">
+				<span class="field__label">Promo Code</span>
+				<input name="promo-code" type="text" autocomplete="off" placeholder="If applicable" class="field__control" />
+			</label>
+			<label class="field field--full">
+				<span class="field__label">Billing Contact Name</span>
+				<input name="billing-name" type="text" autocomplete="billing name" placeholder="If different from the customer" class="field__control" />
+			</label>
+			<label class="field field--full">
+				<span class="field__label">Billing Street Address</span>
+				<input name="billing-street-address" type="text" autocomplete="billing street-address" placeholder="Street address" class="field__control" />
+			</label>
+			<label class="field">
+				<span class="field__label">City</span>
+				<input name="billing-city" type="text" autocomplete="billing address-level2" class="field__control" />
+			</label>
+			<label class="field">
+				<span class="field__label">State</span>
+				<input name="billing-state" type="text" autocomplete="billing address-level1" maxlength="2" placeholder="WI" class="field__control" />
+			</label>
+			<label class="field">
+				<span class="field__label">Billing ZIP Code</span>
+				<input name="billing-zip" type="text" autocomplete="billing postal-code" inputmode="numeric" placeholder="53147" class="field__control" />
+			</label>
+		</div>
+		<p class="rform__note">Submitting this request places no charge. Availability and booking details must be confirmed by the team.</p>
+	</fieldset>
+
+	<label class="rform__agreement">
+		<input required name="agreement" type="checkbox" value="Acknowledged" />
+		<span>I understand that this is a reservation request and my booking is confirmed only after the itinerary, vehicle and date are agreed in writing.</span>
+	</label>
+	<div class="rform__submit"><button type="submit" class="btn-gold">Submit Reservation Request</button></div>
+	<p class="form-status" data-form-status role="status" aria-live="polite"></p>
+</form>
+
+<script>
+	const form = document.querySelector<HTMLFormElement>('[data-reservation-form]');
+	const vehicleSelect = form?.querySelector<HTMLSelectElement>('[name="vehicle"]');
+	const requestedVehicle = new URLSearchParams(location.search).get('vehicle');
+	if (vehicleSelect && requestedVehicle && [...vehicleSelect.options].some((option) => option.value === requestedVehicle)) {
+		vehicleSelect.value = requestedVehicle;
+	}
+	const date = form?.querySelector<HTMLInputElement>('[name="date"]');
+	if (date) {
+		const now = new Date();
+		date.min = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+	}
+</script>
+
+<style>
+	.rform { display: flex; flex-direction: column; }
+	.rform__required { align-self: flex-end; margin: 0 0 8px; color: var(--faint); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+	.rform__required span, .field__label span { color: var(--gold-deep); }
+	.rform__section { min-width: 0; margin: 0; padding: 30px 0 38px; border: 0; border-top: 1px solid var(--line-2); }
+	.rform__legend { padding: 0 18px 0 0; color: var(--ink); font-family: var(--serif); font-size: clamp(24px, 2.5vw, 30px); font-weight: 600; line-height: 1.1; }
+	.rform__legend span { margin-right: 10px; color: var(--gold-deep); font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: .16em; vertical-align: middle; }
+	.rform__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 28px; margin-top: 26px; }
+	.field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+	.field--full { grid-column: 1 / -1; }
+	.field__label { margin: 0; color: var(--ink); font-size: 11px; font-weight: 500; letter-spacing: .24em; line-height: normal; }
+	.field__control { min-width: 0; background: transparent; font-family: var(--sans); transition: border-color .25s; }
+	.field__control:focus-visible { outline: 2px solid var(--gold-dark); outline-offset: 3px; }
+	.rform__note { margin: 22px 0 0; color: var(--muted); font-size: 13px; font-weight: 300; line-height: 1.7; }
+	.rform__agreement { display: flex; align-items: flex-start; gap: 13px; margin: 2px 0 26px; color: var(--muted); font-size: 14px; font-weight: 300; line-height: 1.6; cursor: pointer; }
+	.rform__agreement input { flex: none; width: 19px; height: 19px; margin: 2px 0 0; accent-color: var(--gold-dark); }
+	.rform__submit { margin-top: 2px; }
+	@media (width <= 768px) { .field__label { font-size: 12px; } }
+	@media (width <= 640px) {
+		.rform__section { padding-block: 26px 32px; }
+		.rform__grid { grid-template-columns: minmax(0, 1fr); gap: 22px; margin-top: 24px; }
+		.field--full { grid-column: auto; }
+		.rform__submit .btn-gold { width: 100%; padding-inline: 18px; text-align: center; }
+	}
+</style>

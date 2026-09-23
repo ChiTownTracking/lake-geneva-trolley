@@ -1,0 +1,410 @@
+---
+import { site, contact, socials, footerNav, hasContact, credentials } from '../data/site';
+import Icon from './Icon.astro';
+import WbencLogo from '../assets/wbenc-logo.svg';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="ftr">
+	<div class="ftr__inner wrap">
+		<a class="ftr__brand" href="/" aria-label={`${site.name} home`}>
+			<span class="ftr__brandRow">
+				<span class="ftr__rule"></span>
+				<span class="ftr__name">{site.brandTop}</span>
+				<span class="ftr__rule ftr__rule--r"></span>
+			</span>
+			<span class="ftr__sub">{site.brandBottom}</span>
+		</a>
+
+		<nav class="ftr__nav" aria-label="Footer">
+			<ul class="ftr__navList">
+				{
+					footerNav.map((item) => (
+						<li>
+							<a class="ftr__link" href={item.href}>
+								{item.label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+
+		{
+			hasContact ? (
+				<address class="ftr__contact">
+					<ul class="ftr__contactList">
+						{contact.phoneHref && contact.phoneLabel && (
+							<li class="ftr__contactItem">
+								<Icon name="phone" class="ftr__contactIcon" />
+								<a class="ftr__contactLink" href={`tel:${contact.phoneHref}`}>
+									{contact.phoneLabel}
+								</a>
+							</li>
+						)}
+						{contact.email && (
+							<li class="ftr__contactItem">
+								<Icon name="mail" class="ftr__contactIcon" />
+								<a class="ftr__contactLink" href={`mailto:${contact.email}`}>
+									{contact.email}
+								</a>
+							</li>
+						)}
+						{contact.address && (
+							<li class="ftr__contactItem">
+								<Icon name="pin" class="ftr__contactIcon" />
+								<span class="ftr__contactLink">{contact.address}</span>
+							</li>
+						)}
+					</ul>
+				</address>
+			) : (
+				<p class="ftr__contactFallback">
+					Send your date and itinerary through the <a href="/#getquote">quote form</a> and the
+					team will come back to you with the details.
+				</p>
+			)
+		}
+
+		{
+			socials.length > 0 && (
+				<section class="ftr__socialSection">
+					<p class="ftr__heading">Follow</p>
+					<ul class="ftr__socialLinks">
+						{socials.map((s) => (
+							<li>
+								<a class="ftr__socialLink" href={s.href} rel="noopener">
+									<Icon name={s.icon} class="ftr__socialIcon" />
+									{s.name}
+								</a>
+							</li>
+						))}
+					</ul>
+				</section>
+			)
+		}
+
+		{
+			credentials.womenOwned && (
+				<section class="ftr__creds">
+					<p class="ftr__heading">Women-Owned Business</p>
+					<p class="ftr__credsLine">{credentials.servingLine}</p>
+					{credentials.wbenc && <WbencLogo class="ftr__wbenc" />}
+				</section>
+			)
+		}
+
+		<div class="ftr__copyright">
+			<span>&copy; {year} {site.name}</span>
+			<span>{site.tagline}</span>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.ftr {
+		padding: 42px 28px 28px;
+		border-top: 1px solid var(--line);
+		background: var(--paper);
+	}
+
+	.ftr__inner {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		min-width: 0;
+		text-align: center;
+	}
+
+	.ftr__brand {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 3px;
+		color: var(--ink);
+		text-decoration: none;
+	}
+
+	.ftr__brandRow {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		max-width: 100%;
+	}
+
+	.ftr__rule {
+		display: block;
+		width: 34px;
+		height: 1px;
+		background: linear-gradient(90deg, transparent, var(--gold-dark));
+	}
+
+	.ftr__rule--r {
+		background: linear-gradient(90deg, var(--gold-dark), transparent);
+	}
+
+	.ftr__name {
+		font-family: var(--serif);
+		font-size: 24px;
+		font-weight: 600;
+		letter-spacing: 0.14em;
+		line-height: 1;
+	}
+
+	.ftr__sub {
+		margin-left: 0.5em;
+		color: #8a6508;
+		font-size: 10px;
+		font-weight: 500;
+		letter-spacing: 0.5em;
+	}
+
+	.ftr__navList,
+	.ftr__contactList,
+	.ftr__socialLinks {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.ftr__nav {
+		width: 100%;
+		margin-top: 24px;
+	}
+
+	.ftr__navList {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 5px 24px;
+		max-width: 980px;
+		margin-inline: auto;
+	}
+
+	.ftr__link {
+		display: inline-flex;
+		align-items: center;
+		min-height: 32px;
+		color: var(--muted);
+		font-size: 11px;
+		font-weight: 400;
+		letter-spacing: 0.15em;
+		text-transform: uppercase;
+		white-space: nowrap;
+		text-decoration: none;
+		transition: color 0.2s;
+	}
+
+	.ftr__link:hover,
+	.ftr__contactLink[href]:hover {
+		color: var(--gold-deep);
+	}
+
+	.ftr__contact {
+		margin-top: 20px;
+		color: var(--muted);
+		font-size: 13.5px;
+		font-style: normal;
+		font-weight: 300;
+	}
+
+	.ftr__contactList {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 8px 22px;
+	}
+
+	.ftr__contactItem {
+		display: inline-flex;
+		align-items: center;
+		gap: 9px;
+		min-width: 0;
+	}
+
+	.ftr__contactItem + .ftr__contactItem::before {
+		content: '';
+		width: 5px;
+		height: 5px;
+		margin-right: 10px;
+		background: var(--gold);
+		transform: rotate(45deg);
+	}
+
+	.ftr__contactItem :global(.ftr__contactIcon) {
+		flex: none;
+		width: 17px;
+		height: 17px;
+		color: var(--gold-deep);
+	}
+
+	.ftr__contactLink {
+		min-width: 0;
+		color: var(--muted);
+		overflow-wrap: anywhere;
+		text-decoration: none;
+		transition: color 0.2s;
+	}
+
+	.ftr__contactFallback {
+		max-width: 46ch;
+		margin: 20px auto 0;
+		color: var(--muted);
+		font-size: 13.5px;
+		font-weight: 300;
+		line-height: 1.7;
+	}
+
+	.ftr__contactFallback a {
+		color: var(--gold-deep);
+		text-decoration-color: var(--gold);
+		text-underline-offset: 3px;
+	}
+
+	.ftr__heading {
+		margin: 0;
+		color: var(--gold-deep);
+		font-size: 10.5px;
+		font-weight: 500;
+		letter-spacing: 0.28em;
+		text-transform: uppercase;
+		line-height: 1.4;
+	}
+
+	.ftr__socialSection {
+		margin-top: 18px;
+	}
+
+	.ftr__socialLinks {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 10px;
+		margin-top: 10px;
+	}
+
+	.ftr__socialLink {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		min-width: 126px;
+		min-height: 40px;
+		padding: 7px 13px;
+		border: 1px solid var(--line-2);
+		color: var(--ink);
+		font-size: 12px;
+		letter-spacing: 0.08em;
+		text-decoration: none;
+		transition: border-color 0.2s, color 0.2s, background 0.2s;
+	}
+
+	.ftr__socialLink :global(.ftr__socialIcon) {
+		flex: none;
+		width: 16px;
+		height: 16px;
+		color: var(--gold-deep);
+	}
+
+	.ftr__creds {
+		margin-top: 26px;
+	}
+
+	.ftr__credsLine {
+		margin: 8px 0 0;
+		color: var(--muted);
+		font-size: 13px;
+	}
+
+	.ftr__wbenc {
+		display: block;
+		width: 142px;
+		height: auto;
+		margin: 16px auto 0;
+	}
+
+	.ftr__socialLink:hover {
+		border-color: var(--gold);
+		background: var(--cream);
+		color: var(--gold-deep);
+	}
+
+	.ftr__copyright {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 3px 18px;
+		width: min(100%, 720px);
+		margin-top: 22px;
+		padding-top: 14px;
+		border-top: 1px solid var(--line);
+		color: #6b6459;
+		font-size: 11.5px;
+		font-weight: 300;
+		letter-spacing: 0.04em;
+		line-height: 1.55;
+	}
+
+	.ftr__copyright span + span::before {
+		content: '\00b7';
+		margin-right: 18px;
+		color: var(--gold);
+	}
+
+	.ftr a:focus-visible {
+		outline: 2px solid var(--gold-dark);
+		outline-offset: 4px;
+	}
+
+	@media (width <= 639px) {
+		.ftr {
+			padding: 30px 18px 24px;
+		}
+		.ftr__inner {
+			width: min(100%, 440px);
+			margin-inline: auto;
+			padding-inline: 0;
+		}
+		.ftr__brandRow {
+			gap: 9px;
+		}
+		.ftr__rule {
+			width: 27px;
+		}
+		.ftr__name {
+			font-size: 22px;
+		}
+		.ftr__nav {
+			margin-top: 19px;
+		}
+		.ftr__navList {
+			gap: 3px 17px;
+			max-width: 380px;
+		}
+		.ftr__link {
+			min-height: 29px;
+			font-size: 11.5px;
+			letter-spacing: 0.11em;
+		}
+		.ftr__contactList {
+			flex-direction: column;
+			gap: 8px;
+		}
+		.ftr__contactItem + .ftr__contactItem::before {
+			display: none;
+		}
+		.ftr__copyright {
+			flex-direction: column;
+			align-items: center;
+			gap: 1px;
+			margin-top: 16px;
+			padding-top: 11px;
+			font-size: 12px;
+		}
+		.ftr__copyright span + span::before {
+			display: none;
+		}
+	}
+</style>

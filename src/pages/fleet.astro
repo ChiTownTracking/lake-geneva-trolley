@@ -1,0 +1,169 @@
+﻿---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { fleetCategories, fleetGroups } from '../data/fleet';
+
+const categories = [{ id: 'all', label: 'All Vehicles' }, ...fleetCategories];
+---
+
+<BaseLayout
+	title="Our Fleet | Lake Geneva Trolley & Bus Rental"
+	description="Compare classic and limo trolleys, three coach sizes, party buses and Sprinter vans. View vehicle photos, seating layouts and passenger capacities."
+	canonical="/fleet/"
+>
+	<section class="fleet-heading">
+		<div class="eyebrow center">
+			<span class="eyebrow__rule" aria-hidden="true"></span>
+			<span class="eyebrow__label">The Fleet</span>
+			<span class="eyebrow__rule eyebrow__rule--r" aria-hidden="true"></span>
+		</div>
+		<h1 class="h-page">Find your ride</h1>
+		<p class="fleet-heading__intro">From an intimate outing to a full guest list, explore the seating and space that suit your plans.</p>
+	</section>
+
+	<div class="fleet-filter wrap">
+		<div class="fleet-filter__controls" role="group" aria-label="Fleet categories" data-fleet-filter-controls hidden>
+			{categories.map((category) => (
+				<button class="fleet-filter__button" type="button" data-fleet-filter={category.id} aria-pressed="false" aria-controls="fleet-vehicles">
+					{category.label}
+				</button>
+			))}
+		</div>
+		<p class="sr-only" data-fleet-filter-status role="status" aria-live="polite"></p>
+	</div>
+
+	<div class="fleet wrap" id="fleet-vehicles">
+		{fleetGroups.map((group) => (
+		<section class="fleet-group" data-fleet-group={group.id} aria-labelledby={`heading-${group.id}`}>
+			<header class="fleet-group__heading">
+				<h2 id={`heading-${group.id}`}>{group.label}</h2>
+				<p>{group.description}</p>
+			</header>
+		{group.vehicles.map((vehicle, index) => (
+			<a
+				class:list={['fcard', { 'fcard--image-swap': Boolean(vehicle.interior) }]}
+				href={vehicle.detailHref}
+				id={vehicle.id}
+				data-fleet-card
+				data-fleet-category={vehicle.category}
+			>
+				<div class="fcard__media">
+					<Image class="fcard__img" src={vehicle.image} alt={vehicle.imageAlt} widths={[500, 800, 1200]} sizes="(max-width: 820px) calc(100vw - 56px), 608px" loading={index === 0 ? 'eager' : 'lazy'} />
+					{vehicle.interior && (
+						<Image class="fcard__img fcard__img--hover" src={vehicle.interior.image} alt="" widths={[500, 800, 1200]} sizes="(max-width: 820px) calc(100vw - 56px), 608px" loading="lazy" />
+					)}
+				</div>
+				<div class="fcard__body">
+					{vehicle.status !== 'available' && <span class="fcard__status">{vehicle.status === 'seasonal' ? 'Seasonal' : 'Coming Soon'}</span>}
+					<h3 class="fcard__name">{vehicle.name}</h3>
+					<p class="fcard__cap">{vehicle.capacityLabel}</p>
+					<div class="rule-gold fcard__rule" aria-hidden="true"></div>
+					<ul class="fcard__feats">
+						{vehicle.features.map((feature) => <li class="fcard__feat"><span class="fcard__diamond" aria-hidden="true">◆</span>{feature}</li>)}
+					</ul>
+					<span class="fcard__cta link-gold">View Details &rarr;</span>
+				</div>
+			</a>
+		))}
+		</section>
+		))}
+	</div>
+</BaseLayout>
+
+<script>
+	const controls = document.querySelector<HTMLElement>('[data-fleet-filter-controls]');
+	const status = document.querySelector<HTMLElement>('[data-fleet-filter-status]');
+	const cards = [...document.querySelectorAll<HTMLAnchorElement>('[data-fleet-card]')];
+	const groups = [...document.querySelectorAll<HTMLElement>('[data-fleet-group]')];
+
+	if (controls && status && cards.length) {
+		const buttons = [...controls.querySelectorAll<HTMLButtonElement>('[data-fleet-filter]')];
+		const applyFilter = (category: string) => {
+			const button = buttons.find((item) => item.dataset.fleetFilter === category);
+			if (!button) return;
+			const focusedCard = document.activeElement?.closest('[data-fleet-card]');
+			let count = 0;
+			cards.forEach((card) => {
+				card.hidden = category !== 'all' && card.dataset.fleetCategory !== category;
+				if (!card.hidden) count++;
+			});
+			groups.forEach((group) => { group.hidden = category !== 'all' && group.dataset.fleetGroup !== category; });
+			buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+			status.textContent = `Showing ${count} ${count === 1 ? 'listing' : 'listings'} in ${button.textContent?.trim()}.`;
+			if (focusedCard instanceof HTMLElement && focusedCard.hidden) button.focus();
+		};
+		const syncHash = () => {
+			let hash = '';
+			try { hash = decodeURIComponent(location.hash.slice(1)); } catch { /* Use the default category for a malformed hash. */ }
+			const vehicle = cards.find((card) => card.id === hash);
+			const category = vehicle?.dataset.fleetCategory ?? hash;
+			applyFilter(buttons.some((button) => button.dataset.fleetFilter === category) ? category : 'all');
+		};
+		buttons.forEach((button) => button.addEventListener('click', () => {
+			const category = button.dataset.fleetFilter!;
+			applyFilter(category);
+			history.replaceState(null, '', `#${category}`);
+		}));
+		syncHash();
+		controls.hidden = false;
+		window.addEventListener('hashchange', syncHash);
+		window.addEventListener('pageshow', syncHash);
+	}
+</script>
+
+<style>
+	.fleet-heading { padding: 40px 28px; text-align: center; }
+	.fleet-heading .eyebrow__rule { width: 44px; }
+	.fleet-heading .eyebrow__label { font-size: 11.5px; }
+	.fleet-heading h1 { margin: 20px 0 12px; }
+	.fleet-heading__intro { max-width: 55ch; margin: 0 auto; color: var(--muted); font-size: 16px; line-height: 1.65; }
+	.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+	.fleet-filter { max-width: 1140px; padding: 0 28px 32px; text-align: center; }
+	.fleet-filter__controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 28px; }
+	.fleet-filter__button { display: inline-flex; justify-content: center; align-items: center; min-height: 44px; padding: 10px 2px 8px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: none; color: var(--ink); font-family: var(--sans); font-size: 12px; font-weight: 500; line-height: 1.2; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; cursor: pointer; transition: border-color .25s, color .25s; }
+	.fleet-filter__button:hover { border-bottom-color: var(--gold); color: var(--gold-deep); }
+	.fleet-filter__button[aria-pressed='true'] { border-bottom-color: var(--gold-dark); font-weight: 600; }
+	.fleet { display: flex; flex-direction: column; gap: 48px; max-width: 1140px; padding: 0 28px 40px; }
+	.fleet-group { display: grid; gap: 42px; }
+	.fleet-group__heading { padding-top: 26px; border-top: 1px solid var(--line-2); }
+	.fleet-group__heading h2 { margin: 0 0 8px; font-family: var(--serif); font-size: 32px; font-weight: 600; }
+	.fleet-group__heading p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+	[data-fleet-group][hidden], [data-fleet-card][hidden], [data-fleet-filter-controls][hidden] { display: none; }
+	.fcard { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(320px, .82fr); align-items: stretch; gap: clamp(30px, 4vw, 54px); padding: 0 0 48px; border-bottom: 1px solid var(--line-2); color: inherit; text-decoration: none; scroll-margin-top: 110px; transition: border-color .3s; }
+	.fcard:last-child { border-bottom: 0; }
+	.fcard:hover { border-color: var(--gold-light); }
+	.fcard__media { position: relative; align-self: center; width: 100%; height: clamp(300px, 30vw, 380px); max-height: 380px; overflow: hidden; border-radius: 10px; background: var(--cream); }
+	.fcard__img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; transition: opacity .45s, transform .6s cubic-bezier(.22, .6, .2, 1); }
+	.fcard__img--hover { opacity: 0; transform: scale(1.015); }
+	@media (hover: hover) {
+		.fcard:is(:hover, :focus-visible) .fcard__img { transform: scale(1.035); }
+		.fcard--image-swap:is(:hover, :focus-visible) .fcard__img:not(.fcard__img--hover) { opacity: 0; }
+		.fcard--image-swap:is(:hover, :focus-visible) .fcard__img--hover { opacity: 1; }
+	}
+	.fcard__body { display: flex; flex-direction: column; justify-content: center; min-width: 0; padding: 24px 0; }
+	.fcard__status { align-self: flex-start; margin-bottom: 14px; padding: 5px 10px; border: 1px solid var(--gold-light); color: var(--gold-deep); background: var(--gold-cream); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+	.fcard__name { margin: 0 0 7px; font-family: var(--serif); font-size: clamp(31px, 3.2vw, 40px); font-weight: 600; line-height: 1.05; }
+	.fcard__cap { margin: 0 0 22px; color: var(--gold-deep); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; }
+	.fcard__rule { width: 64px; margin-bottom: 24px; }
+	.fcard__feats { display: flex; flex-direction: column; gap: 11px; margin: 0 0 30px; padding: 0; list-style: none; }
+	.fcard__feat { display: flex; align-items: baseline; gap: 12px; color: var(--muted); font-size: 14.5px; font-weight: 300; line-height: 1.45; }
+	.fcard__diamond { flex: none; color: var(--gold-dark); font-size: 9px; }
+	.fcard__cta { align-self: flex-start; padding: 11px 18px; border: 1px solid var(--gold); background: transparent; transition: background .25s, border-color .25s, color .25s; }
+	.fcard:is(:hover, :focus-visible) .fcard__cta { border-color: var(--gold-dark); background: var(--gold-cream); color: var(--gold-dark); }
+	@media (width <= 820px) {
+		.fleet { gap: 36px; }
+		.fcard { grid-template-columns: 1fr; gap: 0; padding-bottom: 36px; }
+		.fcard__media { height: auto; max-height: none; aspect-ratio: 16 / 10; }
+		.fcard__body { padding: 28px 4px 0; }
+	}
+	@media (width <= 640px) {
+		.fleet-filter { padding-bottom: 28px; }
+		.fleet-filter__controls { column-gap: 20px; }
+		.fleet { gap: 32px; }
+		.fcard__body { padding-top: 24px; }
+		.fcard__name { font-size: 31px; }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.fcard, .fcard__img, .fcard__cta, .fleet-filter__button { transition: none; }
+	}
+</style>

@@ -1,0 +1,58 @@
+---
+import VehicleGallery from '../../components/VehicleGallery.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { fleet, type Vehicle } from '../../data/content';
+
+export function getStaticPaths() {
+	// Vehicles with a dedicated page (the Christmas Trolley) redirect there instead; see astro.config.mjs.
+	return fleet.filter((vehicle) => vehicle.detailHref === `/fleet/${vehicle.id}/`).map((vehicle) => ({ params: { id: vehicle.id }, props: { vehicle } }));
+}
+
+interface Props { vehicle: Vehicle; }
+const { vehicle } = Astro.props;
+---
+
+<BaseLayout title={`${vehicle.name} | Lake Geneva Trolley & Bus Rental`} description={vehicle.description} canonical={`/fleet/${vehicle.id}/`}>
+	<section class="vehicle wrap">
+		<a class="vehicle__back link-gold" href={`/fleet/#${vehicle.category}`}>&larr; Back to the Fleet</a>
+		<div class="vehicle__grid">
+			<VehicleGallery id={vehicle.id} name={vehicle.name} photos={vehicle.gallery} />
+			<div class="vehicle__body">
+				{vehicle.status !== 'available' && <span class="vehicle__status">{vehicle.status === 'seasonal' ? 'Seasonal' : 'Coming Soon'}</span>}
+				<p class="vehicle__caption">{vehicle.caption}</p>
+				<h1 class="h-page">{vehicle.name}</h1>
+				<p class="vehicle__capacity">{vehicle.capacityLabel}</p>
+				<p class="vehicle__detail">{vehicle.detail}</p>
+				<ul class="vehicle__features">
+					{vehicle.features.map((feature) => <li><span aria-hidden="true">◆</span>{feature}</li>)}
+				</ul>
+				{vehicle.status === 'coming-soon' ? (
+					<a class="btn-gold" href={`/#getquote?vehicle=${encodeURIComponent(vehicle.quoteValue)}`}>Ask About Availability</a>
+				) : (
+					<>
+						<a class="btn-gold" href={`/reservation/?vehicle=${encodeURIComponent(vehicle.quoteValue)}`}>Reserve This Vehicle</a>
+						<a class="vehicle__quote link-gold" href={`/#getquote?vehicle=${encodeURIComponent(vehicle.quoteValue)}`}>Request a Quote &rarr;</a>
+					</>
+				)}
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.vehicle { max-width: 1180px; padding-block: 40px 80px; }
+	.vehicle__back { margin-bottom: 32px; }
+	.vehicle__grid { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(0, .82fr); gap: clamp(30px, 4vw, 54px); align-items: start; }
+	.vehicle__body { padding-block: 16px; }
+	.vehicle__status { display: inline-block; margin-bottom: 18px; padding: 5px 10px; border: 1px solid var(--gold-light); background: var(--gold-cream); color: var(--gold-deep); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+	.vehicle__capacity { margin: 18px 0 0; color: var(--gold-deep); font-size: 14px; letter-spacing: .1em; text-transform: uppercase; }
+	.vehicle__caption { margin: 0 0 14px; color: var(--gold-deep); font-size: 11px; line-height: 1.6; letter-spacing: .22em; text-transform: uppercase; }
+	.vehicle__body h1 { margin: 0; }
+	.vehicle__detail { margin: 24px 0; color: var(--muted); font-size: 15px; font-weight: 300; line-height: 1.75; }
+	.vehicle__features { display: grid; gap: 12px; padding: 24px 0; margin: 0 0 24px; border-top: 1px solid var(--line-2); list-style: none; }
+	.vehicle__features li { display: flex; align-items: baseline; gap: 12px; color: var(--muted); font-size: 14.5px; font-weight: 300; line-height: 1.5; }
+	.vehicle__features span { color: var(--gold-dark); font-size: 9px; }
+	.vehicle__quote { display: table; margin-top: 24px; }
+	@media (width <= 820px) { .vehicle__grid { grid-template-columns: 1fr; } }
+	@media (width <= 480px) { .vehicle__body .btn-gold { width: 100%; padding-inline: 16px; text-align: center; } }
+</style>

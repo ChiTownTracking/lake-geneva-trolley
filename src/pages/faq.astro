@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Faq from '../components/Faq.astro';
+import { faqs } from '../data/content';
+
+/**
+ * FAQPage markup describes the questions and answers published on this page.
+ * It makes no claim about prices, capacities or policies.
+ */
+const faqSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'FAQPage',
+	mainEntity: faqs.map((item) => ({
+		'@type': 'Question',
+		name: item.q,
+		acceptedAnswer: { '@type': 'Answer', text: item.a },
+	})),
+};
+---
+
+<BaseLayout
+	title="Trolley Rental FAQs | Lake Geneva Trolley & Bus Rental"
+	description="Answers to common questions about private trolley rentals in Lake Geneva, Wisconsin: quotes, weddings, multiple stops, chauffeurs and how far ahead to reserve."
+	canonical="/faq/"
+	structuredData={faqSchema}
+>
+	<PageHeader
+		eyebrow="Frequently Asked"
+		title="Questions before you book"
+		lead="If your question is not here, send it with your quote request and it will be answered alongside the estimate."
+	/>
+
+	<Faq eyebrow="Trolley Questions" title="Everything we get asked" background="paper" />
+</BaseLayout>

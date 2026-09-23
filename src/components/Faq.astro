@@ -1,0 +1,206 @@
+---
+import { faqs } from '../data/content';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props {
+	eyebrow?: string;
+	title?: string;
+	/** Limit how many questions appear (the homepage shows a subset). */
+	limit?: number;
+	background?: 'cream' | 'paper';
+	/** Page-specific questions; defaults to the site-wide list. */
+	items?: { q: string; a: string }[];
+}
+
+const {
+	eyebrow = 'Common Questions',
+	title = 'Questions before you book',
+	limit,
+	background = 'cream',
+	items: source = faqs,
+} = Astro.props;
+
+const items = limit ? source.slice(0, limit) : source;
+---
+
+<section class:list={['rv', 'faq', `faq--${background}`]}>
+	<div class="wrap">
+		<SectionHeading eyebrow={eyebrow} title={title} />
+
+		<div class="faq__list" data-faq>
+			{
+				items.map((item, index) => (
+					<div class="faq__item">
+						<h3 class="faq__heading">
+							<button
+								type="button"
+								class="faq__head"
+								aria-expanded="false"
+								aria-controls={`faq-panel-${index}`}
+								id={`faq-head-${index}`}
+								data-faq-toggle
+							>
+								<span class="faq__q">{item.q}</span>
+								<span class="faq__chev" aria-hidden="true" />
+							</button>
+						</h3>
+						<div class="faq__panel">
+							<div class="faq__body" id={`faq-panel-${index}`} role="region" aria-labelledby={`faq-head-${index}`}>
+								<p class="faq__a">{item.a}</p>
+							</div>
+						</div>
+					</div>
+				))
+			}
+		</div>
+
+		{
+			limit && limit < source.length && (
+				<p class="faq__more">
+					<a class="link-gold" href="/faq/">
+						See all questions &rarr;
+					</a>
+				</p>
+			)
+		}
+	</div>
+</section>
+
+<style>
+	.faq {
+		padding: 56px 28px;
+	}
+
+	.faq--cream {
+		background: var(--cream);
+	}
+
+	.faq--paper {
+		background: var(--paper);
+	}
+
+	.faq__list {
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.faq__item {
+		border-top: 1px solid var(--line-2);
+	}
+
+	.faq__item:last-child {
+		border-bottom: 1px solid var(--line-2);
+	}
+
+	.faq__heading {
+		margin: 0;
+		font-weight: inherit;
+	}
+
+	.faq__head {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+		width: 100%;
+		padding: 24px 4px;
+		border: 0;
+		background: transparent;
+		color: var(--ink);
+		font-family: var(--serif);
+		text-align: left;
+		cursor: pointer;
+	}
+
+	.faq__q {
+		flex: 1;
+		font-size: 20px;
+		font-weight: 600;
+		line-height: 1.35;
+	}
+
+	.faq__chev {
+		flex: none;
+		width: 10px;
+		height: 10px;
+		border-right: 1.5px solid var(--gold-deep);
+		border-bottom: 1.5px solid var(--gold-deep);
+		transform: translateY(-2px) rotate(45deg);
+		transition: transform 0.3s;
+	}
+
+	.faq__item.is-open .faq__chev {
+		transform: translateY(2px) rotate(-135deg);
+	}
+
+	.faq__panel {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 0.35s;
+	}
+
+	.faq__item.is-open .faq__panel {
+		grid-template-rows: 1fr;
+	}
+
+	.faq__body {
+		min-height: 0;
+		overflow: hidden;
+	}
+
+	.faq__a {
+		max-width: 66ch;
+		margin: 0;
+		padding: 0 4px 26px;
+		color: var(--muted);
+		font-size: 15px;
+		font-weight: 300;
+		line-height: 1.8;
+	}
+
+	.faq__more {
+		margin: 34px 0 0;
+		text-align: center;
+	}
+
+	@media (width <= 560px) {
+		.faq {
+			padding: 44px 20px;
+		}
+		.faq__q {
+			font-size: 17px;
+		}
+		.faq__head {
+			gap: 14px;
+			padding: 20px 2px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.faq__panel,
+		.faq__chev {
+			transition: none;
+		}
+	}
+</style>
+
+<script>
+	document.querySelectorAll<HTMLElement>('[data-faq]').forEach((list) => {
+		const items = Array.from(list.querySelectorAll<HTMLElement>('.faq__item'));
+
+		const setOpen = (item: HTMLElement, open: boolean) => {
+			item.classList.toggle('is-open', open);
+			item.querySelector('[data-faq-toggle]')?.setAttribute('aria-expanded', String(open));
+			const body = item.querySelector<HTMLElement>('.faq__body');
+			if (body) body.inert = !open;
+		};
+
+		items.forEach((item) => {
+			setOpen(item, false);
+			item.querySelector('[data-faq-toggle]')?.addEventListener('click', () => {
+				const wasOpen = item.classList.contains('is-open');
+				items.forEach((other) => setOpen(other, false));
+				if (!wasOpen) setOpen(item, true);
+			});
+		});
+	});
+</script>

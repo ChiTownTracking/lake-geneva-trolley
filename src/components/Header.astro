@@ -1,0 +1,560 @@
+---
+import { nav, site } from '../data/site';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const basePath = (href: string) => href.split('#')[0].replace(/\/$/, '') || '/';
+
+/**
+ * A link is current only when it points at this page. Entries that differ just
+ * by a hash (the fleet anchors) would otherwise all light up at once, so they
+ * are never marked individually — the parent carries the state instead.
+ */
+const isActive = (href: string) => !href.includes('#') && basePath(href) === path;
+const groupIsActive = (item: { href: string; children?: { href: string }[] }) =>
+	basePath(item.href) === path || (item.children ?? []).some((c) => basePath(c.href) === path);
+---
+
+<header class="hdr" data-header>
+	<div class="hdr__inner wrap wrap-wide">
+		<a class="brand" href="/" aria-label={`${site.name} home`}>
+			<span class="brand__row">
+				<span class="brand__rule"></span>
+				<span class="brand__name">{site.brandTop}</span>
+				<span class="brand__rule brand__rule--r"></span>
+			</span>
+			<span class="brand__sub">{site.brandBottom}</span>
+		</a>
+
+		<!--
+			Below 1024px this block becomes a slide-in drawer (see the media query).
+			`display: contents` keeps it a no-op wrapper on desktop.
+		-->
+		<div class="hdr__panel" id="site-menu" data-menu-panel>
+			<nav class="nav" aria-label="Main">
+				{
+					nav.map((item) =>
+						item.children ? (
+							<div class="more" data-more>
+								<button
+									type="button"
+									class:list={['nav__link', 'more__btn', { active: groupIsActive(item) }]}
+									aria-expanded="false"
+									aria-controls={`more-${item.label.toLowerCase()}`}
+									data-more-btn
+								>
+									{item.label}
+									<svg
+										class="more__caret"
+										width="10"
+										height="6"
+										viewBox="0 0 10 6"
+										fill="none"
+										aria-hidden="true"
+									>
+										<path
+											d="M1 1l4 4 4-4"
+											stroke="currentColor"
+											stroke-width="1.3"
+											stroke-linecap="round"
+										/>
+									</svg>
+								</button>
+								<div class="more__menu" id={`more-${item.label.toLowerCase()}`} hidden>
+									{item.children.map((child) => (
+										<a
+											class:list={['more__item', { active: isActive(child.href) }]}
+											href={child.href}
+										>
+											{child.label}
+										</a>
+									))}
+								</div>
+							</div>
+						) : (
+							<a
+								class:list={['nav__link', { active: isActive(item.href), 'nav__link--festive': item.festive }]}
+								href={item.href}
+								aria-current={isActive(item.href) ? 'page' : undefined}
+							>
+								{item.festive ? (
+									<>
+										<span class="festive-green">{item.label.split(' ')[0]}</span>{' '}
+										<span class="festive-red">{item.label.split(' ').slice(1).join(' ')}</span>
+									</>
+								) : (
+									item.label
+								)}
+							</a>
+						),
+					)
+				}
+			</nav>
+
+			<div class="hdr__cta">
+				<a class="btn-gold btn-gold--sm" href="/reservation/">Reservation</a>
+			</div>
+		</div>
+
+		<button
+			type="button"
+			class="hdr__burger"
+			aria-label="Open menu"
+			aria-expanded="false"
+			aria-controls="site-menu"
+			data-burger
+		>
+			<span class="hdr__burger-line"></span>
+			<span class="hdr__burger-line"></span>
+			<span class="hdr__burger-line"></span>
+		</button>
+	</div>
+	<div class="hdr__backdrop" data-backdrop></div>
+</header>
+
+<style>
+	.hdr {
+		position: sticky;
+		top: 0;
+		z-index: 60;
+		isolation: isolate;
+		border-bottom: 1px solid var(--line);
+		background: transparent;
+	}
+
+	.hdr::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background: rgb(253 252 250 / 0.92);
+		backdrop-filter: blur(10px);
+		pointer-events: none;
+	}
+
+	.hdr.is-menu-open {
+		z-index: 900;
+	}
+
+	.hdr__inner {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: clamp(8px, 1.6vw, 20px);
+		min-height: 52px;
+		padding-block: 12px;
+	}
+
+	.brand {
+		display: flex;
+		flex: none;
+		flex-direction: column;
+		align-items: center;
+		gap: 2px;
+		color: var(--ink);
+		text-decoration: none;
+	}
+
+	.brand__row {
+		display: flex;
+		align-items: center;
+		gap: clamp(5px, 0.8vw, 10px);
+	}
+
+	.brand__rule {
+		display: block;
+		width: clamp(12px, 1.8vw, 24px);
+		height: 1px;
+		background: linear-gradient(90deg, transparent, var(--gold-dark));
+	}
+
+	.brand__rule--r {
+		background: linear-gradient(90deg, var(--gold-dark), transparent);
+	}
+
+	.brand__name {
+		font-family: var(--serif);
+		font-size: clamp(14.5px, 1.6vw, 21px);
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		line-height: 1;
+		white-space: nowrap;
+	}
+
+	.brand__sub {
+		margin-left: 0.44em;
+		color: var(--gold-dark);
+		font-size: clamp(7.5px, 0.77vw, 9.5px);
+		font-weight: 500;
+		letter-spacing: 0.44em;
+	}
+
+	.nav {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		justify-content: center;
+		gap: clamp(10px, 1.75vw, 22px);
+		min-width: 0;
+	}
+
+	.nav__link {
+		all: unset;
+		box-sizing: border-box;
+		cursor: pointer;
+		padding: 4px 0;
+		border-bottom: 1px solid transparent;
+		color: var(--ink);
+		font-family: var(--sans);
+		font-size: 12px;
+		font-weight: 400;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		white-space: nowrap;
+		text-decoration: none;
+		transition: color 0.25s;
+	}
+
+	.nav__link:hover {
+		color: var(--gold-dark);
+	}
+
+	.nav__link.active {
+		border-bottom-color: var(--gold);
+		color: var(--gold-deep);
+	}
+
+	.nav__link--festive .festive-green {
+		color: #00bf4c;
+	}
+
+	.nav__link--festive .festive-red {
+		color: #c8102e;
+	}
+
+	.nav__link--festive:hover span {
+		color: var(--gold-dark);
+	}
+
+	.nav__link:focus-visible,
+	.more__item:focus-visible,
+	.hdr__burger:focus-visible {
+		outline: 2px solid var(--gold-dark);
+		outline-offset: 4px;
+	}
+
+	.more {
+		position: relative;
+	}
+
+	.more__btn {
+		display: flex;
+		align-items: center;
+		gap: 7px;
+	}
+
+	.more__caret {
+		transition: transform 0.25s;
+	}
+
+	.more.open .more__caret {
+		transform: rotate(180deg);
+	}
+
+	.more__menu {
+		position: absolute;
+		top: calc(100% + 19.5px);
+		left: 50%;
+		z-index: 70;
+		display: flex;
+		flex-direction: column;
+		min-width: 190px;
+		padding: 8px 0;
+		border: 1px solid var(--line);
+		border-top: 2px solid var(--gold);
+		background: var(--paper);
+		box-shadow: 0 14px 40px rgb(26 26 26 / 0.12);
+		transform: translateX(-50%);
+	}
+
+	.more__item {
+		padding: 11px 22px;
+		color: var(--ink);
+		font-size: 11.5px;
+		font-weight: 400;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		white-space: nowrap;
+		text-decoration: none;
+		transition: color 0.2s, background 0.2s;
+	}
+
+	.more__item:hover {
+		background: var(--cream);
+		color: var(--gold-deep);
+	}
+
+	.more__item.active {
+		color: var(--gold-deep);
+	}
+
+	.hdr__cta {
+		display: flex;
+		flex: none;
+		align-items: center;
+		gap: 20px;
+	}
+
+	.hdr__burger {
+		position: relative;
+		z-index: 66;
+		display: none;
+		flex: none;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 5px;
+		width: 44px;
+		height: 44px;
+		margin-left: 8px;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		cursor: pointer;
+	}
+
+	.hdr__burger-line {
+		display: block;
+		width: 22px;
+		height: 1.5px;
+		background: var(--ink);
+		transition: transform 0.25s, opacity 0.25s;
+	}
+
+	.hdr.is-menu-open .hdr__burger-line:first-child {
+		transform: translateY(6.5px) rotate(45deg);
+	}
+	.hdr.is-menu-open .hdr__burger-line:nth-child(2) {
+		opacity: 0;
+	}
+	.hdr.is-menu-open .hdr__burger-line:nth-child(3) {
+		transform: translateY(-6.5px) rotate(-45deg);
+	}
+
+	.hdr__backdrop {
+		display: none;
+	}
+
+	.hdr__panel {
+		display: contents;
+	}
+
+	/* Six top-level links only just fit between the logo and the button on small desktops. */
+	@media (1024px <= width < 1200px) {
+		.nav {
+			gap: 15px;
+		}
+
+		.nav__link {
+			font-size: 11.5px;
+			letter-spacing: 0.1em;
+		}
+
+		.more__btn {
+			gap: 5px;
+		}
+
+		.hdr__cta :global(.btn-gold--sm) {
+			padding-inline: 16px;
+			letter-spacing: 0.16em;
+		}
+	}
+
+	@media (width <= 1023px) {
+		.hdr__burger {
+			z-index: 920;
+			display: flex;
+		}
+
+		.hdr__backdrop {
+			position: fixed;
+			inset: 0;
+			z-index: 900;
+			display: block;
+			width: 100%;
+			height: 100dvh;
+			background: rgb(0 0 0 / 0.72);
+			opacity: 0;
+			visibility: hidden;
+			pointer-events: none;
+			transition: opacity 0.22s, visibility 0s linear 0.22s;
+		}
+
+		.hdr.is-menu-open .hdr__backdrop {
+			opacity: 1;
+			visibility: visible;
+			pointer-events: auto;
+			transition: opacity 0.22s, visibility linear;
+		}
+
+		.hdr__panel {
+			position: fixed;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 910;
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+			width: min(86vw, 360px);
+			height: 100dvh;
+			padding: calc(80px + env(safe-area-inset-top)) calc(28px + env(safe-area-inset-right))
+				calc(24px + env(safe-area-inset-bottom)) 28px;
+			overflow: hidden auto;
+			overscroll-behavior: contain;
+			background: var(--paper);
+			box-shadow: -16px 0 44px rgb(26 26 26 / 0.18);
+			visibility: hidden;
+			pointer-events: none;
+			transform: translateX(100%);
+			transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.26s;
+		}
+
+		.hdr.is-menu-open .hdr__panel {
+			visibility: visible;
+			pointer-events: auto;
+			transform: translateX(0);
+			transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1), visibility linear;
+		}
+
+		.nav {
+			flex-flow: column;
+			align-items: stretch;
+			justify-content: flex-start;
+			gap: 0;
+		}
+
+		.nav__link {
+			width: 100%;
+			padding: 13px 2px;
+			border-bottom: 1px solid var(--line);
+			font-size: 13px;
+			letter-spacing: 0.14em;
+		}
+
+		.more {
+			width: 100%;
+		}
+
+		.more__btn {
+			justify-content: space-between;
+			width: 100%;
+		}
+
+		.more__menu {
+			position: static;
+			width: 100%;
+			min-width: 0;
+			padding: 4px 0 4px 18px;
+			border: 0;
+			background: var(--cream);
+			box-shadow: none;
+			transform: none;
+		}
+
+		.more__item {
+			padding: 12px 4px;
+		}
+
+		.hdr__cta {
+			width: 100%;
+			margin-top: 22px;
+		}
+
+		.hdr__cta :global(.btn-gold) {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			min-height: 44px;
+		}
+	}
+
+	@media (width <= 1023px) and (prefers-reduced-motion: reduce) {
+		.hdr__panel,
+		.hdr__backdrop,
+		.hdr__burger-line {
+			transition-duration: 1ms;
+		}
+	}
+</style>
+
+<script>
+	const header = document.querySelector<HTMLElement>('[data-header]');
+	const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
+	const panel = document.querySelector<HTMLElement>('[data-menu-panel]');
+	const backdrop = document.querySelector<HTMLElement>('[data-backdrop]');
+	const drawer = window.matchMedia('(max-width: 1023px)');
+
+	const setMenu = (open: boolean) => {
+		if (!header || !burger) return;
+		header.classList.toggle('is-menu-open', open);
+		document.documentElement.classList.toggle('menu-open', open);
+		burger.setAttribute('aria-expanded', String(open));
+		burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+		if (panel && drawer.matches) panel.inert = !open;
+	};
+
+	const syncDrawer = () => {
+		if (!panel) return;
+		if (drawer.matches) {
+			panel.inert = !header?.classList.contains('is-menu-open');
+		} else {
+			panel.inert = false;
+			setMenu(false);
+		}
+	};
+
+	burger?.addEventListener('click', () =>
+		setMenu(!header?.classList.contains('is-menu-open')),
+	);
+	backdrop?.addEventListener('click', () => setMenu(false));
+	drawer.addEventListener('change', syncDrawer);
+	syncDrawer();
+
+	// Dropdowns: click to toggle on every viewport so touch and keyboard behave alike.
+	const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-more]'));
+
+	const setGroup = (group: HTMLElement, open: boolean) => {
+		const btn = group.querySelector<HTMLButtonElement>('[data-more-btn]');
+		const menu = group.querySelector<HTMLElement>('.more__menu');
+		group.classList.toggle('open', open);
+		btn?.setAttribute('aria-expanded', String(open));
+		if (menu) menu.hidden = !open;
+	};
+
+	groups.forEach((group) => {
+		setGroup(group, false);
+		group.querySelector('[data-more-btn]')?.addEventListener('click', () => {
+			const open = group.classList.contains('open');
+			groups.forEach((g) => setGroup(g, false));
+			setGroup(group, !open);
+		});
+	});
+
+	document.addEventListener('click', (event) => {
+		const target = event.target as Node;
+		groups.forEach((group) => {
+			if (!group.contains(target)) setGroup(group, false);
+		});
+	});
+
+	document.addEventListener('keydown', (event) => {
+		if (event.key !== 'Escape') return;
+		groups.forEach((group) => setGroup(group, false));
+		if (header?.classList.contains('is-menu-open')) {
+			setMenu(false);
+			burger?.focus();
+		}
+	});
+</script>

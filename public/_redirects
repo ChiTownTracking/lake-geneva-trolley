@@ -1,0 +1,3 @@
+# Netlify permanent redirects. Astro also emits a meta-refresh page for hosts without this file.
+/fleet/christmas-trolley   /christmas-trolley/   301
+/fleet/christmas-trolley/  /christmas-trolley/   301

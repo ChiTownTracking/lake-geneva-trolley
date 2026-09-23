@@ -1,0 +1,453 @@
+/*
+ * Lake Geneva Trolley & Bus Rental - design tokens and shared primitives.
+ *
+ * The typography scale, spacing rhythm, button treatment, eyebrow rules, field
+ * styling and container widths are taken from the ChiTown Trolley design
+ * language so the two sites read as one family. The lake/fern/ivory tokens are
+ * this brand's own: they carry the dark surfaces and small accents while the
+ * gold remains the shared metallic.
+ */
+
+@import '@fontsource-variable/jost/wght.css';
+@import '@fontsource-variable/jost/wght-italic.css';
+@import '@fontsource/cormorant-garamond/400.css';
+@import '@fontsource/cormorant-garamond/500.css';
+@import '@fontsource/cormorant-garamond/600.css';
+@import '@fontsource/cormorant-garamond/400-italic.css';
+
+:root {
+	/* Paper and ink - shared with the reference */
+	--paper: #fdfcfa;
+	--cream: #f7f1e6;
+	--ink: #1a1a1a;
+	--muted: #6d675c;
+	--faint: #a69f91;
+	--line: #efe9dd;
+	--line-2: #e6decc;
+
+	/* Gold - the shared metallic */
+	--gold-deep: #8a6a1f;
+	--gold-dark: #b8860b;
+	--gold: #d4af6a;
+	--gold-light: #f0d9a8;
+	--gold-cream: #ede3cb;
+	--grad-gold: linear-gradient(100deg, #b8860b, #d4af6a 55%, #f0d9a8);
+	--grad-text: linear-gradient(100deg, #b8860b, #d4af6a 55%, #c9a24b);
+
+	/* Lake Geneva accents - dark surfaces and small marks */
+	--lake: #2f5d70;
+	--lake-deep: #16323f;
+	--lake-night: #1a1a1a;
+	--lake-soft: #eef3f4;
+	--fern: #4f6b4e;
+	--fern-soft: #e9efe6;
+
+	--serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+	--sans: 'Jost Variable', 'Jost', 'Helvetica Neue', Arial, sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	overflow-x: clip;
+	scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
+
+body {
+	margin: 0;
+	overflow-x: clip;
+	background: var(--paper);
+	color: var(--ink);
+	font-family: var(--sans);
+	-webkit-font-smoothing: antialiased;
+}
+
+html.menu-open,
+html.menu-open body {
+	overflow: hidden;
+	overscroll-behavior: none;
+}
+
+html.menu-open body {
+	position: fixed;
+	inset-inline: 0;
+	width: 100%;
+}
+
+img {
+	max-width: 100%;
+}
+
+:where(a, button, input, select, textarea, summary):focus-visible {
+	outline: 2px solid var(--gold-dark);
+	outline-offset: 3px;
+}
+
+input::placeholder,
+textarea::placeholder {
+	color: var(--faint);
+}
+
+[hidden] {
+	display: none !important;
+}
+
+.skip-link {
+	position: fixed;
+	top: 12px;
+	left: 12px;
+	z-index: 1000;
+	padding: 10px 14px;
+	border: 2px solid var(--gold-dark);
+	background: var(--paper);
+	color: var(--ink);
+	text-decoration: none;
+	transform: translateY(calc(-100% - 24px));
+}
+
+.skip-link:focus {
+	transform: translateY(0);
+}
+
+.site {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+main {
+	flex: 1;
+}
+
+/* ---- Containers --------------------------------------------------------- */
+
+.wrap {
+	max-width: 1100px;
+	margin: 0 auto;
+	padding-inline: 28px;
+}
+
+.wrap-wide {
+	max-width: 1240px;
+}
+.wrap-1180 {
+	max-width: 1180px;
+}
+.wrap-1000 {
+	max-width: 1000px;
+}
+.wrap-860 {
+	max-width: 860px;
+}
+.wrap-760 {
+	max-width: 760px;
+}
+
+@media (width <= 768px) {
+	body {
+		font-size: 17px;
+	}
+	.wrap {
+		padding-inline: 20px;
+	}
+}
+
+.text-center {
+	text-align: center;
+}
+
+/* ---- Type --------------------------------------------------------------- */
+
+.h-section {
+	margin: 0;
+	font-family: var(--serif);
+	font-size: clamp(28px, 3.4vw, 42px);
+	font-weight: 500;
+}
+
+.h-page {
+	margin: 0;
+	font-family: var(--serif);
+	font-size: clamp(34px, 4.6vw, 56px);
+	font-weight: 500;
+	line-height: 1.15;
+}
+
+.grad {
+	background: var(--grad-text);
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-style: italic;
+}
+
+.lead {
+	max-width: 64ch;
+	margin: 0;
+	color: var(--muted);
+	font-size: 15px;
+	font-weight: 300;
+	line-height: 1.75;
+}
+
+/* ---- Eyebrow ------------------------------------------------------------ */
+
+.eyebrow {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.eyebrow.center {
+	justify-content: center;
+}
+
+.eyebrow__rule {
+	display: block;
+	width: 36px;
+	height: 1px;
+	background: linear-gradient(90deg, transparent, var(--gold-dark));
+}
+
+.eyebrow__rule--r {
+	background: linear-gradient(90deg, var(--gold-dark), transparent);
+}
+
+.eyebrow__label {
+	color: var(--gold-deep);
+	font-size: 11px;
+	font-weight: 500;
+	letter-spacing: 0.42em;
+	text-transform: uppercase;
+}
+
+.rule-gold {
+	height: 1px;
+	background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+/* ---- Buttons ------------------------------------------------------------ */
+
+.btn-gold,
+.btn-ghost,
+.btn-invert {
+	display: inline-block;
+	cursor: pointer;
+	font-family: var(--sans);
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: 0.24em;
+	text-transform: uppercase;
+	text-decoration: none;
+	transition: box-shadow 0.3s, background 0.25s, border-color 0.25s, color 0.25s;
+}
+
+.btn-gold {
+	padding: 16px 38px;
+	border: none;
+	background: var(--grad-gold);
+	color: #000;
+	box-shadow: 0 4px 18px rgb(184 134 11 / 0.3);
+}
+
+.btn-gold:hover {
+	box-shadow: 0 6px 24px rgb(184 134 11 / 0.45);
+}
+
+.btn-gold--sm {
+	padding: 12px 22px;
+	font-size: 11.5px;
+	letter-spacing: 0.22em;
+	box-shadow: 0 2px 10px rgb(184 134 11 / 0.25);
+}
+
+.btn-gold[disabled] {
+	cursor: progress;
+	opacity: 0.6;
+}
+
+.btn-ghost {
+	padding: 15px 37px;
+	border: 1px solid var(--gold);
+	background: transparent;
+	color: var(--gold-deep);
+}
+
+.btn-ghost:hover {
+	border-color: var(--gold-dark);
+	background: var(--gold-cream);
+	color: var(--gold-dark);
+}
+
+.btn-invert {
+	padding: 16px 38px;
+	border: none;
+	background: var(--paper);
+	color: var(--gold-deep);
+	box-shadow: 0 4px 18px rgb(90 60 0 / 0.25);
+}
+
+.btn-invert:hover {
+	box-shadow: 0 6px 24px rgb(90 60 0 / 0.4);
+}
+
+.link-gold {
+	display: inline-block;
+	padding-bottom: 5px;
+	border-bottom: 1px solid var(--gold);
+	color: var(--gold-deep);
+	font-size: 11.5px;
+	font-weight: 500;
+	letter-spacing: 0.24em;
+	text-transform: uppercase;
+	text-decoration: none;
+	transition: color 0.25s;
+}
+
+.link-gold:hover {
+	color: var(--gold-dark);
+}
+
+.chip {
+	padding: 12px 22px;
+	border: 1px solid var(--line-2);
+	background: var(--paper);
+	color: var(--ink);
+	font-size: 12.5px;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	transition: border-color 0.25s, color 0.25s;
+}
+
+@media (width <= 768px) {
+	.eyebrow__label,
+	.field__label {
+		font-size: 12px;
+	}
+	.btn-gold,
+	.btn-ghost,
+	.btn-invert,
+	.link-gold {
+		font-size: 12.5px;
+	}
+}
+
+/* ---- Form fields -------------------------------------------------------- */
+
+.field__label {
+	display: block;
+	margin: 0 0 7px;
+	min-height: 14px;
+	color: var(--muted);
+	font-family: var(--sans);
+	font-size: 11px;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	line-height: 1.2;
+}
+
+.field__control {
+	width: 100%;
+	padding: 10px 2px;
+	border: none;
+	border-bottom: 1px solid var(--line-2);
+	background: transparent;
+	color: var(--ink);
+	font-family: var(--sans);
+	font-size: 16px;
+	font-weight: 300;
+	outline: none;
+	transition: border-color 0.25s;
+}
+
+.field__control:focus {
+	border-bottom-color: var(--gold-dark);
+}
+
+.field__control:user-invalid {
+	border-bottom-color: #8b2f2f;
+}
+
+textarea.field__control {
+	resize: vertical;
+}
+
+select.field__control:has(option:disabled:checked) {
+	color: var(--muted);
+}
+
+.honeypot {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	clip-path: inset(50%);
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.form-status {
+	grid-column: 1 / -1;
+	margin: 4px 0 0;
+	color: var(--muted);
+	font-size: 14px;
+	font-weight: 300;
+	line-height: 1.65;
+}
+
+.form-status:empty {
+	display: none;
+}
+
+.form-status[data-state='error'] {
+	color: #8b2f2f;
+}
+
+.form-status[data-state='success'] {
+	color: var(--fern);
+}
+
+/* Local dev build: the request was deliberately not sent. Never reads as success. */
+.form-status[data-state='notice'] {
+	padding: 10px 14px;
+	border-left: 2px solid var(--gold-dark);
+	background: var(--cream);
+	color: var(--gold-deep);
+}
+
+/* ---- Reveal on scroll --------------------------------------------------- */
+
+.rv {
+	opacity: 1;
+	transform: none;
+	transition: opacity 0.9s cubic-bezier(0.22, 0.6, 0.2, 1),
+		transform 0.9s cubic-bezier(0.22, 0.6, 0.2, 1);
+}
+
+.reveal-ready .rv {
+	opacity: 0;
+	transform: translateY(22px);
+}
+
+.reveal-ready .rv.in {
+	opacity: 1;
+	transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.reveal-ready .rv {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+}

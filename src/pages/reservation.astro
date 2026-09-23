@@ -1,0 +1,72 @@
+﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ReservationForm from '../components/ReservationForm.astro';
+import { contact } from '../data/site';
+
+const notes = [
+	'Every charter is reserved privately with a professional chauffeur.',
+	'Include all pickup points, stops and timing so the team can plan your route.',
+	'Availability, the final itinerary and your booking are confirmed in writing.',
+];
+---
+
+<BaseLayout
+	title="Reserve Your Ride | Lake Geneva Trolley & Bus Rental"
+	description="Request a private trolley or vehicle reservation in Lake Geneva. Share your event, itinerary and group size so we can confirm availability and your booking details."
+	canonical="/reservation/"
+>
+	<section class="reservation-heading">
+		<div class="eyebrow center">
+			<span class="eyebrow__rule" aria-hidden="true"></span>
+			<span class="eyebrow__label">Reservation</span>
+			<span class="eyebrow__rule eyebrow__rule--r" aria-hidden="true"></span>
+		</div>
+		<h1 class="h-page">Reserve <em class="grad">your ride</em></h1>
+		<p class="reservation-heading__lead">Tell us where you’re headed. Our team will check your date, review the itinerary and get back to you with the next steps.</p>
+	</section>
+
+	<section class="res wrap" aria-label="Reservation request">
+		<div class="res__formcol"><ReservationForm /></div>
+		<aside class="aside" aria-label="Reservation help">
+			<div>
+				<p class="aside__eyebrow">Prefer to book by phone?</p>
+				{contact.phoneHref && contact.phoneLabel && <a href={`tel:${contact.phoneHref}`} class="aside__phone">{contact.phoneLabel}</a>}
+				{contact.email && <a href={`mailto:${contact.email}`} class="aside__email">{contact.email}</a>}
+			</div>
+			<div class="rule-gold" aria-hidden="true"></div>
+			<div class="aside__notes">
+				{notes.map((note) => <div class="resnote"><span class="resnote__diamond" aria-hidden="true">◆</span><p class="resnote__text">{note}</p></div>)}
+			</div>
+		</aside>
+	</section>
+</BaseLayout>
+
+<style>
+	.reservation-heading { padding: 40px 28px 48px; text-align: center; }
+	.reservation-heading .eyebrow { margin-bottom: 16px; }
+	.reservation-heading .eyebrow__rule { width: 40px; }
+	.reservation-heading .eyebrow__label { font-size: 11px; }
+	.reservation-heading h1 { margin: 0; }
+	.reservation-heading__lead { max-width: 52ch; margin: 18px auto 0; color: var(--muted); font-size: 15.5px; font-weight: 300; line-height: 1.55; }
+	.res { display: grid; grid-template-columns: minmax(0, 1fr) 280px; align-items: start; gap: clamp(52px, 7vw, 88px); max-width: 1140px; padding: 0 28px 100px; }
+	.res__formcol { min-width: 0; }
+	.aside { position: sticky; top: 118px; display: flex; flex-direction: column; gap: 32px; }
+	.aside__eyebrow { margin: 0 0 12px; color: var(--gold-deep); font-size: 11px; font-weight: 500; letter-spacing: .28em; text-transform: uppercase; }
+	.aside__phone { display: block; color: var(--ink); font-family: var(--serif); font-size: 28px; font-weight: 600; text-decoration: none; transition: color .25s; }
+	.aside__email { display: block; margin-top: 6px; color: var(--muted); font-size: 14px; font-weight: 300; text-decoration: none; overflow-wrap: anywhere; transition: color .25s; }
+	.aside__phone:hover, .aside__email:hover { color: var(--gold-deep); }
+	.aside__notes { display: flex; flex-direction: column; gap: 18px; }
+	.resnote { display: flex; align-items: baseline; gap: 13px; }
+	.resnote__diamond { flex: none; color: var(--gold-dark); font-size: 9px; }
+	.resnote__text { margin: 0; color: var(--muted); font-size: 14px; font-weight: 300; line-height: 1.7; }
+	@media (width <= 900px) {
+		.res { grid-template-columns: 1fr; gap: 56px; }
+		.aside { position: static; display: grid; grid-template-columns: 1fr 1px 1fr; align-items: start; }
+		.aside > .rule-gold { width: 1px; height: 100%; background: var(--line-2); }
+	}
+	@media (width <= 640px) {
+		.res { gap: 44px; padding: 0 18px 80px; }
+		.aside { display: flex; gap: 28px; }
+		.aside > .rule-gold { width: auto; height: 1px; }
+	}
+</style>

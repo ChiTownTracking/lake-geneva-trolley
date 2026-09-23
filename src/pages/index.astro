@@ -1,11 +1,141 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import FleetGrid from '../components/FleetGrid.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Occasions from '../components/Occasions.astro';
+import Faq from '../components/Faq.astro';
+import { organizationSchema } from '../data/site';
+import { homeFleetIds } from '../data/content';
+import { photos, alt } from '../data/images';
+import { fleetGalleries } from '../data/fleet-images';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout
+	title="Lake Geneva Trolley Rental for Weddings & Events | Lake Geneva Trolley & Bus Rental"
+	description="Book a Lake Geneva trolley rental for weddings, private celebrations and group transportation. Explore the fleet and request a quote built around your itinerary."
+	canonical="/"
+	structuredData={organizationSchema()}
+>
+	<Hero />
+
+	<section class="rv getquote" id="getquote">
+		<div class="getquote__inner">
+			<h2 class="h-section getquote__title">
+				Request a <em class="grad">Lake Geneva trolley quote</em>
+			</h2>
+			<QuoteForm />
+			<p class="getquote__disclaimer">
+				Trolley rental pricing varies with the date, the vehicle, how long you need it, the
+				itinerary and the pickup details. Share your plans and you will get an estimate built
+				around them.
+			</p>
+		</div>
+	</section>
+
+	<section class="rv band">
+		<div class="wrap wrap-1180">
+			<SectionHeading
+				eyebrow="Choose Your Vehicle"
+				title="A vehicle to suit the day you are planning"
+				lead="Explore classic and limo trolleys, three coach sizes, a party bus, and Sprinter vans with lounge or executive seating."
+			/>
+			<FleetGrid
+				ids={homeFleetIds}
+				cardOverrides={{
+					'classic-trolley': {
+						name: 'Trolley Bus',
+						caption: 'Classic & Limo Trolleys',
+						capacityLabel: '30 or 36 passengers',
+						image: photos.fleetClassicTrolley,
+						imageAlt: alt.fleetClassicTrolley,
+						interior: fleetGalleries['limo-trolley'][3],
+						description: 'Choose classic forward-facing seating or limo-style perimeter seating.',
+						href: '/fleet/#trolley',
+						linkLabel: 'View Trolleys',
+					},
+					'super-coach-bus': {
+						name: 'Coach Buses',
+						caption: 'Small, Mid-Size & Super Coach',
+						capacityLabel: '22–57 passengers',
+						description: 'Three coach sizes with reclining seats for guest shuttles, group outings and longer trips.',
+						href: '/fleet/#coach-bus',
+						linkLabel: 'View Coach Buses',
+					},
+					'party-bus': { href: '/fleet/#party-bus', linkLabel: 'View Party Bus' },
+					'limo-van': {
+						name: 'Sprinter Vans',
+						caption: 'Limo & Executive Seating',
+						capacityLabel: 'Up to 15 passengers',
+						description: 'Choose a limo van with wraparound lounge seating or an executive Sprinter with individual seats.',
+						href: '/fleet/#limo-van',
+						linkLabel: 'View Sprinter Vans',
+					},
+				}}
+			/>
+			<div class="fleetp__cta">
+				<a class="btn-gold" href="/fleet/">Explore the Fleet</a>
+			</div>
+		</div>
+	</section>
+
+	<Testimonials />
+
+	<Occasions />
+
+	<Faq limit={5} />
+</BaseLayout>
+
+<style>
+	.getquote {
+		padding: 48px 0 56px;
+	}
+
+	.getquote__inner {
+		margin: 0 auto;
+		padding-inline: clamp(20px, 4vw, 72px);
+	}
+
+	.getquote__title {
+		margin: 0 0 28px;
+		text-align: left;
+	}
+
+	.getquote__disclaimer {
+		max-width: 78ch;
+		margin: 18px 4px 0;
+		color: #6b6459;
+		font-size: 12.5px;
+		font-weight: 300;
+		line-height: 1.65;
+	}
+
+	.band {
+		padding: 56px 0 64px;
+		background: var(--cream);
+	}
+
+	.fleetp__cta {
+		margin-top: 48px;
+		text-align: center;
+	}
+
+	@media (width <= 768px) {
+		.getquote {
+			padding: 32px 0 48px;
+		}
+		.getquote__title {
+			margin-bottom: 20px;
+			font-size: clamp(22px, 6.2vw, 30px);
+			text-align: center;
+			line-height: 1.2;
+		}
+		.getquote__disclaimer {
+			margin-top: 16px;
+			font-size: 13px;
+			line-height: 1.6;
+		}
+	}
+</style>

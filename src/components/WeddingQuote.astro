@@ -1,0 +1,83 @@
+---
+import { formEndpoint } from '../data/site';
+---
+
+<dialog class="wquote" aria-labelledby="wedding-quote-title" aria-describedby="wedding-quote-lead" data-wedding-dialog>
+	<div class="wquote__inner">
+		<button class="wquote__close" type="button" aria-label="Close wedding quote" data-wedding-close>&times;</button>
+		<p class="wquote__eyebrow">Your Lake Geneva Wedding</p>
+		<h2 id="wedding-quote-title">Let’s plan your wedding ride</h2>
+		<p class="wquote__lead" id="wedding-quote-lead">Share a few details to check the trolley and coach availability for your day.</p>
+		<form name="wedding-quote-request" method="POST" action={formEndpoint} data-netlify="true" netlify-honeypot="bot-field" data-async-form>
+			<input type="hidden" name="form-name" value="wedding-quote-request" />
+			<input type="hidden" name="type" value="Wedding" />
+			<input type="hidden" name="vehicle" value="Classic Trolley + Super Coach Bus" />
+			<p class="honeypot"><label>Do not fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+			<div class="wquote__fields">
+				<div><label class="field__label" for="wedding-name">Full name <span aria-hidden="true">*</span></label><input class="field__control" id="wedding-name" name="name" autocomplete="name" required /></div>
+				<div><label class="field__label" for="wedding-email">Email address <span aria-hidden="true">*</span></label><input class="field__control" id="wedding-email" name="email" type="email" autocomplete="email" required /></div>
+				<div><label class="field__label" for="wedding-phone">Phone number <span aria-hidden="true">*</span></label><input class="field__control" id="wedding-phone" name="phone" type="tel" autocomplete="tel" required /></div>
+				<div><label class="field__label" for="wedding-date">Wedding date <span aria-hidden="true">*</span></label><input class="field__control" id="wedding-date" name="date" type="date" required /></div>
+				<div><label class="field__label" for="wedding-guests">Estimated guest count</label><input class="field__control" id="wedding-guests" name="passengers" type="number" min="1" step="1" inputmode="numeric" placeholder="How many guests?" /></div>
+				<div><label class="field__label" for="wedding-time">Preferred pickup time</label><input class="field__control" id="wedding-time" name="time" type="time" /></div>
+				<div><label class="field__label" for="wedding-pickup">Pickup location</label><input class="field__control" id="wedding-pickup" name="pickup" placeholder="Hotel, resort or address" /></div>
+				<div><label class="field__label" for="wedding-dropoff">Reception or final stop</label><input class="field__control" id="wedding-dropoff" name="dropoff" placeholder="Venue or address" /></div>
+				<div class="wquote__wide"><label class="field__label" for="wedding-message">Tell us about your plans</label><textarea class="field__control" id="wedding-message" name="message" rows="3" placeholder="Wedding-party headcount, ceremony time, photo stops and return trips. Let us know if you only need one vehicle."></textarea></div>
+			</div>
+			<div class="wquote__submit"><button class="btn-gold" type="submit">Request Wedding Quote</button><p>* Required fields.<br />Availability is confirmed by our team.</p></div>
+			<p class="form-status" data-form-status role="status" aria-live="polite"></p>
+		</form>
+	</div>
+</dialog>
+
+<style>
+	.wquote { width: min(760px, calc(100% - 32px)); max-width: none; max-height: calc(100dvh - 40px); margin: auto; padding: 0; border: 1px solid var(--gold); border-radius: 8px; background: var(--paper); color: var(--ink); box-shadow: 0 25px 90px rgb(0 0 0 / 25%); overscroll-behavior: contain; }
+	.wquote::backdrop { background: rgb(20 22 20 / 65%); backdrop-filter: blur(4px); }
+	.wquote__inner { position: relative; padding: 40px; }
+	.wquote__close { position: absolute; top: 10px; right: 10px; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: none; background: transparent; color: var(--muted); font: 300 30px/1 var(--sans); cursor: pointer; }
+	.wquote__close:hover { color: var(--gold-deep); }
+	.wquote__eyebrow { margin: 0 0 12px; padding-right: 18px; color: var(--gold-deep); font-size: 10px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; }
+	.wquote h2 { margin: 0; font: 500 36px/1.1 var(--serif); }
+	.wquote__lead { max-width: 52ch; margin: 15px 0 28px; color: var(--muted); font-size: 14px; font-weight: 300; line-height: 1.7; }
+	.wquote__fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+	.wquote__fields > div { min-width: 0; }
+	.wquote__wide { grid-column: 1 / -1; }
+	.wquote .field__control { min-height: 44px; }
+	.wquote input[type='date'], .wquote input[type='time'] { min-width: 0; }
+	.wquote__submit { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 26px; }
+	.wquote__submit .btn-gold { padding-inline: 24px; font-size: 11px; letter-spacing: .16em; }
+	.wquote__submit p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+	.wquote .form-status:not(:empty) { margin-top: 18px; }
+	:global(html.wedding-dialog-open) { overflow: hidden; }
+	@media (width <= 540px) {
+		.wquote { max-height: calc(100dvh - 24px); }
+		.wquote__inner { padding: 36px 22px 28px; }
+		.wquote h2 { font-size: 30px; }
+		.wquote__fields { grid-template-columns: 1fr; gap: 20px; }
+		.wquote__submit .btn-gold { width: 100%; }
+	}
+</style>
+
+<script>
+	const weddingDialog = document.querySelector<HTMLDialogElement>('[data-wedding-dialog]');
+	if (weddingDialog && typeof weddingDialog.showModal === 'function') {
+		document.querySelectorAll<HTMLAnchorElement>('[data-wedding-quote]').forEach((link) => {
+			link.setAttribute('aria-haspopup', 'dialog');
+			link.addEventListener('click', (event) => {
+				if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+				event.preventDefault();
+				weddingDialog.showModal();
+				weddingDialog.scrollTop = 0;
+				document.documentElement.classList.add('wedding-dialog-open');
+			});
+		});
+		weddingDialog.querySelector('[data-wedding-close]')?.addEventListener('click', () => weddingDialog.close());
+		weddingDialog.addEventListener('close', () => document.documentElement.classList.remove('wedding-dialog-open'));
+		weddingDialog.addEventListener('click', (event) => {
+			if (event.target !== weddingDialog) return;
+			const rect = weddingDialog.getBoundingClientRect();
+			if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) weddingDialog.close();
+		});
+		weddingDialog.querySelector('form')?.addEventListener('async-form:success', () => weddingDialog.close());
+	}
+</script>

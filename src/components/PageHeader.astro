@@ -1,0 +1,50 @@
+---
+/** Text-only page header for pages that do not carry a banner photograph. */
+interface Props {
+	eyebrow: string;
+	title: string;
+	lead?: string;
+}
+
+const { eyebrow, title, lead } = Astro.props;
+---
+
+<section class="phdr">
+	<div class="wrap wrap-860">
+		<div class="eyebrow center">
+			<span class="eyebrow__rule"></span>
+			<span class="eyebrow__label">{eyebrow}</span>
+			<span class="eyebrow__rule eyebrow__rule--r"></span>
+		</div>
+		<h1 class="h-page phdr__title">{title}</h1>
+		{lead && <p class="phdr__lead">{lead}</p>}
+	</div>
+</section>
+
+<style>
+	.phdr {
+		padding: 56px 0 44px;
+		border-bottom: 1px solid var(--line);
+		background: var(--cream);
+		text-align: center;
+	}
+
+	.phdr__title {
+		margin: 16px 0 0;
+	}
+
+	.phdr__lead {
+		max-width: 60ch;
+		margin: 18px auto 0;
+		color: var(--muted);
+		font-size: 15.5px;
+		font-weight: 300;
+		line-height: 1.75;
+	}
+
+	@media (width <= 560px) {
+		.phdr {
+			padding: 40px 0 34px;
+		}
+	}
+</style>

@@ -9,12 +9,27 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check",
+    "placeholders": "node scripts/generate-placeholders.mjs",
+    "audit": "node scripts/audit.mjs",
+    "test:ui": "node scripts/interaction-test.mjs",
+    "test:booking": "node scripts/fleet-reservation-test.mjs",
+    "test:weddings": "node scripts/wedding-page-test.mjs",
+    "test:contrast": "node scripts/hero-contrast.mjs"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/jost": "^5.3.0",
+    "@fontsource/cormorant-garamond": "^5.3.0",
     "astro": "^7.3.3"
   },
   "allowScripts": {
     "esbuild": true
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "playwright-core": "^1.63.0",
+    "typescript": "^6.0.3"
   }
 }

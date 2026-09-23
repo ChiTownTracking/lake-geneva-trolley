@@ -1,0 +1,296 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import WeddingQuote from '../components/WeddingQuote.astro';
+import { fleet } from '../data/fleet';
+import weddingVenue from '../assets/photos/wedding-venue.webp';
+import weddingVehicles from '../assets/photos/wedding-trolley-coach.webp';
+
+const trolley = fleet.find((vehicle) => vehicle.id === 'classic-trolley')!;
+const coach = fleet.find((vehicle) => vehicle.id === 'super-coach-bus')!;
+const quoteHref = '/?vehicle=Classic%20Trolley#getquote';
+
+const routes = [
+	{
+		label: trolley.name,
+		title: 'A trolley for your wedding party',
+		body: 'Make the journey part of the celebration. Travel together from getting ready to the ceremony, with time for photographs around Geneva Lake before your reception.',
+		steps: [
+			{ title: 'Getting-ready pickup', body: 'Gather at your home, hotel or resort for one planned departure.' },
+			{ title: 'Arrive at the ceremony', body: 'Allow time to board, travel and settle in before the ceremony starts.' },
+			{ title: 'A pause for photographs', body: 'Build your chosen photo locations into the route, with parking and travel time considered.' },
+			{ title: 'On to the reception', body: 'Bring the whole party to the venue, ready to celebrate with your guests.' },
+		],
+	},
+	{
+		label: coach.name,
+		title: 'A coach for your wedding guests',
+		body: 'Give guests a clear place to meet and a comfortable ride. Coordinate hotel pickups and evening returns around your ceremony and reception schedule.',
+		steps: [
+			{ title: 'Hotel and resort pickups', body: 'Share each hotel address and guest count so pickup times can be planned.' },
+			{ title: 'Welcome to the venue', body: 'Schedule arrival with enough time for guests to find their seats.' },
+			{ title: 'Time to celebrate', body: 'Agree the waiting arrangements and return schedule when you book.', note: 'Planned around your evening' },
+			{ title: 'Reception pickup', body: 'Meet at the confirmed loading point for your scheduled return shuttle.' },
+			{ title: 'Back to the hotel', body: 'End the evening with the return stops already arranged.' },
+		],
+	},
+];
+
+const questions = [
+	{ q: 'How many people can ride together?', a: `The ${trolley.name} seats ${trolley.capacity} passengers. The ${coach.name} accommodates ${coach.capacityLabel}, depending on the assigned vehicle. Share separate headcounts for the wedding party and hotel guests so we can help you choose the right combination.` },
+	{ q: 'Can we book a trolley and a coach together?', a: 'Yes, you can request both vehicles in one inquiry. The trolley can stay with the wedding party while a coach handles guest transfers. Each vehicle and its schedule are subject to availability and confirmation.' },
+	{ q: 'How long should we reserve the vehicles?', a: 'Start with your ceremony time, then allow for boarding, travel, photographs and the reception arrival. Guest shuttles may need a different schedule from the trolley. Include your evening return plans so both services can be quoted accurately.' },
+	{ q: 'Can we include photo stops around Geneva Lake?', a: 'Yes, planned photo stops can be part of your itinerary when the route, vehicle access and charter length allow. Send the locations you have in mind so time for travel, parking and photographs can be included.' },
+	{ q: 'Can you pick up at more than one hotel?', a: 'Multiple pickup points can be considered when planning your route. Include each address, the number of guests at each location and the required arrival time. Confirm loading access with the hotels and wedding venue before finalizing the schedule.' },
+	{ q: 'When should we inquire about our date?', a: 'Get in touch once your date and venues are settled. If your wedding is coming up soon, you can still ask about availability. Your quote will reflect the vehicles, hours and complete route for your day.' },
+];
+---
+
+<BaseLayout
+	title="Lake Geneva Wedding Trolley Rental | Lake Geneva Trolley & Bus Rental"
+	description="Bring your wedding party and guests together with a Lake Geneva trolley and coach package. Plan ceremony transfers, photo stops, hotel pickups and reception returns."
+	canonical="/weddings/"
+	showCtaBand={false}
+>
+	<section class="whero">
+		<Image src={weddingVenue} alt="Flowers and lanterns frame a wedding venue entrance at sunset." class="whero__image" widths={[760, 1200, 1909]} sizes="140vw" loading="eager" fetchpriority="high" />
+		<div class="whero__overlay" aria-hidden="true"></div>
+		<div class="wrap wrap-wide whero__content">
+			<p class="whero__eyebrow">Your wedding, beautifully connected</p>
+			<h1>Lake Geneva Wedding Trolley Rental</h1>
+			<p class="whero__lead">From the first pickup to the last dance, bring everyone together for your day around the lake.</p>
+			<div class="whero__actions">
+				<a class="btn-gold" href={quoteHref} data-wedding-quote>Check Wedding Availability</a>
+				<a class="btn-ghost" href={trolley.detailHref}>Explore the Trolley</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="wpackage" aria-labelledby="wedding-package-title">
+		<div class="wrap">
+			<SectionHeading eyebrow="The Wedding Package" title="Two vehicles. One wonderful day." id="wedding-package-title" lead="A classic trolley for your closest people. A comfortable coach for your guests. A transportation plan that brings it all together." />
+			<div class="package-card">
+				<div class="package-card__photo">
+					<span class="package-card__badge">The perfect pairing</span>
+					<Image src={weddingVehicles} alt="A white wedding trolley and coach pictured outside an elegant venue." widths={[360, 540, 720]} sizes="(max-width: 720px) calc(100vw - 80px), 500px" loading="lazy" />
+				</div>
+				<div class="package-card__content">
+					<p class="wkicker">Your wedding transport</p>
+					<div class="package-card__vehicles">
+						{[{ vehicle: trolley, letter: 'T', role: 'Wedding party' }, { vehicle: coach, letter: 'C', role: 'Guest shuttle' }].map(({ vehicle, letter, role }) => (
+							<a class="package-vehicle" href={vehicle.detailHref}>
+								<span class="package-vehicle__initial" aria-hidden="true">{letter}</span>
+								<div><h3>{vehicle.name}</h3><span class="package-vehicle__capacity">{vehicle.capacityLabel}</span></div>
+								<span class="package-vehicle__role">{role}</span>
+							</a>
+						))}
+					</div>
+					<div class="package-card__details">
+						<h3>Thoughtfully planned, together</h3>
+						<ul>
+							<li><strong>A schedule that fits</strong><span>Coordinate ceremony arrivals and evening hotel returns.</span></li>
+							<li><strong>Room for every stop</strong><span>Plan your pickup points, photo locations and reception route.</span></li>
+							<li><strong>A comfortable journey</strong><span>A wood-finished trolley cabin and reclining coach seats.</span></li>
+							<li><strong>Your own chauffeurs</strong><span>Professional drivers for both vehicles on your itinerary.</span></li>
+						</ul>
+					</div>
+					<div class="package-card__action">
+						<a class="btn-gold" href={quoteHref} data-wedding-quote>Get a Wedding Quote</a>
+						<p>Tailored to your date,<br />your guests and your plans.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="wroutes" aria-labelledby="wedding-routes-title">
+		<div class="wrap">
+			<SectionHeading eyebrow="Every Part of Your Day" title="Two routes, one celebration" id="wedding-routes-title" align="left" lead="Your wedding party and your guests have different places to be. Give each group a route that works for them." />
+			<div class="wroutes__grid">
+				{routes.map((route) => (
+					<article class="wroute">
+						<p class="wkicker">{route.label}</p>
+						<h3>{route.title}</h3>
+						<p class="wroute__intro">{route.body}</p>
+						<ol class="wroute__stops">
+							{route.steps.map((step, index) => (
+								<li class:list={['wroute__stop', { 'wroute__stop--pause': 'note' in step }]}>
+									<span class="wroute__number" aria-hidden="true">{index + 1}</span>
+									{'note' in step && <span class="wroute__note">{step.note}</span>}
+									<h4>{step.title}</h4>
+									<p>{step.body}</p>
+								</li>
+							))}
+						</ol>
+					</article>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="wplanning" aria-labelledby="wedding-planning-title">
+		<div class="wrap">
+			<SectionHeading eyebrow="A Few Thoughtful Details" title="Less to organize. More to enjoy." id="wedding-planning-title" align="left" />
+			<div class="wplanning__grid">
+				<article class="wplanning__item wplanning__item--dark">
+					<span class="wplanning__number" aria-hidden="true">01</span>
+					<h3>Start with your timeline</h3>
+					<p>Share the ceremony time and work back from there. Leave a little breathing room for gathering, boarding and the moments you want to linger over.</p>
+				</article>
+				<article class="wplanning__item">
+					<span class="wplanning__number" aria-hidden="true">02</span>
+					<h3>Put every stop on the map</h3>
+					<p>List hotels, photo spots and venues. Check the loading points with each property so everyone knows exactly where to meet.</p>
+				</article>
+				<article class="wplanning__item">
+					<span class="wplanning__number" aria-hidden="true">03</span>
+					<h3>Count both groups</h3>
+					<p>Send a wedding-party headcount and a separate guest-shuttle count. We can review the vehicle combination around your plans.</p>
+				</article>
+			</div>
+		</div>
+	</section>
+
+	<section class="wfaq" aria-labelledby="wedding-faq-title">
+		<div class="wrap">
+			<SectionHeading eyebrow="Wedding Transportation Questions" title="A few details before the big day" id="wedding-faq-title" />
+			<div class="wfaq__list">
+				{questions.map((item) => (
+					<details class="wfaq__item" name="wedding-faq">
+						<summary>{item.q}<span class="wfaq__chevron" aria-hidden="true"></span></summary>
+						<p>{item.a}</p>
+					</details>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="wcta">
+		<div class="wrap">
+			<h2>Let’s bring your wedding day together</h2>
+			<p>Tell us when, where and who’s coming. We’ll help you plan the ride.</p>
+			<a class="btn-invert" href={quoteHref} data-wedding-quote>Request Your Wedding Quote</a>
+		</div>
+	</section>
+
+	<WeddingQuote />
+</BaseLayout>
+
+<style>
+	.whero { position: relative; isolation: isolate; overflow: hidden; background: #211c16; }
+	.whero__image { position: absolute; z-index: -2; top: 0; right: 0; width: 140%; max-width: none; height: 100%; object-fit: cover; object-position: right center; }
+	.whero__overlay { position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgb(17 16 12 / 88%), rgb(17 16 12 / 65%) 58%, rgb(17 16 12 / 20%)); }
+	.whero__content { padding-block: 58px 56px; }
+	.whero__eyebrow { margin: 0 0 17px; color: var(--gold-light); font-size: 11px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; }
+	.whero h1 { max-width: 1000px; margin: 0; color: var(--paper); font: 500 clamp(36px, 4.5vw, 62px)/1.08 var(--serif); }
+	.whero__lead { max-width: 52ch; margin: 21px 0 25px; color: #f3eee5; font-size: 16px; font-weight: 300; line-height: 1.7; }
+	.whero__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+	.whero__actions .btn-ghost { border-color: rgb(240 217 168 / 65%); color: var(--paper); background: rgb(20 18 13 / 25%); }
+	.whero__actions .btn-ghost:hover { background: rgb(240 217 168 / 15%); }
+	.wpackage { padding: 46px 0 40px; background: radial-gradient(ellipse at top left, #f4ecdc, transparent 65%), var(--cream); }
+	.package-card { display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; border: 1px solid var(--line-2); border-radius: 10px; background: var(--paper); box-shadow: 0 18px 50px rgb(49 38 15 / 8%); }
+	.package-card__photo { position: relative; display: grid; padding: 32px; background: #efe9de; }
+	.package-card__photo img { width: 100%; height: 100%; min-height: 500px; object-fit: cover; border-radius: 5px; }
+	.package-card__badge { position: absolute; z-index: 1; top: 49px; left: 48px; max-width: calc(100% - 96px); padding: 9px 13px; border-radius: 30px; background: var(--paper); color: var(--gold-deep); font-size: 10px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; }
+	.package-card__content { display: flex; flex-direction: column; justify-content: center; padding: 38px; }
+	.wkicker { margin: 0 0 18px; color: var(--gold-deep); font-size: 10px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; }
+	.package-card__vehicles { display: grid; gap: 10px; }
+	.package-vehicle { display: flex; align-items: center; gap: 13px; padding: 15px; border: 1px solid var(--line-2); border-radius: 6px; background: var(--cream); color: inherit; text-decoration: none; transition: border-color .2s; }
+	.package-vehicle:hover { border-color: var(--gold-dark); }
+	.package-vehicle__initial { display: grid; flex: 0 0 34px; place-items: center; height: 34px; border: 1px solid var(--gold); border-radius: 50%; color: var(--gold-deep); font: 500 20px var(--serif); }
+	.package-vehicle h3 { margin: 0 0 3px; font: 600 20px/1.1 var(--serif); }
+	.package-vehicle__capacity { color: var(--muted); font-size: 12px; }
+	.package-vehicle__role { margin-left: auto; color: var(--gold-deep); font-size: 11px; line-height: 1.4; text-align: right; }
+	.package-card__details { margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--line-2); }
+	.package-card__details h3 { margin: 0 0 15px; font: 500 25px/1.2 var(--serif); }
+	.package-card__details ul { display: grid; gap: 13px; margin: 0; padding-left: 19px; }
+	.package-card__details li { padding-left: 2px; font-size: 13px; line-height: 1.5; }
+	.package-card__details li::marker { color: var(--gold-dark); }
+	.package-card__details strong { display: block; font-weight: 500; }
+	.package-card__details li span { display: block; margin-top: 2px; color: var(--muted); font-weight: 300; }
+	.package-card__action { display: flex; flex-wrap: wrap; align-items: center; gap: 15px; margin-top: 27px; }
+	.package-card__action .btn-gold { padding: 16px 22px; font-size: 10px; letter-spacing: .17em; text-align: center; }
+	.package-card__action p { margin: 0; color: var(--gold-deep); font: italic 14px/1.35 var(--serif); }
+	.wroutes { padding: 80px 0 48px; }
+	.wroutes__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; }
+	.wroute { padding-top: 24px; border-top: 1px solid var(--gold); }
+	.wroute .wkicker { margin-bottom: 12px; }
+	.wroute h3 { margin: 0 0 14px; font: 500 30px/1.15 var(--serif); }
+	.wroute__intro { margin: 0 0 30px; color: var(--muted); font-size: 14px; font-weight: 300; line-height: 1.8; }
+	.wroute__stops { margin: 0; padding: 0 0 0 14px; list-style: none; }
+	.wroute__stop { position: relative; min-height: 85px; padding: 0 0 22px 25px; border-left: 1px solid var(--gold); }
+	.wroute__stop:last-child { padding-bottom: 0; border-left-color: transparent; }
+	.wroute__stop + .wroute__stop { padding-top: 20px; }
+	.wroute__stop + .wroute__stop::before { content: ''; position: absolute; top: 0; right: 0; left: 25px; border-top: 1px solid var(--line); }
+	.wroute__number { position: absolute; left: -14px; top: 0; display: grid; place-items: center; width: 27px; height: 27px; border: 1px solid var(--gold-dark); border-radius: 50%; background: var(--paper); color: var(--gold-deep); font: 500 13px var(--serif); }
+	.wroute__stop + .wroute__stop .wroute__number { top: 20px; }
+	.wroute__stop:last-child .wroute__number { background: var(--gold-deep); color: white; }
+	.wroute__stop h4 { margin: 0 0 6px; font: 600 18px/1.35 var(--serif); }
+	.wroute__stop p { margin: 0; color: var(--muted); font-size: 13px; font-weight: 300; line-height: 1.7; }
+	.wroute__stop--pause { padding-right: 18px; background: #f8f4ec; }
+	.wroute__note { display: block; margin-bottom: 7px; color: var(--gold-deep); font-size: 9px; font-weight: 500; letter-spacing: .17em; text-transform: uppercase; }
+	.wplanning { padding: 28px 0 80px; }
+	.wplanning__grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 18px; }
+	.wplanning__item { padding: 30px 28px; background: var(--cream); }
+	.wplanning__number { color: var(--gold-deep); font: 500 30px var(--serif); }
+	.wplanning__item h3 { margin: 18px 0 12px; font: 500 25px/1.15 var(--serif); }
+	.wplanning__item p { margin: 0; color: var(--muted); font-size: 14px; font-weight: 300; line-height: 1.8; }
+	.wplanning__item--dark { background: var(--lake-night); color: var(--paper); }
+	.wplanning__item--dark .wplanning__number { color: var(--gold-light); }
+	.wplanning__item--dark p { color: #e0d9cd; }
+	.wfaq { padding: 65px 0 80px; background: var(--cream); }
+	.wfaq__list { max-width: 800px; margin-inline: auto; }
+	.wfaq__item { border-top: 1px solid var(--line-2); }
+	.wfaq__item:last-child { border-bottom: 1px solid var(--line-2); }
+	.wfaq__item summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 23px 3px; font: 600 19px/1.4 var(--serif); list-style: none; cursor: pointer; }
+	.wfaq__item summary::-webkit-details-marker { display: none; }
+	.wfaq__chevron { flex: 0 0 8px; height: 8px; margin-right: 6px; border-right: 1px solid var(--gold-deep); border-bottom: 1px solid var(--gold-deep); transform: rotate(45deg); }
+	.wfaq__item[open] .wfaq__chevron { transform: rotate(225deg); }
+	.wfaq__item p { max-width: 72ch; margin: 0; padding: 0 30px 24px 3px; color: var(--muted); font-size: 15px; font-weight: 300; line-height: 1.8; }
+	.wcta { padding: 55px 0; background: var(--grad-gold); text-align: center; }
+	.wcta h2 { margin: 0; color: #241c0e; font: 500 clamp(30px, 3.5vw, 42px)/1.15 var(--serif); }
+	.wcta p { margin: 16px 0 28px; color: #342912; font-size: 15px; font-weight: 400; line-height: 1.7; }
+	@media (width <= 1000px) {
+		.package-card__photo { padding: 24px; }
+		.package-card__badge { top: 39px; left: 38px; }
+		.package-card__content { padding: 28px; }
+		.package-vehicle { flex-wrap: wrap; gap: 10px; }
+		.package-vehicle__role { flex: 1 0 100%; text-align: left; padding-left: 44px; }
+		.wroutes__grid { gap: 42px; }
+		.wplanning__item { padding: 26px 22px; }
+	}
+	@media (width <= 720px) {
+		.whero__content { padding-block: 50px; }
+		.whero h1 { max-width: 600px; font-size: clamp(38px, 7vw, 50px); }
+		.whero__eyebrow { font-size: 10px; line-height: 1.8; }
+		.whero__actions { align-items: stretch; }
+		.whero__actions a { padding-inline: 22px; font-size: 11px; text-align: center; }
+		.wpackage { padding: 40px 0; }
+		.package-card { grid-template-columns: 1fr; }
+		.package-card__photo { padding: 22px; }
+		.package-card__photo img { min-height: 0; max-height: 570px; height: auto; aspect-ratio: 4 / 5; object-fit: contain; }
+		.package-card__badge { top: 36px; left: 36px; }
+		.package-card__content { padding: 30px 24px; }
+		.package-vehicle { flex-wrap: nowrap; }
+		.package-vehicle__role { flex: 0 1 auto; padding: 0; text-align: right; }
+		.wroutes { padding: 50px 0 32px; }
+		.wroutes__grid { grid-template-columns: 1fr; gap: 42px; }
+		.wroute h3 { font-size: 29px; }
+		.wplanning { padding: 24px 0 50px; }
+		.wplanning__grid { grid-template-columns: 1fr; gap: 14px; }
+		.wplanning__item { padding: 26px; }
+		.wfaq { padding: 48px 0; }
+		.wfaq__item summary { font-size: 18px; }
+		.wcta { padding: 44px 0; }
+		.wcta .btn-invert { padding-inline: 24px; font-size: 11px; }
+	}
+	@media (width <= 400px) {
+		.whero__actions { flex-direction: column; }
+		.package-card__content { padding-inline: 18px; }
+		.package-vehicle { padding: 12px 10px; gap: 9px; }
+		.package-vehicle h3 { font-size: 18px; }
+		.package-vehicle__role { font-size: 10px; max-width: 48px; }
+		.package-card__action .btn-gold { width: 100%; }
+	}
+</style>

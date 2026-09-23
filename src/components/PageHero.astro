@@ -1,0 +1,166 @@
+---
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+	eyebrow: string;
+	title: string;
+	lead: string;
+	image: ImageMetadata;
+	imageAlt: string;
+	primary?: { label: string; href: string };
+	secondary?: { label: string; href: string };
+}
+
+const { eyebrow, title, lead, image, imageAlt, primary, secondary } = Astro.props;
+
+const banner = await getImage({ src: image, widths: [900, 1400, 1800, 2400], format: 'webp' });
+---
+
+<section class="phero">
+	<img
+		class="phero__image"
+		src={banner.src}
+		srcset={banner.srcSet.attribute}
+		sizes="100vw"
+		width={banner.attributes.width ?? 2400}
+		height={banner.attributes.height ?? 900}
+		alt={imageAlt}
+		loading="eager"
+		decoding="async"
+		fetchpriority="high"
+	/>
+	<div class="phero__overlay"></div>
+	<div class="phero__content wrap wrap-wide">
+		<p class="phero__eyebrow">{eyebrow}</p>
+		<h1 class="h-page phero__title">{title}</h1>
+		<p class="phero__lead">{lead}</p>
+		{
+			(primary || secondary) && (
+				<div class="phero__actions">
+					{primary && (
+						<a class="btn-gold" href={primary.href}>
+							{primary.label}
+						</a>
+					)}
+					{secondary && (
+						<a class="phero__secondary" href={secondary.href}>
+							{secondary.label}
+						</a>
+					)}
+				</div>
+			)
+		}
+	</div>
+</section>
+
+<style>
+	.phero {
+		position: relative;
+		display: grid;
+		align-items: center;
+		min-height: clamp(320px, 44vw, 460px);
+		overflow: hidden;
+		background: var(--lake-night);
+	}
+
+	.phero__image {
+		position: absolute;
+		inset: 0;
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center 45%;
+	}
+
+	.phero__overlay {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			90deg,
+			rgb(0 0 0 / 0.86) 0%,
+			rgb(0 0 0 / 0.64) 42%,
+			rgb(0 0 0 / 0.28) 78%,
+			rgb(0 0 0 / 0.14) 100%
+		);
+		pointer-events: none;
+	}
+
+	.phero__content {
+		position: relative;
+		z-index: 2;
+		width: 100%;
+		padding-block: 56px;
+	}
+
+	.phero__eyebrow {
+		margin: 0 0 14px;
+		color: var(--gold-light);
+		font-size: 11px;
+		font-weight: 500;
+		letter-spacing: 0.42em;
+		text-transform: uppercase;
+	}
+
+	.phero__title {
+		max-width: 20ch;
+		color: #fff;
+		text-shadow: 0 2px 26px rgb(0 0 0 / 0.38);
+	}
+
+	.phero__lead {
+		max-width: 56ch;
+		margin: 18px 0 0;
+		color: rgb(255 255 255 / 0.88);
+		font-size: clamp(14px, 1.5vw, 16.5px);
+		font-weight: 300;
+		line-height: 1.7;
+		text-shadow: 0 2px 18px rgb(0 0 0 / 0.42);
+	}
+
+	.phero__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 14px;
+		margin-top: 30px;
+	}
+
+	.phero__secondary {
+		display: inline-flex;
+		align-items: center;
+		min-height: 46px;
+		padding: 14px 30px;
+		border: 1px solid rgb(253 252 250 / 0.7);
+		color: var(--paper);
+		font-size: 11px;
+		font-weight: 500;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		text-decoration: none;
+		transition: background 0.22s, border-color 0.22s;
+	}
+
+	.phero__secondary:hover {
+		border-color: var(--paper);
+		background: rgb(253 252 250 / 0.12);
+	}
+
+	@media (width <= 560px) {
+		.phero__content {
+			padding-block: 44px;
+		}
+		.phero__title {
+			max-width: 100%;
+		}
+		.phero__actions {
+			flex-direction: column;
+			align-items: stretch;
+			width: min(100%, 340px);
+		}
+		.phero__actions a {
+			justify-content: center;
+			text-align: center;
+		}
+	}
+</style>

@@ -1,0 +1,60 @@
+---
+/**
+ * Decorative string of holiday bulbs, echoing the Christmas Trolley's roofline.
+ * Drawn with repeating gradients on a single element (a 152px tile of four
+ * bulbs), so it fills any width with no child elements running off-screen.
+ */
+interface Props {
+	class?: string;
+}
+
+// Spread the rest so the parent's scope attribute lands here and its `class` styles apply.
+const { class: className, ...rest } = Astro.props;
+---
+
+<div {...rest} class:list={['lights', className]} aria-hidden="true"></div>
+
+<style>
+	.lights {
+		--tile: 152px 30px;
+		position: relative;
+		height: 30px;
+		background:
+			linear-gradient(rgb(240 217 168 / 38%), rgb(240 217 168 / 38%)) 0 6px / 100% 1px no-repeat,
+			radial-gradient(circle 2px at 16px 8px, #2a2a28 90%, transparent) 0 0 / 38px 30px repeat-x,
+			radial-gradient(ellipse 4px 6px at 16px 15px, #f4c865 88%, transparent) 0 0 / var(--tile) repeat-x,
+			radial-gradient(ellipse 4px 6px at 54px 15px, #e4574d 88%, transparent) 0 0 / var(--tile) repeat-x,
+			radial-gradient(ellipse 4px 6px at 92px 15px, #56b77f 88%, transparent) 0 0 / var(--tile) repeat-x,
+			radial-gradient(ellipse 4px 6px at 130px 15px, #62a2e6 88%, transparent) 0 0 / var(--tile) repeat-x;
+	}
+
+	/* Two sets of glows that pulse out of step, so the string twinkles. */
+	.lights::before,
+	.lights::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	.lights::before {
+		background:
+			radial-gradient(circle 12px at 16px 15px, rgb(244 200 101 / 45%), transparent) 0 0 / var(--tile) repeat-x,
+			radial-gradient(circle 12px at 92px 15px, rgb(86 183 127 / 42%), transparent) 0 0 / var(--tile) repeat-x;
+	}
+
+	.lights::after {
+		background:
+			radial-gradient(circle 12px at 54px 15px, rgb(228 87 77 / 42%), transparent) 0 0 / var(--tile) repeat-x,
+			radial-gradient(circle 12px at 130px 15px, rgb(98 162 230 / 42%), transparent) 0 0 / var(--tile) repeat-x;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.lights::before { animation: twinkle 3.2s ease-in-out infinite; }
+		.lights::after { animation: twinkle 4.1s ease-in-out 1.3s infinite; }
+	}
+
+	@keyframes twinkle {
+		50% { opacity: 0.3; }
+	}
+</style>

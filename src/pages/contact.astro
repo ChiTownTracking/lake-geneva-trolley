@@ -1,0 +1,393 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { quoteOptions } from '../data/content';
+import { contact, hasContact, formEndpoint, socials } from '../data/site';
+
+const contactSocials = socials.filter((social) => /^https?:\/\//.test(social.href));
+---
+
+<BaseLayout
+	title="Contact | Lake Geneva Trolley & Bus Rental"
+	description="Get in touch about a private trolley charter in Lake Geneva, Wisconsin. Send your date, group size and itinerary and we will come back with a quote."
+	canonical="/contact/"
+	showCtaBand={false}
+>
+	<section class="contact-heading">
+		<div class="wrap wrap-860">
+			<div class="eyebrow center">
+				<span class="eyebrow__rule"></span>
+				<span class="eyebrow__label">Get a Quote</span>
+				<span class="eyebrow__rule eyebrow__rule--r"></span>
+			</div>
+			<h1 class="h-page">Let’s plan <em>your day</em></h1>
+			<p>Share your date and plans for a private charter around Geneva Lake.</p>
+		</div>
+	</section>
+
+	<section class="contact" aria-label="Charter inquiries">
+		<div class="wrap contact__grid">
+			<form
+				id="contact-form"
+				aria-label="Request a charter quote"
+				class="cform"
+				name="contact-message"
+				method="POST"
+				action={formEndpoint}
+				data-netlify="true"
+				netlify-honeypot="bot-field"
+				data-async-form
+			>
+				<input type="hidden" name="form-name" value="contact-message" />
+				<p class="honeypot">
+					<label>
+						Do not fill this out:
+						<input name="bot-field" tabindex="-1" autocomplete="off" />
+					</label>
+				</p>
+
+				<div class="cform__grid">
+					<div class="cform__field">
+						<label class="field__label" for="c-name">Full Name</label>
+						<input
+							required
+							id="c-name"
+							name="name"
+							type="text"
+							autocomplete="name"
+							placeholder="Your full name"
+							class="field__control"
+						/>
+					</div>
+					<div class="cform__field">
+						<label class="field__label" for="c-email">Email Address</label>
+						<input
+							required
+							id="c-email"
+							name="email"
+							type="email"
+							autocomplete="email"
+							placeholder="Your email address"
+							class="field__control"
+						/>
+					</div>
+					<div class="cform__field">
+						<label class="field__label" for="c-phone">Phone Number</label>
+						<input
+							id="c-phone"
+							name="phone"
+							type="tel"
+							autocomplete="tel"
+							placeholder="Optional"
+							class="field__control"
+						/>
+					</div>
+					<div class="cform__field">
+						<label class="field__label" for="c-date">Event Date</label>
+						<input id="c-date" name="date" type="date" class="field__control" />
+					</div>
+					<div class="cform__field">
+						<label class="field__label" for="c-type">Event Type</label>
+						<select id="c-type" name="type" class="field__control">
+							<option value="" selected>Select your event</option>
+							{quoteOptions.eventTypes.map((eventType) => <option value={eventType}>{eventType}</option>)}
+						</select>
+					</div>
+					<div class="cform__field">
+						<label class="field__label" for="c-passengers">Passengers</label>
+						<input id="c-passengers" name="passengers" type="number" min="1" step="1" inputmode="numeric" placeholder="Your group size" class="field__control" />
+					</div>
+					<div class="cform__field cform__field--wide">
+						<label class="field__label" for="c-message">Message</label>
+						<textarea
+							required
+							id="c-message"
+							name="message"
+							rows="4"
+							placeholder="Share your pickup location, venues, timing and any questions."
+							class="field__control"></textarea>
+					</div>
+				</div>
+
+				<div class="cform__actions">
+					<button type="submit" class="btn-gold">Request a Quote</button>
+				</div>
+				<p class="form-status" role="status" aria-live="polite" data-form-status></p>
+			</form>
+
+			<aside class="contact__aside" aria-label="Contact information">
+				<div>
+					<h2 class="contact__eyebrow">Prefer a conversation?</h2>
+					{hasContact ? (
+						<div class="contact__details">
+							{contact.phoneHref && contact.phoneLabel && <a class="contact__phone" href={`tel:${contact.phoneHref}`}>{contact.phoneLabel}</a>}
+							{contact.email && <a class="contact__email" href={`mailto:${contact.email}`}>{contact.email}</a>}
+							{contact.address && <address>{contact.address}</address>}
+						</div>
+					) : (
+						<p class="contact__copy">Send your questions through the form. We can help you work through vehicle options, stops and timing for your day.</p>
+					)}
+				</div>
+				<div class="rule-gold" aria-hidden="true"></div>
+				<div>
+					<h2 class="contact__eyebrow">Lake Geneva &amp; Lake Country</h2>
+					<p class="contact__copy">Weddings, private celebrations and group outings around Geneva Lake. Share your pickup address and planned stops so we can confirm your route.</p>
+				</div>
+				{contactSocials.length > 0 && (
+					<>
+						<div class="rule-gold" aria-hidden="true"></div>
+						<div class="contact__socials">
+							{contactSocials.map((social) => (
+								<a class="contact__social" href={social.href} aria-label={social.name}><Icon name={social.icon} /></a>
+							))}
+						</div>
+					</>
+				)}
+			</aside>
+		</div>
+	</section>
+
+	<section class="contact-cta">
+		<div class="wrap">
+			<h2>A great day starts with a plan</h2>
+			<p>Tell us where you’re headed. We’ll help you bring everyone together.</p>
+			<a href="#contact-form" class="btn-invert">Get a Free Quote</a>
+		</div>
+	</section>
+</BaseLayout>
+
+<script>
+	// Service links carry an event type; accept only existing form choices.
+	const contactEventType = document.querySelector<HTMLSelectElement>('#c-type');
+	const requestedType = new URLSearchParams(window.location.search).get('type');
+	if (contactEventType && requestedType && Array.from(contactEventType.options).some((option) => option.value === requestedType)) {
+		contactEventType.value = requestedType;
+	}
+</script>
+
+<style>
+	.contact-heading {
+		padding: 42px 0 48px;
+		text-align: center;
+	}
+
+	.contact-heading h1 {
+		margin-top: 18px;
+	}
+
+	.contact-heading em {
+		color: var(--gold-deep);
+		font-weight: inherit;
+	}
+
+	.contact-heading p {
+		margin: 20px auto 0;
+		max-width: 60ch;
+		color: var(--muted);
+		font-size: 15px;
+		font-weight: 300;
+		line-height: 1.75;
+	}
+
+	.contact {
+		padding: 0 0 96px;
+	}
+
+	.contact__grid {
+		display: grid;
+		max-width: 1060px;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 64px;
+		align-items: start;
+	}
+
+	.contact__aside {
+		display: grid;
+		gap: 36px;
+		padding-top: 2px;
+	}
+
+	.contact__eyebrow {
+		margin: 0 0 20px;
+		color: var(--gold-deep);
+		font-family: var(--sans);
+		font-size: 11px;
+		font-weight: 500;
+		letter-spacing: 0.28em;
+		line-height: 1.5;
+		text-transform: uppercase;
+	}
+
+	.contact__details {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	.contact__details a {
+		max-width: 100%;
+		text-decoration: none;
+		overflow-wrap: anywhere;
+	}
+
+	.contact__phone {
+		color: var(--ink);
+		font-family: var(--serif);
+		font-size: clamp(26px, 2.4vw, 32px);
+		font-weight: 500;
+		line-height: 1.1;
+	}
+
+	.contact__email,
+	.contact__details address,
+	.contact__copy {
+		color: var(--muted);
+		font-size: 15px;
+		font-weight: 300;
+		line-height: 1.85;
+	}
+
+	.contact__details a:hover {
+		color: var(--gold-deep);
+	}
+
+	.contact__details address {
+		margin-top: 6px;
+		font-style: normal;
+	}
+
+	.contact__copy {
+		margin: 0;
+	}
+
+	.contact__socials {
+		display: flex;
+		gap: 16px;
+	}
+
+	.contact__social {
+		display: grid;
+		place-items: center;
+		width: 44px;
+		height: 44px;
+		border: 1px solid var(--gold);
+		border-radius: 50%;
+		color: var(--gold-deep);
+		transition: background-color 0.2s;
+	}
+
+	.contact__social:hover {
+		background: var(--cream);
+	}
+
+	.cform {
+		scroll-margin-top: 100px;
+	}
+
+	.cform__grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 24px 22px;
+	}
+
+	.cform__field {
+		min-width: 0;
+	}
+
+	.cform__field--wide {
+		grid-column: 1 / -1;
+	}
+
+	.cform .field__label {
+		margin-bottom: 8px;
+		font-size: 11px;
+		font-weight: 400;
+		letter-spacing: 0.2em;
+	}
+
+	.cform input,
+	.cform select {
+		height: 44px;
+		min-width: 0;
+	}
+
+	.cform select {
+		cursor: pointer;
+	}
+
+	.cform textarea {
+		min-height: 124px;
+		line-height: 1.7;
+	}
+
+	.cform__actions {
+		margin-top: 30px;
+	}
+
+	.cform .form-status:not(:empty) {
+		margin-top: 20px;
+	}
+
+	.contact-cta {
+		padding: 50px 0;
+		background: var(--grad-gold);
+		text-align: center;
+	}
+
+	.contact-cta h2 {
+		margin: 0;
+		color: #241c0e;
+		font-family: var(--serif);
+		font-size: clamp(30px, 3.4vw, 42px);
+		font-weight: 500;
+		line-height: 1.2;
+	}
+
+	.contact-cta p {
+		margin: 16px 0 30px;
+		color: #342912;
+		font-size: 15px;
+		line-height: 1.75;
+	}
+
+	@media (width <= 760px) {
+		.contact__grid {
+			grid-template-columns: 1fr;
+			gap: 58px;
+		}
+		.contact__aside {
+			gap: 32px;
+		}
+		.contact {
+			padding-bottom: 64px;
+		}
+	}
+
+	@media (width <= 560px) {
+		.contact-heading {
+			padding: 40px 0 48px;
+		}
+		.contact-heading h1 {
+			font-size: clamp(34px, 8.5vw, 44px);
+		}
+		.contact-heading p {
+			font-size: 15px;
+		}
+		.contact__grid {
+			padding-inline: 28px;
+		}
+		.cform__grid {
+			grid-template-columns: 1fr;
+		}
+		.cform__actions .btn-gold {
+			padding-inline: 28px;
+		}
+		.contact-cta {
+			padding: 44px 0;
+		}
+		.contact-cta .btn-invert {
+			width: 100%;
+		}
+	}
+</style>
