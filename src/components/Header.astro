@@ -26,7 +26,7 @@ const groupIsActive = (item: { href: string; children?: { href: string }[] }) =>
 		</a>
 
 		<!--
-			Below 1024px this block becomes a slide-in drawer (see the media query).
+			Below 1200px this block becomes a slide-in drawer (see the media query).
 			`display: contents` keeps it a no-op wrapper on desktop.
 		-->
 		<div class="hdr__panel" id="site-menu" data-menu-panel>
@@ -194,7 +194,7 @@ const groupIsActive = (item: { href: string; children?: { href: string }[] }) =>
 		flex-wrap: nowrap;
 		align-items: center;
 		justify-content: center;
-		gap: clamp(10px, 1.75vw, 22px);
+		gap: 16px;
 		min-width: 0;
 	}
 
@@ -208,7 +208,7 @@ const groupIsActive = (item: { href: string; children?: { href: string }[] }) =>
 		font-family: var(--sans);
 		font-size: 12px;
 		font-weight: 400;
-		letter-spacing: 0.16em;
+		letter-spacing: 0.1em;
 		text-transform: uppercase;
 		white-space: nowrap;
 		text-decoration: none;
@@ -349,28 +349,8 @@ const groupIsActive = (item: { href: string; children?: { href: string }[] }) =>
 		display: contents;
 	}
 
-	/* Six top-level links only just fit between the logo and the button on small desktops. */
-	@media (1024px <= width < 1200px) {
-		.nav {
-			gap: 15px;
-		}
-
-		.nav__link {
-			font-size: 11.5px;
-			letter-spacing: 0.1em;
-		}
-
-		.more__btn {
-			gap: 5px;
-		}
-
-		.hdr__cta :global(.btn-gold--sm) {
-			padding-inline: 16px;
-			letter-spacing: 0.16em;
-		}
-	}
-
-	@media (width <= 1023px) {
+	/* The top-level links need the full desktop width; below 1200px they move into the drawer. */
+	@media (width <= 1199px) {
 		.hdr__burger {
 			z-index: 920;
 			display: flex;
@@ -480,7 +460,7 @@ const groupIsActive = (item: { href: string; children?: { href: string }[] }) =>
 		}
 	}
 
-	@media (width <= 1023px) and (prefers-reduced-motion: reduce) {
+	@media (width <= 1199px) and (prefers-reduced-motion: reduce) {
 		.hdr__panel,
 		.hdr__backdrop,
 		.hdr__burger-line {
@@ -494,7 +474,7 @@ const groupIsActive = (item: { href: string; children?: { href: string }[] }) =>
 	const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
 	const panel = document.querySelector<HTMLElement>('[data-menu-panel]');
 	const backdrop = document.querySelector<HTMLElement>('[data-backdrop]');
-	const drawer = window.matchMedia('(max-width: 1023px)');
+	const drawer = window.matchMedia('(max-width: 1199px)');
 
 	const setMenu = (open: boolean) => {
 		if (!header || !burger) return;
@@ -540,6 +520,14 @@ const groupIsActive = (item: { href: string; children?: { href: string }[] }) =>
 			groups.forEach((g) => setGroup(g, false));
 			setGroup(group, !open);
 		});
+	});
+
+	// Following a menu link closes the menus. Same-page links (the fleet category
+	// anchors) don't load a new page, so the menus would otherwise stay open.
+	panel?.addEventListener('click', (event) => {
+		if (!(event.target as Element).closest('a')) return;
+		groups.forEach((group) => setGroup(group, false));
+		if (header?.classList.contains('is-menu-open')) setMenu(false);
 	});
 
 	document.addEventListener('click', (event) => {

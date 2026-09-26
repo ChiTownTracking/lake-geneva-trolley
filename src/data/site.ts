@@ -100,7 +100,7 @@ export const nav: NavItem[] = [
 	},
 	{ label: 'Wedding Package', href: '/weddings/' },
 	{ label: 'Christmas Trolley', href: '/christmas-trolley/', festive: true },
-	{ label: 'Chicago, IL', href: '/chicago-il/' },
+	{ label: 'Southern Wisconsin', href: '/southern-wisconsin/' },
 	{ label: 'Services', href: '/services/' },
 	{
 		label: 'More',
@@ -108,6 +108,7 @@ export const nav: NavItem[] = [
 		children: [
 			{ label: 'FAQ', href: '/faq/' },
 			{ label: 'Contact', href: '/contact/' },
+			{ label: 'Chicago, IL', href: '/chicago-il/' },
 		],
 	},
 ];
@@ -117,6 +118,7 @@ export const footerNav = [
 	{ label: 'Fleet', href: '/fleet/' },
 	{ label: 'Weddings', href: '/weddings/' },
 	{ label: 'Christmas Trolley', href: '/christmas-trolley/' },
+	{ label: 'Southern Wisconsin', href: '/southern-wisconsin/' },
 	{ label: 'Chicago, IL', href: '/chicago-il/' },
 	{ label: 'Services', href: '/services/' },
 	{ label: 'FAQ', href: '/faq/' },

@@ -1,4 +1,5 @@
 ---
+import LavatoryBadge from '../../components/LavatoryBadge.astro';
 import VehicleGallery from '../../components/VehicleGallery.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { fleet, type Vehicle } from '../../data/content';
@@ -21,7 +22,7 @@ const { vehicle } = Astro.props;
 				{vehicle.status !== 'available' && <span class="vehicle__status">{vehicle.status === 'seasonal' ? 'Seasonal' : 'Coming Soon'}</span>}
 				<p class="vehicle__caption">{vehicle.caption}</p>
 				<h1 class="h-page">{vehicle.name}</h1>
-				<p class="vehicle__capacity">{vehicle.capacityLabel}</p>
+				<p class="vehicle__capacity">{vehicle.capacityLabel}{vehicle.lavatoryOnRequest && <LavatoryBadge />}</p>
 				<p class="vehicle__detail">{vehicle.detail}</p>
 				<ul class="vehicle__features">
 					{vehicle.features.map((feature) => <li><span aria-hidden="true">◆</span>{feature}</li>)}
@@ -45,7 +46,7 @@ const { vehicle } = Astro.props;
 	.vehicle__grid { display: grid; grid-template-columns: minmax(0, 1.18fr) minmax(0, .82fr); gap: clamp(30px, 4vw, 54px); align-items: start; }
 	.vehicle__body { padding-block: 16px; }
 	.vehicle__status { display: inline-block; margin-bottom: 18px; padding: 5px 10px; border: 1px solid var(--gold-light); background: var(--gold-cream); color: var(--gold-deep); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
-	.vehicle__capacity { margin: 18px 0 0; color: var(--gold-deep); font-size: 14px; letter-spacing: .1em; text-transform: uppercase; }
+	.vehicle__capacity { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 18px 0 0; color: var(--gold-deep); font-size: 14px; letter-spacing: .1em; text-transform: uppercase; }
 	.vehicle__caption { margin: 0 0 14px; color: var(--gold-deep); font-size: 11px; line-height: 1.6; letter-spacing: .22em; text-transform: uppercase; }
 	.vehicle__body h1 { margin: 0; }
 	.vehicle__detail { margin: 24px 0; color: var(--muted); font-size: 15px; font-weight: 300; line-height: 1.75; }

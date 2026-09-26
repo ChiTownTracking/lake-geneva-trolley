@@ -1,0 +1,439 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Faq from '../components/Faq.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import LavatoryBadge from '../components/LavatoryBadge.astro';
+import { fleet } from '../data/fleet';
+import { contact } from '../data/site';
+import milwaukeeSunset from '../assets/southern-wisconsin/milwaukee-sunset.jpg';
+import milwaukeeLakefront from '../assets/southern-wisconsin/milwaukee-lakefront.jpg';
+import madisonCapitol from '../assets/southern-wisconsin/madison-capitol-dusk.jpg';
+import barnWedding from '../assets/southern-wisconsin/barn-wedding.jpg';
+import milwaukeeRiverwalk from '../assets/southern-wisconsin/milwaukee-riverwalk.jpg';
+import breweryToast from '../assets/southern-wisconsin/brewery-toast.jpg';
+import airportLanding from '../assets/chicago/airport-landing.jpg';
+
+const vehicle = (id: string) => fleet.find((item) => item.id === id)!;
+const rides = ['classic-trolley', 'super-coach-bus', 'party-bus', 'executive-sprinter'].map(vehicle);
+const [trolley, coach, partyBus, sprinter] = rides;
+
+// Quote links fill in the form on this page; the form reads the event type from the hash.
+const quoteLink = (type: string) => `#getquote?type=${encodeURIComponent(type)}`;
+
+/** Map pin, used as this page's accent mark. */
+const pin = 'M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.6A2.6 2.6 0 1 1 12 6.4a2.6 2.6 0 0 1 0 5.2Z';
+
+const stripCities = ['Milwaukee', 'Madison', 'Kenosha', 'Racine', 'Waukesha', 'Janesville', 'Beloit', 'Lake Geneva'];
+
+const featured = [
+	{ id: 'milwaukee', name: 'Milwaukee', miles: 50, image: milwaukeeLakefront, alt: 'Downtown Milwaukee’s towers rising beyond the Lake Michigan shoreline path on a clear day.', position: '50% 40%', body: 'Lakefront weddings, conference and team transportation downtown, and game days, concerts and nights out across the city. Group pickups at Milwaukee Mitchell International Airport can be arranged, too.', tags: ['Weddings', 'Corporate', 'Game days', 'Airport (MKE)'] },
+	{ id: 'madison', name: 'Madison', miles: 75, image: madisonCapitol, alt: 'The Wisconsin State Capitol dome lit at dusk at the end of a Madison street.', position: '50% 35%', body: 'Celebrations around the Capitol Square, university and conference events, rehearsal dinners and group trips between Madison and the lake. Group transfers at Dane County Regional Airport can be arranged, too.', tags: ['Weddings', 'Conferences', 'Celebrations', 'Airport (MSN)'] },
+];
+
+const services = [
+	{ title: 'Wisconsin Weddings', body: 'Barn venues, lakeside ceremonies and city receptions. Ride together as a wedding party, and shuttle guests between their hotels and the venue.', image: barnWedding, alt: 'A bride and groom kissing in a green field in front of red farm buildings.', position: '70% center', type: 'Wedding', action: 'Plan your wedding ride' },
+	{ title: 'Corporate & Team Events', body: 'Conference shuttles, offsite retreats and client outings in Milwaukee, Madison and at the lake, coordinated around one schedule.', image: milwaukeeRiverwalk, alt: 'An autumn tree beside a boardwalk on the Milwaukee Riverwalk.', position: '50% 60%', type: 'Corporate Event', action: 'Plan team transportation' },
+	{ title: 'MKE & MSN Airport Transfers', body: 'Group arrivals and departures at Milwaukee Mitchell and Dane County Regional, with room for luggage. Share your flights and we’ll plan the timing.', image: airportLanding, alt: 'A plane coming in to land above runway approach lights at dusk.', position: '42% center', type: 'Airport Transfer', action: 'Arrange an airport transfer' },
+	{ title: 'Brewery Tours & Nights Out', body: 'Brewery and winery tours, birthdays, bachelor and bachelorette parties and game days, with a private ride between every stop.', image: breweryToast, alt: 'Three friends raising glasses of beer at a table in a brewery taproom.', position: '58% center', type: 'Night Out', action: 'Plan your night out' },
+];
+
+/*
+ * Route map. Positions are projected from real coordinates (equirectangular,
+ * corrected for latitude) and distances are approximate driving miles from
+ * Lake Geneva; see docs/southern-wisconsin-page.md.
+ */
+const bounds = { west: -89.62, east: -87.52, north: 43.24, south: 42.36 };
+const scale = 330;
+const kx = Math.cos((42.8 * Math.PI) / 180) * scale;
+const project = (lon: number, lat: number) => [(lon - bounds.west) * kx, (bounds.north - lat) * scale].map((n) => Math.round(n * 10) / 10);
+const mapWidth = Math.round((bounds.east - bounds.west) * kx);
+const mapHeight = Math.round((bounds.north - bounds.south) * scale);
+const toPoints = (coords: [number, number][]) => coords.map(([lon, lat]) => project(lon, lat).join(',')).join(' ');
+
+type Label = 'above' | 'aboveLeft' | 'left' | 'right' | 'upperLeft';
+const cities: { name: string; lon: number; lat: number; miles: number; label: Label }[] = [
+	{ name: 'Milwaukee', lon: -87.9065, lat: 43.0389, miles: 50, label: 'aboveLeft' },
+	{ name: 'Madison', lon: -89.4012, lat: 43.0731, miles: 75, label: 'right' },
+	{ name: 'Waukesha', lon: -88.2315, lat: 43.0117, miles: 35, label: 'left' },
+	{ name: 'Racine', lon: -87.7829, lat: 42.7261, miles: 45, label: 'upperLeft' },
+	{ name: 'Kenosha', lon: -87.8212, lat: 42.5847, miles: 35, label: 'upperLeft' },
+	{ name: 'Janesville', lon: -89.0187, lat: 42.6828, miles: 35, label: 'above' },
+	{ name: 'Beloit', lon: -89.0318, lat: 42.5083, miles: 35, label: 'above' },
+];
+const labelOffset: Record<Label, { dx: number; dy: number; anchor: string }> = {
+	above: { dx: 0, dy: -14, anchor: 'middle' },
+	aboveLeft: { dx: 6, dy: -14, anchor: 'end' },
+	left: { dx: -12, dy: 5, anchor: 'end' },
+	right: { dx: 12, dy: 5, anchor: 'start' },
+	upperLeft: { dx: -10, dy: -10, anchor: 'end' },
+};
+const [lgX, lgY] = project(-88.4334, 42.5917);
+const mapCities = cities.map((city) => {
+	const [x, y] = project(city.lon, city.lat);
+	return { ...city, x, y, ...labelOffset[city.label] };
+});
+const shoreline: [number, number][] = [[-87.86, 43.24], [-87.87, 43.12], [-87.885, 43.045], [-87.86, 42.99], [-87.84, 42.92], [-87.79, 42.84], [-87.765, 42.76], [-87.78, 42.7], [-87.8, 42.64], [-87.815, 42.58], [-87.8, 42.49], [-87.81, 42.42], [-87.83, 42.36]];
+const lakeMichigan = `${toPoints(shoreline)} ${mapWidth + 8},${mapHeight + 8} ${mapWidth + 8},-8`;
+const genevaLake = toPoints([[-88.575, 42.548], [-88.55, 42.56], [-88.52, 42.575], [-88.49, 42.585], [-88.455, 42.588], [-88.435, 42.583], [-88.45, 42.572], [-88.49, 42.568], [-88.52, 42.558], [-88.55, 42.543], [-88.575, 42.54]]);
+const [, stateLineY] = project(-88, 42.4926);
+const [stateLineEnd] = project(-87.8, 42.4926);
+// Chicago lies off the map to the south-east; the arrow follows that bearing to the map edge.
+const [chiX, chiY] = project(-87.6298, 41.8781);
+const chiT = (mapHeight - 6 - lgY) / (chiY - lgY);
+const chiArrow = { x: Math.round(lgX + chiT * (chiX - lgX)), y: mapHeight - 6 };
+
+const nearby = 'Delavan, Elkhorn, Williams Bay, Fontana and Burlington';
+
+const questions = [
+	{ q: 'Do you offer trolley and bus rentals in Milwaukee and Madison?', a: 'Yes. Lake Geneva Trolley & Bus Rental serves Southern Wisconsin, including Milwaukee, Madison, Kenosha, Racine, Waukesha, Janesville and Beloit. Every trip is quoted around your date, your group and your full itinerary.' },
+	{ q: 'How far is Lake Geneva from Milwaukee and Madison?', a: 'By road, Lake Geneva is about 50 miles from downtown Milwaukee and about 75 miles from Madison. Kenosha, Waukesha, Janesville and Beloit are each about 35 miles away, and Racine is about 45.' },
+	{ q: 'Can you pick up at the Milwaukee or Madison airport?', a: 'Group transfers to and from Milwaukee Mitchell International Airport (MKE) and Dane County Regional Airport (MSN) can be arranged. Share your flight numbers, arrival times, passenger count and luggage so the vehicle and pickup plan fit your group.' },
+	{ q: 'Can you bring our group from the city to Lake Geneva?', a: 'Yes. Private transfers between Lake Geneva and Milwaukee, Madison or anywhere in Southern Wisconsin can be planned one way or round trip. Tell us every pickup point and where your group is staying at the lake.' },
+	{ q: 'Which vehicle is right for our group?', a: `It depends on your headcount and plans. The ${trolley.name} seats ${trolley.capacity}, the ${sprinter.name} carries ${sprinter.capacityLabel}, the ${partyBus.name} holds ${partyBus.capacityLabel.toLowerCase()} and the ${coach.name} takes ${coach.capacityLabel}${coach.lavatoryOnRequest ? ', with a lavatory available upon request for longer trips' : ''}. Share your group size and we’ll suggest the right fit.` },
+	{ q: 'How far ahead should we book?', a: 'Get in touch once your date and group size are settled. If your date is coming up soon, you can still ask about availability.' },
+];
+---
+
+<BaseLayout
+	title="Southern Wisconsin Trolley & Bus Rental | Lake Geneva Trolley & Bus Rental"
+	description="Private trolley and bus rental across Southern Wisconsin, including Milwaukee, Madison, Kenosha, Racine and Janesville, for weddings, corporate events, airport transfers and group trips to Lake Geneva."
+	canonical="/southern-wisconsin/"
+	showCtaBand={false}
+>
+	<section class="swhero" aria-labelledby="sw-title">
+		<Image class="swhero__image" src={milwaukeeSunset} alt="" widths={[800, 1200, 1600, 2200]} sizes="100vw" loading="eager" fetchpriority="high" />
+		<div class="swhero__shade" aria-hidden="true"></div>
+		<div class="wrap wrap-wide swhero__copy">
+			<p class="swkicker"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={pin} /></svg> Serving Southern Wisconsin</p>
+			<h1 id="sw-title">Southern Wisconsin<br /><em>Trolley &amp; Bus Rental</em></h1>
+			<p class="swhero__lead">Private rides for weddings, corporate events, airport runs and nights out in Milwaukee, Madison and the towns in between, and for the trip down to Lake Geneva.</p>
+			<div class="swhero__actions">
+				<a class="btn-gold" href="#getquote">Get a Wisconsin Quote</a>
+				<a class="swhero__link" href="/fleet/">Explore the fleet <span aria-hidden="true">→</span></a>
+			</div>
+		</div>
+		<p class="swhero__caption">The Milwaukee Art Museum at sunset</p>
+	</section>
+
+	<div class="swstrip" aria-hidden="true">
+		<ul class="swstrip__list">
+			{stripCities.map((city) => <li class:list={{ 'is-home': city === 'Lake Geneva' }}>{city}</li>)}
+		</ul>
+	</div>
+
+	<section class="swquote" id="getquote" aria-labelledby="sw-quote-title">
+		<div class="wrap wrap-wide">
+			<div class="swquote__head">
+				<p class="swkicker swkicker--dark">Request a quote</p>
+				<h2 id="sw-quote-title">Get a <em>Southern Wisconsin</em> trolley &amp; bus quote</h2>
+			</div>
+			<QuoteForm idPrefix="swq" />
+			<p class="swquote__note">Pricing depends on the date, the vehicle, how long you need it and every pickup and stop. Share your plans and we’ll put together a quote around them.</p>
+		</div>
+	</section>
+
+	<section class="swfleet" aria-labelledby="sw-fleet-title">
+		<div class="wrap wrap-wide">
+			<div class="swfleet__head">
+				<div>
+					<p class="swkicker swkicker--dark">Choose your ride</p>
+					<h2 id="sw-fleet-title">A vehicle for every group size</h2>
+				</div>
+				<a class="swfleet__all" href="/fleet/">See the full fleet <span aria-hidden="true">→</span></a>
+			</div>
+			<ul class="swfleet__grid">
+				{rides.map((ride) => (
+					<li>
+						<a class="swride" href={ride.detailHref}>
+							<Image src={ride.image} alt={ride.imageAlt} widths={[360, 560]} sizes="(max-width: 700px) calc(50vw - 30px), 280px" loading="lazy" />
+							<span class="swride__name">{ride.name}</span>
+							<span class="swride__capacity">{ride.capacityLabel}{ride.lavatoryOnRequest && <LavatoryBadge />}</span>
+						</a>
+					</li>
+				))}
+			</ul>
+		</div>
+	</section>
+
+	<section class="swcities" aria-labelledby="sw-cities-title">
+		<div class="wrap wrap-wide">
+			<div class="swcities__head">
+				<p class="swkicker swkicker--dark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={pin} /></svg> Major cities</p>
+				<h2 id="sw-cities-title">Milwaukee, Madison <em>and the miles between.</em></h2>
+				<p class="swcities__lead">Lake Geneva Trolley &amp; Bus Rental serves Southern Wisconsin, from the Lake Michigan shore to the state capital. Wherever your day starts, we’ll plan the vehicles and the route around your group.</p>
+			</div>
+			<div class="swcities__grid">
+				{featured.map((city) => (
+					<article class="swcity" id={city.id} aria-labelledby={`sw-city-${city.id}`}>
+						<figure class="swcity__photo">
+							<Image src={city.image} alt={city.alt} widths={[360, 560, 800]} sizes="(max-width: 600px) calc(100vw - 40px), 260px" loading="lazy" style={`object-position: ${city.position}`} />
+						</figure>
+						<div class="swcity__body">
+							<p class="swcity__miles">About {city.miles} miles from Lake Geneva</p>
+							<h3 id={`sw-city-${city.id}`}>{city.name}</h3>
+							<p class="swcity__text">{city.body}</p>
+							<ul class="swcity__tags">{city.tags.map((tag) => <li>{tag}</li>)}</ul>
+							<a class="swcity__link" href="#getquote">Plan a {city.name} trip <span aria-hidden="true">↗</span></a>
+						</div>
+					</article>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="swservices" aria-labelledby="sw-services-title">
+		<div class="wrap wrap-wide">
+			<div class="swservices__head">
+				<p class="swkicker swkicker--dark">Wisconsin services</p>
+				<h2 id="sw-services-title">However your group <em>gets around.</em></h2>
+			</div>
+			<div class="swservices__grid">
+				{services.map((service, index) => (
+					<article class="swcard">
+						<figure class="swcard__photo">
+							<Image src={service.image} alt={service.alt} widths={[420, 640, 900]} sizes="(max-width: 700px) calc(100vw - 40px), (max-width: 1100px) calc(50vw - 40px), 290px" loading="lazy" style={`object-position: ${service.position}`} />
+							<span class="swcard__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+						</figure>
+						<h3>{service.title}</h3>
+						<p>{service.body}</p>
+						<a class="swcard__link" href={quoteLink(service.type)}>{service.action} <span aria-hidden="true">↗</span></a>
+					</article>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="swmap" aria-labelledby="sw-map-title">
+		<div class="wrap wrap-wide swmap__inner">
+			<div class="swmap__copy">
+				<p class="swkicker">Lake Geneva at the center</p>
+				<h2 id="sw-map-title">Southern Wisconsin,<br /><em>within easy reach.</em></h2>
+				<p class="swmap__lead">Lake Geneva sits just north of the Illinois line, close to every major city in the south of the state. Bring a group down to the lake for the weekend, or take the lake crowd up to the city for the day.</p>
+				<ul class="swmap__list">
+					{cities.map((city) => <li><strong>{city.name}</strong><span>About {city.miles} mi</span></li>)}
+					<li class="swmap__nearby"><strong>Near the lake</strong><span>{nearby}</span></li>
+				</ul>
+				<div class="swmap__actions">
+					<a class="btn-gold" href={quoteLink('Group Transportation')}>Plan a Trip to the Lake</a>
+					<a class="swmap__link" href="/services/">Lake Geneva services <span aria-hidden="true">→</span></a>
+				</div>
+			</div>
+			<figure class="swmap__figure">
+				<svg class="swmap__svg" viewBox={`-6 -10 ${mapWidth + 12} ${mapHeight + 16}`} role="img" aria-labelledby="sw-map-caption">
+					<polygon class="swmap__water" points={lakeMichigan} />
+					<text class="swmap__water-label" transform={`translate(${mapWidth - 26} ${mapHeight / 2}) rotate(90)`} text-anchor="middle">Lake Michigan</text>
+					<line class="swmap__state" x1="0" y1={stateLineY} x2={stateLineEnd} y2={stateLineY} />
+					<text class="swmap__region" x="4" y={stateLineY - 10}>Wisconsin</text>
+					<text class="swmap__region" x="4" y={stateLineY + 22}>Illinois</text>
+					{mapCities.map((city) => <line class="swmap__spoke" x1={lgX} y1={lgY} x2={city.x} y2={city.y} />)}
+					<line class="swmap__spoke swmap__spoke--chicago" x1={lgX} y1={lgY} x2={chiArrow.x} y2={chiArrow.y} />
+					<polygon class="swmap__arrow" points={`${chiArrow.x},${chiArrow.y + 5} ${chiArrow.x - 7},${chiArrow.y - 6} ${chiArrow.x + 5},${chiArrow.y - 8}`} />
+					<text class="swmap__chicago" x={chiArrow.x - 12} y={chiArrow.y - 2} text-anchor="end">To Chicago, IL</text>
+					<polygon class="swmap__geneva" points={genevaLake} />
+					{mapCities.map((city) => (
+						<g>
+							<circle class="swmap__dot" cx={city.x} cy={city.y} r="4.5" />
+							<text class="swmap__city" x={city.x + city.dx} y={city.y + city.dy} text-anchor={city.anchor}>{city.name}</text>
+						</g>
+					))}
+					<circle class="swmap__home-ring" cx={lgX} cy={lgY} r="12" />
+					<circle class="swmap__home" cx={lgX} cy={lgY} r="6.5" />
+					<text class="swmap__home-label" x={lgX} y={lgY + 28} text-anchor="middle">Lake Geneva</text>
+				</svg>
+				<figcaption id="sw-map-caption">Lake Geneva and the cities of Southern Wisconsin. Distances are approximate driving miles.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<Faq eyebrow="Southern Wisconsin Questions" title="Planning a ride in Southern Wisconsin" items={questions} />
+
+	<section class="swcta" aria-labelledby="sw-cta-title">
+		<div class="wrap swcta__inner">
+			<svg class="swcta__pin" viewBox="0 0 24 24" aria-hidden="true"><path d={pin} /></svg>
+			<h2 id="sw-cta-title">Planning something <em>in Wisconsin?</em></h2>
+			<p>Send the date, your group size and every stop you have in mind. We’ll put together a quote around your itinerary.</p>
+			<div class="swcta__actions">
+				<a class="btn-gold" href="#getquote">Request a Wisconsin Quote</a>
+				{contact.phoneHref && <a class="swcta__phone" href={`tel:${contact.phoneHref}`}>Or call {contact.phoneLabel}</a>}
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	/* Lake and dusk tones, used for decoration only. */
+	.swhero, .swmap, .swcta { --sw-night: #10222b; --sw-water: #9cc3d2; }
+	.swkicker { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; color: var(--gold-light); font-size: 11px; font-weight: 500; letter-spacing: .26em; line-height: 1.6; text-transform: uppercase; }
+	.swkicker svg { flex: none; width: 15px; height: 15px; fill: currentColor; }
+	.swkicker--dark { color: var(--gold-deep); }
+	h2 em, h1 em { font-weight: 400; }
+
+	/* Hero */
+	.swhero { position: relative; isolation: isolate; display: flex; align-items: center; min-height: clamp(380px, 31vw, 460px); overflow: hidden; background: var(--sw-night); color: var(--paper); }
+	.swhero__image { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 50% 68%; }
+	.swhero__shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgb(10 22 29 / 92%) 0%, rgb(10 22 29 / 74%) 38%, rgb(10 22 29 / 22%) 72%, rgb(10 22 29 / 5%)); }
+	.swhero__copy { width: 100%; padding-block: 48px; }
+	.swhero h1 { margin: 0; font: 500 clamp(42px, 4.6vw, 66px)/1.04 var(--serif); letter-spacing: -.02em; }
+	.swhero h1 em { color: var(--gold-light); }
+	.swhero__lead { max-width: 52ch; margin: 18px 0 26px; color: #dde5e8; font-size: 16px; font-weight: 300; line-height: 1.8; }
+	.swhero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
+	.swhero__link, .swmap__link { color: var(--paper); font-size: 13px; letter-spacing: .04em; text-underline-offset: 6px; }
+	.swhero__link:hover, .swmap__link:hover { color: var(--gold-light); }
+	.swhero__caption { position: absolute; right: 28px; bottom: 22px; margin: 0; color: rgb(255 255 255 / 75%); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+
+	/* City strip */
+	.swstrip { padding: 17px 20px; border-block: 1px solid var(--gold-light); background: var(--paper); }
+	.swstrip__list { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 0; margin: 0; padding: 0; list-style: none; }
+	.swstrip__list li { display: flex; align-items: center; color: var(--lake-deep); font: italic 500 19px/1.3 var(--serif); }
+	.swstrip__list li + li::before { content: '◆'; margin: 0 18px; color: var(--gold); font: normal 8px/1 var(--sans); }
+	.swstrip__list .is-home { color: var(--gold-deep); }
+
+	/* Quote form */
+	.swquote { padding: 36px 0 60px; scroll-margin-top: 80px; }
+	.swquote__head { margin-bottom: 28px; }
+	.swquote h2 { margin: 0; color: var(--lake-deep); font: 500 clamp(32px, 3.2vw, 44px)/1.1 var(--serif); text-wrap: balance; }
+	.swquote h2 em { color: var(--gold-deep); }
+	.swquote__note { max-width: 78ch; margin: 18px 4px 0; color: var(--muted); font-size: 12.5px; font-weight: 300; line-height: 1.65; }
+
+	/* Fleet */
+	.swfleet { padding: 72px 0 80px; background: var(--cream); }
+	.swfleet__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 40px; margin-bottom: 34px; }
+	.swfleet h2, .swcities h2, .swservices h2 { margin: 0; color: var(--lake-deep); font: 500 clamp(34px, 3.6vw, 50px)/1.08 var(--serif); }
+	.swcities h2 em, .swservices h2 em { color: var(--gold-deep); }
+	.swfleet__all { color: var(--lake-deep); font-size: 13px; text-underline-offset: 6px; }
+	.swfleet__all:hover { color: var(--gold-deep); }
+	.swfleet__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; margin: 0; padding: 0; list-style: none; }
+	.swride { display: block; color: inherit; text-decoration: none; }
+	.swride img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; margin-bottom: 14px; object-fit: cover; background: var(--cream); transition: opacity .2s; }
+	.swride:hover img { opacity: .88; }
+	.swride__name { display: block; color: var(--ink); font: 600 20px/1.25 var(--serif); }
+	.swride:hover .swride__name { color: var(--gold-deep); }
+	.swride__capacity { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 4px; color: var(--gold-deep); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+
+	/* Featured cities */
+	.swcities { padding: 84px 0 88px; }
+	.swcities__head { max-width: 860px; margin-bottom: 44px; }
+	.swcities__lead { max-width: 60ch; margin: 22px 0 0; color: var(--muted); font-size: 15.5px; font-weight: 300; line-height: 1.85; }
+	.swcities__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+	.swcity { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); border: 1px solid var(--line-2); background: var(--paper); scroll-margin-top: 90px; }
+	.swcity__photo { position: relative; margin: 0; overflow: hidden; background: var(--lake-deep); }
+	.swcity__photo img { display: block; width: 100%; height: 100%; min-height: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+	.swcity__photo::after { content: ''; position: absolute; right: 0; bottom: 0; left: 0; height: 5px; background: var(--grad-gold); }
+	.swcity__body { display: flex; flex-direction: column; padding: 30px 30px 28px; }
+	.swcity__miles { margin: 0 0 10px; color: var(--gold-deep); font-size: 10.5px; font-weight: 500; letter-spacing: .2em; line-height: 1.5; text-transform: uppercase; }
+	.swcity h3 { margin: 0 0 12px; color: var(--ink); font: 600 36px/1.05 var(--serif); }
+	.swcity__text { margin: 0 0 18px; color: var(--muted); font-size: 14px; font-weight: 300; line-height: 1.75; }
+	.swcity__tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 24px; padding: 0; list-style: none; }
+	.swcity__tags li { padding: 5px 10px; border: 1px solid var(--line-2); background: var(--cream); color: var(--lake-deep); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; }
+	.swcity__link, .swcard__link { display: inline-flex; align-self: flex-start; gap: 14px; margin-top: auto; padding-bottom: 6px; border-bottom: 1px solid var(--gold); color: var(--lake-deep); font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; }
+	.swcity__link:hover, .swcard__link:hover { color: var(--gold-deep); }
+
+	/* Services */
+	.swservices { padding: 80px 0 88px; background: var(--cream); }
+	.swservices__head { max-width: 640px; margin-bottom: 40px; }
+	.swservices__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+	.swcard { display: flex; flex-direction: column; min-width: 0; }
+	.swcard__photo { position: relative; margin: 0 0 22px; overflow: hidden; background: var(--lake-deep); }
+	.swcard__photo img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; transition: transform .5s ease; }
+	.swcard:hover .swcard__photo img { transform: scale(1.04); }
+	.swcard__photo::after { content: ''; position: absolute; right: 0; bottom: 0; left: 0; height: 5px; background: var(--grad-gold); }
+	.swcard__number { position: absolute; top: 16px; left: 16px; display: grid; place-items: center; width: 40px; height: 40px; background: var(--paper); color: var(--lake-deep); font: 500 20px var(--serif); }
+	.swcard h3 { margin: 0 0 10px; color: var(--ink); font: 600 24px/1.2 var(--serif); }
+	.swcard p { margin: 0 0 20px; color: var(--muted); font-size: 14px; font-weight: 300; line-height: 1.75; }
+
+	/* Route map */
+	.swmap { padding: 88px 0; background: var(--lake-deep); color: var(--paper); }
+	.swmap__inner { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: center; gap: 64px; }
+	.swmap h2 { margin: 0; font: 500 clamp(36px, 3.8vw, 54px)/1.06 var(--serif); }
+	.swmap h2 em { color: var(--gold-light); }
+	.swmap__lead { max-width: 48ch; margin: 22px 0 28px; color: #d3dde0; font-size: 15px; font-weight: 300; line-height: 1.8; }
+	.swmap__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; margin: 0 0 34px; padding: 0; list-style: none; }
+	.swmap__list li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgb(240 217 168 / 22%); }
+	.swmap__list strong { font: 500 20px/1.25 var(--serif); }
+	.swmap__list span { color: var(--gold-light); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+	.swmap__list .swmap__nearby { grid-column: 1 / -1; flex-wrap: wrap; }
+	.swmap__list .swmap__nearby span { color: #c3d0d4; font-size: 13px; letter-spacing: 0; text-transform: none; white-space: normal; }
+	.swmap__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
+	.swmap__figure { --sw-map-bg: #1d3845; margin: 0; padding: 22px 22px 16px; border: 1px solid rgb(240 217 168 / 28%); background: var(--sw-map-bg); }
+	.swmap__svg { display: block; width: 100%; height: auto; overflow: visible; }
+	.swmap__water { fill: rgb(156 195 210 / 20%); stroke: rgb(156 195 210 / 55%); stroke-width: 1.2; stroke-linejoin: round; }
+	.swmap__water-label { fill: var(--sw-water); font: 500 11px var(--sans); letter-spacing: .3em; text-transform: uppercase; }
+	.swmap__state { stroke: rgb(255 255 255 / 32%); stroke-width: 1; stroke-dasharray: 2 5; }
+	.swmap__region { fill: rgb(255 255 255 / 50%); font: 500 10px var(--sans); letter-spacing: .3em; text-transform: uppercase; }
+	.swmap__spoke { stroke: rgb(240 217 168 / 55%); stroke-width: 1.3; stroke-dasharray: 4 5; }
+	.swmap__spoke--chicago { stroke: rgb(240 217 168 / 35%); }
+	.swmap__arrow { fill: rgb(240 217 168 / 60%); }
+	.swmap__chicago { fill: rgb(255 255 255 / 70%); font: 500 11px var(--sans); letter-spacing: .14em; text-transform: uppercase; }
+	.swmap__geneva { fill: var(--sw-water); opacity: .7; }
+	.swmap__dot { fill: var(--paper); }
+	.swmap__city { fill: var(--paper); font: 500 17px var(--serif); }
+	.swmap__home-ring { fill: none; stroke: var(--gold-light); stroke-width: 1.2; opacity: .6; }
+	.swmap__home { fill: var(--gold-light); }
+	.swmap__home-label { fill: var(--gold-light); font: 600 19px var(--serif); }
+	/* A halo in the map colour keeps route lines from running through the labels. */
+	.swmap__city, .swmap__home-label, .swmap__chicago, .swmap__region { paint-order: stroke; stroke: var(--sw-map-bg); stroke-width: 6px; stroke-linejoin: round; }
+	.swmap__figure figcaption { margin-top: 14px; color: #b9c8cc; font-size: 12px; line-height: 1.5; }
+
+	/* Closing call to action */
+	.swcta { padding: 72px 0 76px; background: var(--sw-night); color: var(--paper); text-align: center; }
+	.swcta__pin { width: 30px; height: 30px; margin: 0 auto 22px; fill: var(--gold-light); }
+	.swcta h2 { margin: 0; font: 500 clamp(34px, 3.8vw, 52px)/1.1 var(--serif); }
+	.swcta h2 em { color: var(--gold-light); }
+	.swcta p { max-width: 50ch; margin: 18px auto 30px; color: #d0dadd; font-size: 15px; font-weight: 300; line-height: 1.8; }
+	.swcta__actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 16px 28px; }
+	.swcta__phone { color: var(--gold-light); font-size: 14px; text-underline-offset: 6px; }
+	.swcta__phone:hover { color: var(--paper); }
+
+	@media (width <= 1100px) {
+		.swservices__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 28px; }
+		.swcard__photo img { aspect-ratio: 4 / 3; }
+		.swcities__grid { grid-template-columns: 1fr; }
+		.swcity { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
+		.swmap__inner { gap: 48px; }
+	}
+	@media (width <= 860px) {
+		/* Flatten the copy into the grid so the map can sit between the intro and the distance list. */
+		.swmap__inner { grid-template-columns: 1fr; gap: 0; }
+		.swmap__copy { display: contents; }
+		.swmap__figure { order: 1; margin-bottom: 30px; }
+		.swmap__list, .swmap__actions { order: 2; }
+		.swfleet__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 18px; }
+	}
+	@media (width <= 700px) {
+		.swhero { align-items: flex-end; min-height: 460px; }
+		.swhero__image { object-position: 40% center; }
+		.swhero__shade { background: linear-gradient(0deg, rgb(10 22 29 / 94%) 0%, rgb(10 22 29 / 78%) 45%, rgb(10 22 29 / 25%) 80%, rgb(10 22 29 / 10%)); }
+		.swhero__copy { padding-block: 84px 40px; }
+		.swhero__lead { font-size: 15px; margin-block: 16px 24px; }
+		.swhero__caption { top: 18px; right: 20px; bottom: auto; }
+		.swstrip { padding-block: 14px; }
+		.swstrip__list li { font-size: 16px; }
+		.swstrip__list li + li::before { margin: 0 12px; }
+		.swquote { padding: 44px 0 44px; }
+		.swquote__head { margin-bottom: 20px; }
+		.swfleet { padding: 52px 0 56px; }
+		.swcities { padding: 56px 0 60px; }
+		.swcities__head { margin-bottom: 30px; }
+		.swservices { padding: 56px 0 60px; }
+		.swservices__head { margin-bottom: 30px; }
+		.swservices__grid { grid-template-columns: 1fr; gap: 44px; }
+		.swmap { padding: 56px 0; }
+		.swmap__figure { padding: 14px 12px 12px; }
+		.swcta { padding: 56px 0 60px; }
+	}
+	@media (width <= 600px) {
+		.swcity { grid-template-columns: 1fr; }
+		.swcity__photo img { height: auto; aspect-ratio: 4 / 3; }
+		.swcity__body { padding: 24px 22px 24px; }
+		.swcity h3 { font-size: 32px; }
+		.swmap__list { grid-template-columns: 1fr; }
+	}
+	@media (width <= 400px) {
+		.swhero__actions .btn-gold, .swmap__actions .btn-gold, .swcta .btn-gold { width: 100%; padding-inline: 16px; text-align: center; }
+		.swride__name { font-size: 18px; }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.swcard__photo img { transition: none; }
+	}
+</style>

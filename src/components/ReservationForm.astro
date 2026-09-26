@@ -1,5 +1,6 @@
 ---
 import { quoteOptions } from '../data/content';
+import LavatoryRequest from './LavatoryRequest.astro';
 import VehicleOptions from './VehicleOptions.astro';
 ---
 
@@ -87,6 +88,7 @@ import VehicleOptions from './VehicleOptions.astro';
 				<input required id="r-passengers" name="passengers" type="number" min="1" step="1" inputmode="numeric" placeholder="Your group size" class="field__control" />
 			</label>
 		</div>
+		<LavatoryRequest id="r-lavatory" />
 	</fieldset>
 
 	<fieldset class="rform__section">
@@ -138,6 +140,7 @@ import VehicleOptions from './VehicleOptions.astro';
 	const requestedVehicle = new URLSearchParams(location.search).get('vehicle');
 	if (vehicleSelect && requestedVehicle && [...vehicleSelect.options].some((option) => option.value === requestedVehicle)) {
 		vehicleSelect.value = requestedVehicle;
+		vehicleSelect.dispatchEvent(new Event('change'));
 	}
 	const date = form?.querySelector<HTMLInputElement>('[name="date"]');
 	if (date) {

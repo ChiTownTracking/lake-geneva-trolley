@@ -1,5 +1,6 @@
 ---
 import { quoteOptions } from '../data/content';
+import LavatoryRequest from './LavatoryRequest.astro';
 import VehicleOptions from './VehicleOptions.astro';
 
 interface Props {
@@ -75,6 +76,7 @@ const { formName = 'quote-request', submitLabel = 'Submit', idPrefix = 'q' } = A
 							</select>
 						</div>
 					</div>
+					<LavatoryRequest id={`${idPrefix}-lavatory`} />
 					<div class="step__nav">
 						<button type="button" class="btn-gold" data-step-next="2">Next</button>
 					</div>
@@ -492,6 +494,7 @@ const { formName = 'quote-request', submitLabel = 'Submit', idPrefix = 'q' } = A
 			const match = Array.from(select.options).find((o) => o.value === wanted);
 			if (!match) return false;
 			select.value = match.value;
+			select.dispatchEvent(new Event('change'));
 			return Boolean(fromHash);
 		};
 		const applyVehicle = () => {

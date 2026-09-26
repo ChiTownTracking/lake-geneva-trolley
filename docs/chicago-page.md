@@ -1,6 +1,6 @@
 # Chicago, IL page
 
-`/chicago-il/` presents Lake Geneva Trolley & Bus Rental's service in Chicago, Illinois. It is linked from the main nav, the footer and the Airport & Chicago section of `/services/`. The design is original. Its accents come from the Chicago city flag: light-blue stripes and red six-pointed stars, used purely as decoration.
+`/chicago-il/` presents Lake Geneva Trolley & Bus Rental's service in Chicago, Illinois. It is linked from the More menu in the main nav, the footer and the Airport & Chicago section of `/services/`. The design is original. Its accents come from the Chicago city flag: light-blue stripes and red six-pointed stars, used purely as decoration.
 
 ## Photography
 
@@ -30,4 +30,4 @@ The airport photo was taken in Los Angeles, so its alt text describes a plane la
 - The page carries its own copy of the site quote form (`QuoteForm.astro`, Netlify form name `quote-request`) directly below the flag strip, at `#getquote`.
 - Every quote link on the page scrolls to that form. The service cards and the city-to-lake button also pre-select the event type via the hash (`#getquote?type=Wedding`, `Corporate Event`, `Airport Transfer`, `Night Out`, `Group Transportation`). `QuoteForm.astro` accepts `type` as well as `vehicle` in the hash, and ignores values that are not existing options.
 - The closing section shows the phone number from `src/data/site.ts` when one is set.
-- Between 1024px and 1199px the header tightens its link spacing so the six top-level links fit (see `Header.astro`).
+- The main nav moved Chicago, IL into the More dropdown when Southern Wisconsin was added (see `docs/southern-wisconsin-page.md`).

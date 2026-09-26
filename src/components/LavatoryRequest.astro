@@ -1,0 +1,48 @@
+---
+/**
+ * Lavatory request checkbox. By default it follows the form's vehicle <select>
+ * and appears only while a coach above 33 passengers is selected. `fixed` shows
+ * it permanently, for forms that always quote a coach.
+ */
+interface Props {
+	id: string;
+	fixed?: boolean;
+}
+
+const { id, fixed = false } = Astro.props;
+---
+
+<div class="lav" hidden={!fixed} data-lavatory-request={fixed ? undefined : ''}>
+	<input class="lav__input" id={id} name="lavatory" type="checkbox" value="Requested" />
+	<label class="lav__label" for={id}>
+		<span class="lav__title">Request a lavatory</span>
+		<span class="lav__note">Lavatory available upon request on coaches above 33 passengers. Our team will confirm it for your date.</span>
+	</label>
+</div>
+
+<script>
+	// A hidden box is also disabled, so a tick left behind after switching away from a coach is not submitted.
+	document.querySelectorAll<HTMLElement>('[data-lavatory-request]').forEach((field) => {
+		const form = field.closest('form');
+		const vehicle = form?.querySelector<HTMLSelectElement>('select[name="vehicle"]');
+		const input = field.querySelector<HTMLInputElement>('input');
+		if (!form || !vehicle || !input) return;
+		const sync = () => {
+			const eligible = Boolean(vehicle.selectedOptions[0]?.hasAttribute('data-lavatory'));
+			field.hidden = !eligible;
+			input.disabled = !eligible;
+		};
+		vehicle.addEventListener('change', sync);
+		// The reset event fires before the fields are restored.
+		form.addEventListener('reset', () => setTimeout(sync));
+		sync();
+	});
+</script>
+
+<style>
+	.lav { display: flex; align-items: flex-start; gap: 13px; margin-top: 22px; padding: 16px 18px; border: 1px solid var(--gold-light); }
+	.lav__input { flex: none; width: 19px; height: 19px; margin: 2px 0 0; accent-color: var(--gold-dark); cursor: pointer; }
+	.lav__label { display: flex; flex-direction: column; gap: 3px; cursor: pointer; }
+	.lav__title { color: var(--ink); font-size: 14px; font-weight: 500; line-height: 1.5; }
+	.lav__note { color: var(--muted); font-size: 13px; font-weight: 300; line-height: 1.6; }
+</style>

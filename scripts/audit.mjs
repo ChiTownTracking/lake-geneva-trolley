@@ -15,7 +15,7 @@ const outDir = process.argv[3] ?? 'C:/Users/abs55/AppData/Local/Temp/claude/lgt-
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 
-const routes = ['/', '/fleet', '/weddings', '/christmas-trolley', '/chicago-il', '/services', '/faq', '/contact', '/reservation'];
+const routes = ['/', '/fleet', '/weddings', '/christmas-trolley', '/chicago-il', '/southern-wisconsin', '/services', '/faq', '/contact', '/reservation'];
 const viewports = [
 	{ name: 'mobile', width: 390, height: 844, mobile: true },
 	{ name: 'tablet', width: 820, height: 1180, mobile: false },

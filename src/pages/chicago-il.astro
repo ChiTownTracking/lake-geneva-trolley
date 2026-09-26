@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Faq from '../components/Faq.astro';
 import QuoteForm from '../components/QuoteForm.astro';
+import LavatoryBadge from '../components/LavatoryBadge.astro';
 import { fleet } from '../data/fleet';
 import { contact } from '../data/site';
 import riverNight from '../assets/chicago/river-night.jpg';
@@ -100,7 +101,7 @@ const questions = [
 						<a class="cride" href={ride.detailHref}>
 							<Image src={ride.image} alt={ride.imageAlt} widths={[360, 560]} sizes="(max-width: 700px) calc(50vw - 30px), 280px" loading="lazy" />
 							<span class="cride__name">{ride.name}</span>
-							<span class="cride__capacity">{ride.capacityLabel}</span>
+							<span class="cride__capacity">{ride.capacityLabel}{ride.lavatoryOnRequest && <LavatoryBadge />}</span>
 						</a>
 					</li>
 				))}
@@ -279,7 +280,7 @@ const questions = [
 	.cride:hover img { opacity: .88; }
 	.cride__name { display: block; color: var(--ink); font: 600 20px/1.25 var(--serif); }
 	.cride:hover .cride__name { color: var(--gold-deep); }
-	.cride__capacity { display: block; margin-top: 4px; color: var(--gold-deep); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+	.cride__capacity { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 4px; color: var(--gold-deep); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
 
 	/* Closing call to action */
 	.ccta { padding: 72px 0 76px; background: var(--chi-night); color: var(--paper); text-align: center; }

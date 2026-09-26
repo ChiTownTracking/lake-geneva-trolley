@@ -1,6 +1,7 @@
 ﻿---
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LavatoryBadge from '../components/LavatoryBadge.astro';
 import { fleetCategories, fleetGroups } from '../data/fleet';
 
 const categories = [{ id: 'all', label: 'All Vehicles' }, ...fleetCategories];
@@ -56,7 +57,7 @@ const categories = [{ id: 'all', label: 'All Vehicles' }, ...fleetCategories];
 				<div class="fcard__body">
 					{vehicle.status !== 'available' && <span class="fcard__status">{vehicle.status === 'seasonal' ? 'Seasonal' : 'Coming Soon'}</span>}
 					<h3 class="fcard__name">{vehicle.name}</h3>
-					<p class="fcard__cap">{vehicle.capacityLabel}</p>
+					<p class="fcard__cap">{vehicle.capacityLabel}{vehicle.lavatoryOnRequest && <LavatoryBadge />}</p>
 					<div class="rule-gold fcard__rule" aria-hidden="true"></div>
 					<ul class="fcard__feats">
 						{vehicle.features.map((feature) => <li class="fcard__feat"><span class="fcard__diamond" aria-hidden="true">◆</span>{feature}</li>)}
@@ -71,6 +72,7 @@ const categories = [{ id: 'all', label: 'All Vehicles' }, ...fleetCategories];
 </BaseLayout>
 
 <script>
+	const filter = document.querySelector<HTMLElement>('.fleet-filter');
 	const controls = document.querySelector<HTMLElement>('[data-fleet-filter-controls]');
 	const status = document.querySelector<HTMLElement>('[data-fleet-filter-status]');
 	const cards = [...document.querySelectorAll<HTMLAnchorElement>('[data-fleet-card]')];
@@ -92,21 +94,43 @@ const categories = [{ id: 'all', label: 'All Vehicles' }, ...fleetCategories];
 			status.textContent = `Showing ${count} ${count === 1 ? 'listing' : 'listings'} in ${button.textContent?.trim()}.`;
 			if (focusedCard instanceof HTMLElement && focusedCard.hidden) button.focus();
 		};
+		const isCategory = (hash: string) => buttons.some((button) => button.dataset.fleetFilter === hash);
+		const readHash = (hash: string) => {
+			try { return decodeURIComponent(hash.slice(1)); } catch { return ''; /* Use the default category for a malformed hash. */ }
+		};
+		// Category links (#trolley, #coach-bus, ...) land on the filter bar. Some category names are
+		// also vehicle ids, so without this the browser would jump to that one vehicle's card instead.
+		const showFilter = () => filter?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 		const syncHash = () => {
-			let hash = '';
-			try { hash = decodeURIComponent(location.hash.slice(1)); } catch { /* Use the default category for a malformed hash. */ }
+			const hash = readHash(location.hash);
 			const vehicle = cards.find((card) => card.id === hash);
-			const category = vehicle?.dataset.fleetCategory ?? hash;
-			applyFilter(buttons.some((button) => button.dataset.fleetFilter === category) ? category : 'all');
+			const category = isCategory(hash) ? hash : vehicle?.dataset.fleetCategory ?? hash;
+			applyFilter(isCategory(category) ? category : 'all');
+			return isCategory(hash);
 		};
 		buttons.forEach((button) => button.addEventListener('click', () => {
 			const category = button.dataset.fleetFilter!;
 			applyFilter(category);
 			history.replaceState(null, '', `#${category}`);
 		}));
-		syncHash();
+		// Handle category links to this page (such as the Fleet menu) here, so choosing the category
+		// already in the URL still scrolls, and no hashchange jump runs first.
+		document.addEventListener('click', (event) => {
+			const link = (event.target as Element).closest<HTMLAnchorElement>('a[href*="#"]');
+			if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+			const url = new URL(link.href);
+			const samePage = url.origin === location.origin && url.pathname.replace(/\/$/, '') === location.pathname.replace(/\/$/, '');
+			const category = readHash(url.hash);
+			if (!samePage || !isCategory(category)) return;
+			event.preventDefault();
+			if (location.hash !== url.hash) history.pushState(null, '', url.hash);
+			applyFilter(category);
+			showFilter();
+		});
+		if (syncHash()) requestAnimationFrame(() => filter?.scrollIntoView());
 		controls.hidden = false;
-		window.addEventListener('hashchange', syncHash);
+		window.addEventListener('hashchange', () => { if (syncHash()) showFilter(); });
+		window.addEventListener('popstate', syncHash);
 		window.addEventListener('pageshow', syncHash);
 	}
 </script>
@@ -118,7 +142,7 @@ const categories = [{ id: 'all', label: 'All Vehicles' }, ...fleetCategories];
 	.fleet-heading h1 { margin: 20px 0 12px; }
 	.fleet-heading__intro { max-width: 55ch; margin: 0 auto; color: var(--muted); font-size: 16px; line-height: 1.65; }
 	.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-	.fleet-filter { max-width: 1140px; padding: 0 28px 32px; text-align: center; }
+	.fleet-filter { max-width: 1140px; padding: 0 28px 32px; text-align: center; scroll-margin-top: 96px; }
 	.fleet-filter__controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 28px; }
 	.fleet-filter__button { display: inline-flex; justify-content: center; align-items: center; min-height: 44px; padding: 10px 2px 8px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: none; color: var(--ink); font-family: var(--sans); font-size: 12px; font-weight: 500; line-height: 1.2; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; cursor: pointer; transition: border-color .25s, color .25s; }
 	.fleet-filter__button:hover { border-bottom-color: var(--gold); color: var(--gold-deep); }
@@ -143,7 +167,7 @@ const categories = [{ id: 'all', label: 'All Vehicles' }, ...fleetCategories];
 	.fcard__body { display: flex; flex-direction: column; justify-content: center; min-width: 0; padding: 24px 0; }
 	.fcard__status { align-self: flex-start; margin-bottom: 14px; padding: 5px 10px; border: 1px solid var(--gold-light); color: var(--gold-deep); background: var(--gold-cream); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
 	.fcard__name { margin: 0 0 7px; font-family: var(--serif); font-size: clamp(31px, 3.2vw, 40px); font-weight: 600; line-height: 1.05; }
-	.fcard__cap { margin: 0 0 22px; color: var(--gold-deep); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; }
+	.fcard__cap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 0 0 22px; color: var(--gold-deep); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; }
 	.fcard__rule { width: 64px; margin-bottom: 24px; }
 	.fcard__feats { display: flex; flex-direction: column; gap: 11px; margin: 0 0 30px; padding: 0; list-style: none; }
 	.fcard__feat { display: flex; align-items: baseline; gap: 12px; color: var(--muted); font-size: 14.5px; font-weight: 300; line-height: 1.45; }

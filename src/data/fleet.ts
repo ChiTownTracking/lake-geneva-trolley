@@ -8,6 +8,8 @@ export const fleetCategories = [
 	{ id: 'limo-van', label: 'Sprinter Vans', description: 'Limo-style lounge or individual executive seating.' },
 ] as const;
 
+export const lavatoryLabel = 'Lavatory available upon request';
+
 export interface Vehicle {
 	id: keyof typeof fleetGalleries;
 	name: string;
@@ -19,6 +21,8 @@ export interface Vehicle {
 	quoteValue: string;
 	capacity: number | null;
 	capacityLabel: string;
+	/** Coaches above 33 passengers can be booked with a lavatory. */
+	lavatoryOnRequest: boolean;
 	status: 'available' | 'seasonal' | 'coming-soon';
 	image: ImageMetadata;
 	imageAlt: string;
@@ -28,7 +32,7 @@ export interface Vehicle {
 	detailHref: string;
 }
 
-type FleetEntry = Omit<Vehicle, 'image' | 'imageAlt' | 'interior' | 'gallery' | 'detailHref'> & {
+type FleetEntry = Omit<Vehicle, 'image' | 'imageAlt' | 'interior' | 'gallery' | 'detailHref' | 'lavatoryOnRequest'> & {
 	/** A dedicated page that replaces the /fleet/<id>/ listing page. */
 	page?: string;
 	interiorIndex?: number;
@@ -247,6 +251,7 @@ export const fleet: Vehicle[] = entries.map(({ interiorIndex, interiorFrom, page
 		...vehicle,
 		gallery,
 		detailHref: page ?? `/fleet/${vehicle.id}/`,
+		lavatoryOnRequest: vehicle.category === 'coach-bus' && (vehicle.capacity ?? 0) > 33,
 		image: gallery[0].image,
 		imageAlt: gallery[0].alt,
 		interior: interiorIndex === undefined ? undefined : interiorSource[interiorIndex],

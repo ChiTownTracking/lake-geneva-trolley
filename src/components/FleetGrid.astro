@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { fleet, type Vehicle } from '../data/content';
+import LavatoryBadge from './LavatoryBadge.astro';
 
 interface Props {
 	/** Link target for each card. Defaults to the fleet page anchor. */
@@ -50,7 +51,7 @@ const cards = shown.map((vehicle) => ({ ...vehicle, ...cardOverrides[vehicle.id]
 				<div class="fleetp__body">
 					<p class="fleetp__cap">{vehicle.caption}</p>
 					<h3 class="fleetp__name">{vehicle.name}</h3>
-					<p class="fleetp__capacity">{vehicle.capacityLabel}</p>
+					<p class="fleetp__capacity">{vehicle.capacityLabel}{vehicle.lavatoryOnRequest && <LavatoryBadge />}</p>
 					{vehicle.status !== 'available' && <p class="fleetp__status">{vehicle.status === 'seasonal' ? 'Seasonal' : 'Coming Soon'}</p>}
 					<p class="fleetp__description">{vehicle.description}</p>
 						<span class="link-gold fleetp__more">{vehicle.linkLabel ?? 'View Vehicle'} &rarr;</span>
@@ -194,6 +195,11 @@ const cards = shown.map((vehicle) => ({ ...vehicle, ...cardOverrides[vehicle.id]
 	}
 
 	.fleetp__capacity {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		gap: 8px 12px;
 		margin: 10px 0 0;
 		color: var(--muted);
 		font-size: 12px;
