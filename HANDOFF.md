@@ -16,8 +16,8 @@ call-to-action band and the `Organization` structured data.
 | Field | Where it appears | Status |
 | --- | --- | --- |
 | `contact.phoneHref` / `phoneLabel` | Top bar, footer, contact page, CTA band | Done: +1 630-624-3448 (owner-supplied) |
-| `contact.email` | Top bar, footer, contact page | **Missing** |
-| `contact.address` | Footer, contact page, structured data | **Missing** |
+| `contact.email` | Top bar, footer, contact page, reservation page | Done: info@lakegenevatrolleys.com (owner-supplied) |
+| `contact.address` | Footer, contact page, structured data | Intentionally not published (owner request, September 27, 2026) |
 | `socials[]` | Top bar, footer | **Missing** |
 
 While these are empty the top bar shows the tagline and a "Request a quote"

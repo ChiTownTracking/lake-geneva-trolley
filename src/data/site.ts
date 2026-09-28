@@ -30,21 +30,17 @@ export const site = {
 } as const;
 
 /**
- * The phone number is real (supplied by the owner, September 23, 2026).
- *
- * TODO(handoff): the EMAIL AND ADDRESS ARE PLACEHOLDERS - NOT REAL, DO NOT LAUNCH.
- * They exist so the footer layout can be reviewed with content in it:
- * example.com is reserved by RFC 2606 and the street address is invented.
- * Replace both with the real Lake Geneva details and set
- * `contactIsPlaceholder` to false.
+ * Phone (September 23, 2026) and email (September 27, 2026) are supplied by the
+ * owner. No postal address is published, so `address` stays null and every
+ * address slot is omitted.
  */
-export const contactIsPlaceholder = true;
+export const contactIsPlaceholder = false;
 
 export const contact: ContactDetails = {
 	phoneHref: '+16306243448',
 	phoneLabel: '+1 630-624-3448',
-	email: 'placeholder@example.com',
-	address: '000 Placeholder Ave, Lake Geneva, WI 53147',
+	email: 'info@lakegenevatrolleys.com',
+	address: null,
 };
 
 export interface Social {
