@@ -1,7 +1,9 @@
 ---
+import { Image } from 'astro:assets';
 import { site, contact, socials, footerNav, hasContact, credentials } from '../data/site';
 import Icon from './Icon.astro';
 import WbencLogo from '../assets/wbenc-logo.svg';
+import logo from '../assets/logo.png';
 
 const year = new Date().getFullYear();
 ---
@@ -9,12 +11,7 @@ const year = new Date().getFullYear();
 <footer class="ftr">
 	<div class="ftr__inner wrap">
 		<a class="ftr__brand" href="/" aria-label={`${site.name} home`}>
-			<span class="ftr__brandRow">
-				<span class="ftr__rule"></span>
-				<span class="ftr__name">{site.brandTop}</span>
-				<span class="ftr__rule ftr__rule--r"></span>
-			</span>
-			<span class="ftr__sub">{site.brandBottom}</span>
+			<Image class="ftr__logo" src={logo} alt="" width={380} densities={[1, 2]} />
 		</a>
 
 		<nav class="ftr__nav" aria-label="Footer">
@@ -118,46 +115,15 @@ const year = new Date().getFullYear();
 	}
 
 	.ftr__brand {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 3px;
-		color: var(--ink);
+		display: block;
+		width: min(380px, 100%);
 		text-decoration: none;
 	}
 
-	.ftr__brandRow {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-		max-width: 100%;
-	}
-
-	.ftr__rule {
+	.ftr__logo {
 		display: block;
-		width: 34px;
-		height: 1px;
-		background: linear-gradient(90deg, transparent, var(--gold-dark));
-	}
-
-	.ftr__rule--r {
-		background: linear-gradient(90deg, var(--gold-dark), transparent);
-	}
-
-	.ftr__name {
-		font-family: var(--serif);
-		font-size: 24px;
-		font-weight: 600;
-		letter-spacing: 0.14em;
-		line-height: 1;
-	}
-
-	.ftr__sub {
-		margin-left: 0.5em;
-		color: #8a6508;
-		font-size: 10px;
-		font-weight: 500;
-		letter-spacing: 0.5em;
+		width: 100%;
+		height: auto;
 	}
 
 	.ftr__navList,
@@ -367,14 +333,8 @@ const year = new Date().getFullYear();
 			margin-inline: auto;
 			padding-inline: 0;
 		}
-		.ftr__brandRow {
-			gap: 9px;
-		}
-		.ftr__rule {
-			width: 27px;
-		}
-		.ftr__name {
-			font-size: 22px;
+		.ftr__brand {
+			width: min(300px, 100%);
 		}
 		.ftr__nav {
 			margin-top: 19px;

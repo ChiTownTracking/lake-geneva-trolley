@@ -20,9 +20,6 @@ export interface ContactDetails {
 
 export const site = {
 	name: 'Lake Geneva Trolley & Bus Rental',
-	/** Rendered as two stacked words in the brand lockup. */
-	brandTop: 'LAKE GENEVA',
-	brandBottom: 'TROLLEY & BUS RENTAL',
 	url: 'https://lakegenevatrolley.com',
 	/** Used as the default meta description and in structured data. */
 	description:
