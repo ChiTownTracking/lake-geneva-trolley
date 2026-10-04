@@ -114,7 +114,7 @@ try {
 	await page.fill('#r-pickup', 'Test pickup, Lake Geneva');
 	await page.fill('#r-dropoff', 'Test venue, Lake Geneva');
 	await page.selectOption('#r-hours', '4 hours');
-	await page.selectOption('#r-vehicle', 'Coach Bus — 44 Passengers');
+	await page.selectOption('#r-vehicle', 'Coach Bus — 44');
 	await page.fill('#r-passengers', '0');
 	assert.equal(await page.locator('#r-passengers').evaluate((field) => field.checkValidity()), false);
 	await page.fill('#r-passengers', '24');
@@ -137,7 +137,7 @@ try {
 	assert.equal(await page.locator('#r-name').inputValue(), 'Test Person');
 	assert.equal(posts, 1);
 	assert.equal(posted.get('form-name'), 'reservation-request');
-	assert.equal(posted.get('vehicle'), 'Coach Bus — 44 Passengers');
+	assert.equal(posted.get('vehicle'), 'Coach Bus — 44');
 	assert.equal(posted.get('passengers'), '24');
 	statusCode = 200;
 	await page.getByRole('button', { name: 'Submit Reservation Request' }).click();

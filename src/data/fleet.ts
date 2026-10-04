@@ -131,7 +131,7 @@ const entries: FleetEntry[] = [
 		"capacity": 57,
 		"capacityLabel": "50–57 passengers",
 		"status": "available",
-		"quoteValue": "Super Coach Bus — 57 Passengers",
+		"quoteValue": "Super Coach Bus — 57",
 		"description": "Lake Geneva charter bus rental for 50–57 passengers. Plan wedding guest shuttles, corporate events or longer trips with reclining seats and USB charging.",
 		"detail": "Our Lake Geneva Super Coach Bus rentals accommodate 50–57 passengers, depending on the vehicle assigned. High-back reclining leather seats, onboard audio and USB charging suit larger guest lists and longer trips. Overhead storage is provided; request undercarriage luggage space and a lavatory-equipped coach when booking so the team can confirm the right vehicle.",
 		"features": [
@@ -151,7 +151,7 @@ const entries: FleetEntry[] = [
 		"capacity": 44,
 		"capacityLabel": "39–44 passengers",
 		"status": "available",
-		"quoteValue": "Coach Bus — 44 Passengers",
+		"quoteValue": "Coach Bus — 44",
 		"description": "Rent a 39–44 passenger coach bus in Lake Geneva for wedding shuttles, corporate travel and day trips. Reclining seats, USB charging and overhead storage.",
 		"detail": "Our mid-size Lake Geneva coach bus rentals carry 39–44 passengers with high-back reclining leather seats, overhead luggage storage, seatbelts and USB charging. It provides a practical step between a small coach and the full-size Super Coach. Luggage space beyond the overhead racks is limited, and a lavatory must be requested and confirmed for the assigned vehicle.",
 		"features": [
@@ -171,7 +171,7 @@ const entries: FleetEntry[] = [
 		"capacity": 28,
 		"capacityLabel": "22–28 passengers",
 		"status": "available",
-		"quoteValue": "Coach Bus — 28 Passengers",
+		"quoteValue": "Coach Bus — 28",
 		"description": "Small coach bus rental in Lake Geneva for 22–28 passengers, with reclining seats and USB charging for wedding shuttles, airport transfers and group outings.",
 		"detail": "Our Small Coach Bus rentals provide Lake Geneva group transportation for 22–28 passengers in high-back reclining leather seats. Overhead storage, seatbelts, USB charging and an onboard PA support wedding parties, airport transfers, corporate outings and day trips while keeping the group in one vehicle.",
 		"features": [
@@ -191,7 +191,7 @@ const entries: FleetEntry[] = [
 		"capacity": 40,
 		"capacityLabel": "Up to 40 passengers",
 		"status": "available",
-		"quoteValue": "Party Bus — 40 Passengers",
+		"quoteValue": "Party Bus — 40",
 		"description": "Party bus rental in Lake Geneva for up to 40 passengers. Plan birthdays, bachelor and bachelorette parties or nights out with a professional chauffeur.",
 		"detail": "Our Lake Geneva Party Bus rental carries up to 40 passengers in a lounge-style interior. Wraparound seating, color LED lighting, a premium sound system and an open dance-floor area suit birthdays, bachelor and bachelorette parties, concerts and nights out. A professional chauffeur handles the planned route and stops.",
 		"features": [
@@ -265,8 +265,9 @@ export const fleetGroups = fleetCategories.map((category) => ({
 }));
 
 /**
- * Vehicle options on every booking form, matching the owner's ChiTown Trolley
- * quote form (requested October 4, 2026). The value submitted is the label.
+ * Vehicle options on every booking form, following the owner's ChiTown Trolley
+ * quote form (requested October 4, 2026) without the word "Passengers" after
+ * the sizes. The value submitted is the label.
  * Some sizes here - Party Bus 45, 35 and 25, Coach Bus 50 and 40 - have no
  * Lake Geneva fleet listing; see docs/fleet-sources.md. `lavatory` marks the
  * coaches above 33 passengers that offer one on request.
@@ -277,15 +278,15 @@ export const vehicleChoices: { value: string; lavatory?: boolean }[] = [
 	{ value: 'White Trolley — Limo' },
 	{ value: 'Festive Trolley — Red & Green' },
 	{ value: 'Christmas Trolley' },
-	{ value: 'Party Bus — 45 Passengers' },
-	{ value: 'Party Bus — 40 Passengers' },
-	{ value: 'Party Bus — 35 Passengers' },
-	{ value: 'Party Bus — 25 Passengers' },
-	{ value: 'Super Coach Bus — 57 Passengers', lavatory: true },
-	{ value: 'Coach Bus — 50 Passengers', lavatory: true },
-	{ value: 'Coach Bus — 44 Passengers', lavatory: true },
-	{ value: 'Coach Bus — 40 Passengers', lavatory: true },
-	{ value: 'Coach Bus — 28 Passengers' },
+	{ value: 'Party Bus — 45' },
+	{ value: 'Party Bus — 40' },
+	{ value: 'Party Bus — 35' },
+	{ value: 'Party Bus — 25' },
+	{ value: 'Super Coach Bus — 57', lavatory: true },
+	{ value: 'Coach Bus — 50', lavatory: true },
+	{ value: 'Coach Bus — 44', lavatory: true },
+	{ value: 'Coach Bus — 40', lavatory: true },
+	{ value: 'Coach Bus — 28' },
 	{ value: 'Sprinter — Executive' },
 	{ value: 'Sprinter — Limo' },
 ];

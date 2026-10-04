@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import { fleetGalleries } from '../../data/fleet-images';
 import christmasStreet from '../../assets/christmas/christmas-street.webp';
 
@@ -19,11 +19,17 @@ const shots = [
 		{
 			shots.map((shot) => (
 				<li class="strip__item">
-					<Image
+					<Picture
 						class="strip__img"
 						src={shot.image}
 						alt={shot.alt}
-						widths={[320, 480, 640]}
+						formats={['avif']}
+						fallbackFormat="webp"
+						quality={65}
+						width={640}
+						height={480}
+						fit="cover"
+						widths={[160, 240, 320, 480, 640]}
 						sizes="(max-width: 900px) 34vw, 17vw"
 						loading="lazy"
 					/>

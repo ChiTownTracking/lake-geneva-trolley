@@ -6,6 +6,9 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
 	site: 'https://lakegenevatrolley.com',
 	trailingSlash: 'ignore',
+	// These static pages have modest CSS bundles. Inlining avoids the stylesheet
+	// round trips that delayed the homepage's first paint on mobile connections.
+	build: { inlineStylesheets: 'always' },
 	integrations: [
 		// The redirect stub is not a real page, so keep it out of the sitemap.
 		sitemap({ filter: (page) => !page.includes('/fleet/christmas-trolley') }),

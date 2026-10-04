@@ -26,7 +26,7 @@ The catalog contains 10 listings in four categories. These are vehicle offerings
 - Christmas Trolley is marked Seasonal. Its route and date are subject to confirmation; no Chicago route or published tour schedule was copied to Lake Geneva.
 - Coach capacity ranges are preserved. Lavatories and undercarriage storage are described as available on request where the source says so.
 - Prices, minimum hours, deposits and cancellation terms were not imported as vehicle facts.
-- **Form vehicle options** (October 4, 2026, owner request) match the ChiTown Trolley quote form exactly: `vehicleChoices` in `src/data/fleet.ts`, used by the quote and reservation forms (the wedding form sends the Wedding Package value). Each fleet listing's `quoteValue` points at one of them (the build fails if one does not). Five choices have no Lake Geneva fleet listing: Party Bus 45, 35 and 25, and Coach Bus 50 and 40. Confirm they can be offered here, or remove them.
+- **Form vehicle options** (October 4, 2026, owner request) follow the ChiTown Trolley quote form, with sizes shown as a bare number ("Coach Bus — 44"): `vehicleChoices` in `src/data/fleet.ts`, used by the quote and reservation forms (the wedding form sends the Wedding Package value). Each fleet listing's `quoteValue` points at one of them (the build fails if one does not). Five choices have no Lake Geneva fleet listing: Party Bus 45, 35 and 25, and Coach Bus 50 and 40. Confirm they can be offered here, or remove them.
 
 ## Maintaining the implementation
 

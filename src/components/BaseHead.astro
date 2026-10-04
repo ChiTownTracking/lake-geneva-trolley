@@ -2,6 +2,10 @@
 import { getImage } from 'astro:assets';
 import { site } from '../data/site';
 import { photos } from '../data/images';
+import { getHomeHeroImages } from '../data/hero-images';
+import sansFont from '@fontsource-variable/jost/files/jost-latin-wght-normal.woff2?url';
+import headingFont from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-400-normal.woff2?url';
+import italicFont from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-400-italic.woff2?url';
 
 interface Props {
 	title: string;
@@ -21,6 +25,7 @@ const canonicalUrl = new URL(path, site.url).href;
 
 const ogImage = await getImage({ src: photos.ogDefault, width: 1200, height: 630, format: 'jpg' });
 const ogImageUrl = new URL(ogImage.src, site.url).href;
+const heroImages = path === '/' ? await getHomeHeroImages() : null;
 ---
 
 <meta charset="utf-8" />
@@ -29,6 +34,18 @@ const ogImageUrl = new URL(ogImage.src, site.url).href;
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalUrl} />
 <meta name="generator" content={Astro.generator} />
+
+{
+	heroImages && (
+		<>
+			<link rel="preload" as="image" type="image/avif" media="(max-width: 768px)" imagesrcset={heroImages[2].srcSet.attribute} imagesizes="100vw" fetchpriority="high" />
+			<link rel="preload" as="image" type="image/avif" media="(min-width: 769px)" imagesrcset={heroImages[0].srcSet.attribute} imagesizes="100vw" fetchpriority="high" />
+			<link rel="preload" as="font" type="font/woff2" href={sansFont} crossorigin="anonymous" />
+			<link rel="preload" as="font" type="font/woff2" href={headingFont} crossorigin="anonymous" />
+			<link rel="preload" as="font" type="font/woff2" href={italicFont} crossorigin="anonymous" />
+		</>
+	)
+}
 
 <link rel="icon" href="/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />

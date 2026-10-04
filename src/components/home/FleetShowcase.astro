@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import SectionHeading from '../SectionHeading.astro';
 import { photos, alt } from '../../data/images';
@@ -68,7 +68,7 @@ const cards: Card[] = [
 	},
 ];
 
-const sizes = '(max-width: 720px) 100vw, (max-width: 1140px) 50vw, 540px';
+const sizes = '(max-width: 720px) calc(100vw - 42px), (max-width: 1140px) calc((100vw - 88px) / 2), 524px';
 ---
 
 <section class="rv fsc">
@@ -83,10 +83,12 @@ const sizes = '(max-width: 720px) 100vw, (max-width: 1140px) 50vw, 540px';
 			{
 				cards.map((card) => (
 					<li>
-						<a class="fcard" href={card.href}>
+						<a class="fcard" href={card.href} data-fleet-preview>
 							<div class="fcard__media">
-								<Image class="fcard__img" src={card.image} alt={card.imageAlt} widths={[540, 800, 1080]} sizes={sizes} loading="lazy" />
-								<Image class="fcard__img fcard__img--alt" src={card.alternate} alt="" widths={[540, 800, 1080]} sizes={sizes} loading="lazy" />
+								<Picture class="fcard__img" src={card.image} alt={card.imageAlt} formats={['avif']} fallbackFormat="webp" width={1080} height={675} fit="cover" quality={65} widths={[400, 640, 800, 1080]} sizes={sizes} loading="lazy" />
+								<template data-fleet-interior>
+									<Picture class="fcard__img fcard__img--alt" src={card.alternate} alt="" formats={['avif']} fallbackFormat="webp" width={1080} height={675} fit="cover" quality={65} widths={[400, 640, 800, 1080]} sizes={sizes} loading="eager" />
+								</template>
 								<span class="fcard__cap">{card.capacity}</span>
 								<span class="fcard__peek" aria-hidden="true">Interior</span>
 							</div>
@@ -215,8 +217,8 @@ const sizes = '(max-width: 720px) 100vw, (max-width: 1140px) 50vw, 540px';
 	/* The interior cross-fades in on hover. A touch screen has no hover to
 	   leave, so the swap would stick after a tap. */
 	@media (hover: hover) {
-		.fcard:hover .fcard__img--alt,
-		.fcard:focus-visible .fcard__img--alt,
+		.fcard:hover .fcard__img--alt.is-ready,
+		.fcard:focus-visible .fcard__img--alt.is-ready,
 		.fcard:hover .fcard__peek,
 		.fcard:focus-visible .fcard__peek {
 			opacity: 1;
@@ -323,3 +325,22 @@ const sizes = '(max-width: 720px) 100vw, (max-width: 1140px) 50vw, 540px';
 		}
 	}
 </style>
+
+<script>
+	// Interior photographs are decorative hover previews. A template keeps them
+	// out of the network queue until a mouse or keyboard user requests one.
+	document.querySelectorAll<HTMLAnchorElement>('[data-fleet-preview]').forEach((card) => {
+		const loadInterior = () => {
+			if (!matchMedia('(hover: hover)').matches) return;
+			const template = card.querySelector<HTMLTemplateElement>('[data-fleet-interior]');
+			if (!template) return;
+			const media = template.parentElement!;
+			media.append(template.content.cloneNode(true));
+			template.remove();
+			const image = media.querySelector<HTMLImageElement>('.fcard__img--alt');
+			image?.decode().then(() => image.classList.add('is-ready')).catch(() => {});
+		};
+		card.addEventListener('pointerenter', loadInterior);
+		card.addEventListener('focus', loadInterior);
+	});
+</script>

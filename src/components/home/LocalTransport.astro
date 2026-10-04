@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import SectionHeading from '../SectionHeading.astro';
 import Icon from '../Icon.astro';
 import { localServices } from '../../data/home';
@@ -9,12 +9,15 @@ import harbor from '../../assets/home/lake-geneva-harbor.jpg';
 <section class="rv local">
 	<div class="wrap wrap-wide local__grid">
 		<figure class="local__media">
-			<Image
+			<Picture
 				class="local__img"
 				src={harbor}
 				alt="Aerial view of the Lake Geneva waterfront at dusk, with boats in the harbor, piers lit along the shore and a Ferris wheel glowing on the beach."
-				widths={[600, 1000]}
-				sizes="(max-width: 900px) 100vw, 62vw"
+				formats={['avif']}
+				fallbackFormat="webp"
+				quality={65}
+				widths={[400, 640, 800, 1000, 1400]}
+				sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1240px) 62vw, 734px"
 				loading="lazy"
 			/>
 		</figure>

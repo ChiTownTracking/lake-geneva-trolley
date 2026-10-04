@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import SectionHeading from '../SectionHeading.astro';
 import Icon from '../Icon.astro';
 import { weddingServices } from '../../data/home';
@@ -37,12 +37,15 @@ import { photos, alt } from '../../data/images';
 		</div>
 
 		<figure class="wed__media">
-			<Image
+			<Picture
 				class="wed__img"
 				src={photos.occasions}
 				alt={alt.occasions}
-				widths={[500, 800, 1200]}
-				sizes="(max-width: 900px) 100vw, 46vw"
+				formats={['avif']}
+				fallbackFormat="webp"
+				quality={65}
+				widths={[400, 640, 800, 1200]}
+				sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1240px) 46vw, 570px"
 				loading="lazy"
 			/>
 		</figure>

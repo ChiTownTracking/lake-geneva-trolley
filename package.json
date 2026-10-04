@@ -16,7 +16,8 @@
     "test:ui": "node scripts/interaction-test.mjs",
     "test:booking": "node scripts/fleet-reservation-test.mjs",
     "test:weddings": "node scripts/wedding-page-test.mjs",
-    "test:contrast": "node scripts/hero-contrast.mjs"
+    "test:contrast": "node scripts/hero-contrast.mjs",
+    "test:performance": "node scripts/home-performance-test.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
