@@ -1,0 +1,112 @@
+---
+import { contact } from '../../data/site';
+import Icon from '../Icon.astro';
+---
+
+<section class="plan">
+	<div class="wrap wrap-wide plan__inner">
+		<div class="plan__copy">
+			<h2 class="plan__title">Ready to Plan Your Event?</h2>
+			<p class="plan__sub">
+				Contact us today for a free, no-obligation quote. Our team is here to help make your Lake
+				Geneva event unforgettable.
+			</p>
+		</div>
+		<div class="plan__actions">
+			<a class="btn-red" href="#getquote">Get a Free Quote <Icon name="arrow-long" /></a>
+			{
+				contact.phoneHref && (
+					<a class="btn-line plan__call" href={`tel:${contact.phoneHref}`}>
+						<Icon name="phone" />
+						Call Us Today
+					</a>
+				)
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.plan {
+		position: relative;
+		overflow: hidden;
+		padding: 54px 0;
+		border-top: 1px solid rgb(212 175 106 / 0.6);
+		border-bottom: 1px solid rgb(212 175 106 / 0.6);
+		background: var(--brand-green);
+	}
+
+	.plan::after {
+		content: '';
+		position: absolute;
+		top: -170px;
+		right: -100px;
+		width: 420px;
+		height: 420px;
+		border: 1px solid rgb(212 175 106 / 0.16);
+		border-radius: 50%;
+		box-shadow:
+			0 0 0 54px rgb(212 175 106 / 0.035),
+			0 0 0 108px rgb(212 175 106 / 0.02);
+		pointer-events: none;
+	}
+
+	.plan__inner {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 28px 48px;
+	}
+
+	.plan__title {
+		margin: 0;
+		color: var(--paper);
+		font-family: var(--serif);
+		font-size: clamp(30px, 3.4vw, 44px);
+		font-weight: 500;
+		line-height: 1.08;
+	}
+
+	.plan__sub {
+		max-width: 58ch;
+		margin: 10px 0 0;
+		color: rgb(253 252 250 / 0.78);
+		font-size: 15px;
+		font-weight: 300;
+		line-height: 1.65;
+	}
+
+	.plan__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+	}
+
+	.plan__call {
+		background: transparent;
+	}
+
+	.plan a:focus-visible {
+		outline-color: var(--gold-light);
+	}
+
+	@media (width <= 560px) {
+		.plan {
+			padding: 46px 0;
+			text-align: center;
+		}
+		.plan__inner {
+			justify-content: center;
+		}
+		.plan__sub {
+			margin-inline: auto;
+		}
+		.plan__actions {
+			flex-direction: column;
+			width: 100%;
+		}
+	}
+</style>

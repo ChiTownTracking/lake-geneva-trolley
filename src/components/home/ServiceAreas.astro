@@ -1,0 +1,339 @@
+---
+import { Image } from 'astro:assets';
+import SectionHeading from '../SectionHeading.astro';
+import Icon from '../Icon.astro';
+import { serviceAreas } from '../../data/home';
+import lakeDock from '../../assets/services/lake-dock.jpg';
+import milwaukeeSunset from '../../assets/southern-wisconsin/milwaukee-sunset.jpg';
+
+// Only places with a photograph of that place get one; the rest are type-only tiles.
+const [lakeGeneva, ...rest] = serviceAreas;
+const region = rest.pop()!;
+const towns = rest;
+---
+
+<section class="rv areas">
+	<div class="wrap wrap-wide areas__grid">
+		<div class="areas__intro">
+			<SectionHeading
+				eyebrow="Explore Our Service Areas"
+				title="Lake Geneva and Surrounding Areas"
+				align="left"
+				tone="light"
+			/>
+			<p class="areas__lead">
+				We provide trolley rental and transportation services throughout Lake Geneva, Wisconsin
+				and nearby communities.
+			</p>
+			<a class="btn-gold areas__cta" href={region.href}>
+				View All Service Areas
+				<Icon name="arrow-long" />
+			</a>
+			<a class="areas__aside" href="/chicago-il/">Planning a trip into Chicago? &rarr;</a>
+		</div>
+
+		<ul class="bento">
+			<li class="tile tile--photo tile--lake">
+				<Image
+					class="tile__img"
+					src={lakeDock}
+					alt="A wooden pier reaching into Geneva Lake, Wisconsin, with a leafy shoreline beyond."
+					widths={[400, 700]}
+					sizes="(max-width: 900px) 100vw, 320px"
+					loading="lazy"
+				/>
+				<span class="tile__copy">
+					<span class="tile__name">{lakeGeneva.name}</span>
+					<span class="tile__note">{lakeGeneva.note}</span>
+				</span>
+			</li>
+			{
+				towns.map((town) => (
+					<li class="tile">
+						<Icon name="map-pin" class="tile__pin" />
+						<span class="tile__copy">
+							<span class="tile__name">{town.name}</span>
+							<span class="tile__note">{town.note}</span>
+						</span>
+					</li>
+				))
+			}
+			<li class="tile tile--photo tile--region">
+				<a class="tile__link" href={region.href}>
+					<Image
+						class="tile__img"
+						src={milwaukeeSunset}
+						alt=""
+						widths={[600, 1000]}
+						sizes="(max-width: 900px) 100vw, 640px"
+						loading="lazy"
+					/>
+					<span class="tile__copy">
+						<span class="tile__name">{region.name}</span>
+						<span class="tile__note">{region.note}</span>
+					</span>
+					<Icon name="arrow-long" class="tile__arrow" />
+				</a>
+			</li>
+		</ul>
+	</div>
+</section>
+
+<style>
+	.areas {
+		position: relative;
+		overflow: hidden;
+		padding: 88px 0;
+		background: var(--brand-green-deep);
+	}
+
+	/* Faint ripples - a nod to the lake without another photograph. */
+	.areas::before {
+		content: '';
+		position: absolute;
+		bottom: -260px;
+		left: -180px;
+		width: 620px;
+		height: 620px;
+		border: 1px solid rgb(212 175 106 / 0.12);
+		border-radius: 50%;
+		box-shadow:
+			0 0 0 60px rgb(212 175 106 / 0.03),
+			0 0 0 120px rgb(212 175 106 / 0.02);
+		pointer-events: none;
+	}
+
+	.areas__grid {
+		position: relative;
+		display: grid;
+		grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+		align-items: center;
+		gap: clamp(40px, 6vw, 88px);
+	}
+
+	.areas__intro {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.areas__intro :global(.sh) {
+		margin-bottom: 0;
+	}
+
+	.areas__intro :global(.sh__title) {
+		max-width: 16ch;
+		line-height: 1.1;
+		text-wrap: balance;
+	}
+
+	.areas__lead {
+		max-width: 44ch;
+		margin: 20px 0 0;
+		color: rgb(253 252 250 / 0.8);
+		font-size: 15.5px;
+		font-weight: 300;
+		line-height: 1.75;
+	}
+
+	.areas__cta {
+		display: inline-flex;
+		align-items: center;
+		gap: 12px;
+		margin-top: 32px;
+		box-shadow: none;
+	}
+
+	.areas__cta :global(svg) {
+		width: 17px;
+		height: 17px;
+	}
+
+	.areas__aside {
+		margin-top: 20px;
+		color: var(--gold-light);
+		font-size: 13.5px;
+		font-weight: 300;
+		letter-spacing: 0.02em;
+		text-decoration: underline;
+		text-decoration-color: rgb(240 217 168 / 0.4);
+		text-underline-offset: 4px;
+	}
+
+	.areas__aside:hover {
+		text-decoration-color: var(--gold-light);
+	}
+
+	.areas a:focus-visible {
+		outline-color: var(--gold-light);
+	}
+
+	.bento {
+		display: grid;
+		grid-template-columns: 1.15fr 1fr 1fr;
+		grid-template-rows: repeat(2, minmax(150px, auto)) minmax(140px, auto);
+		gap: 12px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.tile {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 18px;
+		min-width: 0;
+		padding: 20px;
+		overflow: hidden;
+		border: 1px solid rgb(212 175 106 / 0.26);
+		border-radius: 6px;
+		background: rgb(255 255 255 / 0.035);
+	}
+
+	.tile :global(.tile__pin) {
+		width: 22px;
+		height: 22px;
+		color: var(--gold);
+	}
+
+	.tile__copy {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	.tile__name {
+		color: var(--paper);
+		font-family: var(--serif);
+		font-size: 24px;
+		font-weight: 500;
+		line-height: 1.1;
+	}
+
+	.tile__note {
+		color: rgb(253 252 250 / 0.66);
+		font-size: 13px;
+		font-weight: 300;
+		line-height: 1.45;
+	}
+
+	.tile--photo {
+		justify-content: flex-end;
+		border-color: transparent;
+	}
+
+	.tile--photo::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(180deg, rgb(6 22 15 / 0) 30%, rgb(6 22 15 / 0.82) 100%);
+		pointer-events: none;
+	}
+
+	.tile__img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.6s cubic-bezier(0.22, 0.6, 0.2, 1);
+	}
+
+	.tile--lake {
+		grid-row: 1 / 3;
+	}
+
+	.tile--lake .tile__name {
+		font-size: 30px;
+	}
+
+	.tile--region {
+		grid-column: 1 / -1;
+		padding: 0;
+	}
+
+	.tile__link {
+		position: relative;
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 16px;
+		width: 100%;
+		height: 100%;
+		padding: 20px 24px;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.tile--region .tile__img {
+		object-position: 50% 62%;
+	}
+
+	.tile--region::after {
+		background: linear-gradient(90deg, rgb(6 22 15 / 0.86) 0%, rgb(6 22 15 / 0.5) 55%, rgb(6 22 15 / 0.2) 100%);
+	}
+
+	.tile :global(.tile__arrow) {
+		position: relative;
+		z-index: 1;
+		flex: none;
+		width: 26px;
+		height: 26px;
+		color: var(--gold-light);
+		transition: transform 0.3s;
+	}
+
+	.tile__link:hover :global(.tile__arrow) {
+		transform: translateX(5px);
+	}
+
+	.tile__link:hover .tile__img {
+		transform: scale(1.04);
+	}
+
+	@media (width <= 1100px) {
+		.areas__grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (width <= 600px) {
+		.areas {
+			padding: 60px 0;
+		}
+		.bento {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			grid-template-rows: none;
+			grid-auto-rows: minmax(124px, auto);
+			gap: 10px;
+		}
+		.tile--lake {
+			grid-row: auto;
+			grid-column: 1 / -1;
+			min-height: 190px;
+		}
+		.tile:not(.tile--region) {
+			padding: 16px;
+		}
+		.tile__link {
+			padding: 18px 16px;
+		}
+		.tile__name {
+			font-size: 21px;
+		}
+		.tile__note {
+			font-size: 12.5px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.tile__img,
+		.tile :global(.tile__arrow) {
+			transition: none;
+		}
+	}
+</style>

@@ -1,5 +1,5 @@
 /** Editorial content and shared form choices. Fleet facts live in fleet.ts. */
-export { fleet, fleetCategories, fleetGroups, homeFleetIds, type Vehicle } from './fleet';
+export { fleet, fleetCategories, fleetGroups, type Vehicle } from './fleet';
 
 export interface Step {
 	number: string;
@@ -36,6 +36,8 @@ export interface Testimonial {
 	person: string;
 	/** Whatever the review is signed with - a town, or a role and a town. */
 	role: string;
+	/** Star rating out of 5, as given on the source review. Omit to show no stars. */
+	rating?: number;
 }
 
 /**
@@ -48,7 +50,8 @@ export interface Testimonial {
  * this business has not had.
  *
  * Replace every entry with a real Lake Geneva Trolley & Bus Rental review - Google, The
- * Knot, WeddingWire, wherever they live - and delete this notice. Emptying the
+ * Knot, WeddingWire, wherever they live - and delete this notice. The ratings
+ * are placeholders too: copy each one from its source review, or omit it. Emptying the
  * array removes the section from the page rather than leaving a gap.
  */
 export const testimonials: Testimonial[] = [
@@ -56,46 +59,21 @@ export const testimonials: Testimonial[] = [
 		quote: 'Placeholder review - replace before launch. A short one, to show how the smallest card sits.',
 		person: 'Client name',
 		role: 'Town, WI',
+		rating: 5,
 	},
 	{
 		quote:
 			'Placeholder review - replace before launch. A middling length, which is what most real reviews run to once the pleasantries are trimmed off the front and back of them.',
 		person: 'Client name',
 		role: 'Town, WI',
+		rating: 5,
 	},
 	{
 		quote:
-			'Placeholder review - replace before launch. This one is deliberately long, so the carousel can be checked against a review that runs on a bit: someone describing the pickup, the driver, the stops around the lake and how the timing held up across the whole afternoon.',
+			'Placeholder review - replace before launch. This one is deliberately long, so the cards can be checked against a review that runs on a bit: someone describing the pickup, the driver, the stops around the lake and how the timing held up across the whole afternoon.',
 		person: 'Client name',
 		role: 'Event role, Town, WI',
-	},
-];
-
-export interface Occasion {
-	title: string;
-	body: string;
-	href?: string;
-}
-
-export const occasions: Occasion[] = [
-	{
-		title: 'Weddings',
-		href: '/weddings/',
-		body: 'Keep the wedding party together between the hotel, photographs, the ceremony and the reception.',
-	},
-	{
-		title: 'Private Celebrations',
-		href: '/services/',
-		body: 'Birthdays, anniversaries and family gatherings that move between more than one address.',
-	},
-	{
-		title: 'Group Transportation',
-		href: '/services/',
-		body: 'Hotel pickups, venue transfers and multi-stop routes coordinated on one timeline.',
-	},
-	{
-		title: 'Lake Country Routes',
-		body: 'Itineraries planned around the roads, venues and loading points near Geneva Lake.',
+		rating: 5,
 	},
 ];
 

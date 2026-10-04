@@ -1,0 +1,112 @@
+---
+import { Image } from 'astro:assets';
+import { fleetGalleries } from '../../data/fleet-images';
+import christmasStreet from '../../assets/christmas/christmas-street.webp';
+
+// A closing look across the fleet, inside and out.
+const shots = [
+	{ image: fleetGalleries['limo-trolley'][2].image, alt: 'A white trolley parked beside a lawn under a blue sky.' },
+	{ image: fleetGalleries['classic-trolley'][1].image, alt: 'The classic trolley’s wood-finished cabin with forward-facing seats.' },
+	{ image: fleetGalleries['executive-sprinter'][3].image, alt: 'A black Executive Sprinter van on a tree-lined drive.' },
+	{ image: fleetGalleries['super-coach-bus'][6].image, alt: 'Reclining coach bus seats under blue accent lighting.' },
+	{ image: fleetGalleries['festive-trolley'][0].image, alt: 'Two green-and-red festive trolleys parked side by side.' },
+	{ image: christmasStreet, alt: 'The Christmas trolley lit up on a snowy street at night.' },
+];
+---
+
+<section class="strip" aria-label="Fleet photographs">
+	<ul class="strip__list">
+		{
+			shots.map((shot) => (
+				<li class="strip__item">
+					<Image
+						class="strip__img"
+						src={shot.image}
+						alt={shot.alt}
+						widths={[320, 480, 640]}
+						sizes="(max-width: 900px) 34vw, 17vw"
+						loading="lazy"
+					/>
+				</li>
+			))
+		}
+	</ul>
+	<a class="strip__all" href="/fleet/">Explore the full fleet &rarr;</a>
+</section>
+
+<style>
+	.strip {
+		position: relative;
+		background: var(--brand-green-deep);
+	}
+
+	.strip__list {
+		display: grid;
+		grid-template-columns: repeat(6, minmax(0, 1fr));
+		gap: 3px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.strip__item {
+		aspect-ratio: 4 / 3;
+		overflow: hidden;
+	}
+
+	.strip__img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition:
+			transform 0.6s cubic-bezier(0.22, 0.6, 0.2, 1),
+			filter 0.4s;
+	}
+
+	.strip__item:hover .strip__img {
+		transform: scale(1.06);
+		filter: saturate(1.1);
+	}
+
+	/* The one route to the fleet from the strip. */
+	.strip__all {
+		position: absolute;
+		bottom: 14px;
+		left: 50%;
+		padding: 10px 20px;
+		border: 1px solid rgb(240 217 168 / 0.7);
+		border-radius: 999px;
+		background: rgb(11 47 32 / 0.85);
+		color: var(--gold-light);
+		font-size: 11px;
+		font-weight: 500;
+		letter-spacing: 0.2em;
+		text-decoration: none;
+		text-transform: uppercase;
+		white-space: nowrap;
+		transform: translateX(-50%);
+		backdrop-filter: blur(4px);
+		transition: background 0.25s;
+	}
+
+	.strip__all:hover {
+		background: var(--brand-green);
+	}
+
+	.strip__all:focus-visible {
+		outline-color: var(--gold-light);
+	}
+
+	@media (width <= 900px) {
+		.strip__list {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.strip__img {
+			transition: none;
+		}
+	}
+</style>

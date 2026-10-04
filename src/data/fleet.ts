@@ -262,6 +262,3 @@ export const fleetGroups = fleetCategories.map((category) => ({
 	...category,
 	vehicles: fleet.filter((vehicle) => vehicle.category === category.id),
 }));
-
-// Four homepage cards introduce the categories; the fleet page shows every listing.
-export const homeFleetIds = ['classic-trolley', 'super-coach-bus', 'party-bus', 'limo-van'];

@@ -1,73 +1,75 @@
 ---
 /**
- * Client reviews carousel, in the slot the itinerary strip used to hold on the
- * homepage. One quote at a time; the viewport is a scroll-snap strip, so it
- * still swipes and still reads in order if the script never runs. Arrows and
- * dots are the enhancement on top.
- *
- * Metrics match the ChiTown Trolley testimonial section so the two sites read
- * as one family - see the note at the top of global.css. It sits directly on
- * the page with no section background.
- *
- * The quotes themselves are placeholders - see the notice above `testimonials`
- * in src/data/content.ts.
+ * Client reviews as a card carousel: two cards a view on wide screens, one on
+ * phones. The track is a scroll-snap strip, so it still swipes and reads in
+ * order if the script never runs; arrows and dots are the enhancement on top.
+ * The quotes themselves are placeholders -
+ * see the notice above `testimonials` in src/data/content.ts. Emptying that
+ * array removes the section.
  */
 import { testimonials } from '../data/content';
 import Icon from './Icon.astro';
 import SectionHeading from './SectionHeading.astro';
 
 const many = testimonials.length > 1;
+
+const initials = (name: string) =>
+	name
+		.split(/\s+/)
+		.filter(Boolean)
+		.slice(0, 2)
+		.map((part) => part[0]?.toUpperCase())
+		.join('');
 ---
 
 {
 	testimonials.length > 0 && (
 		<section class="rv tst">
-			<div class="wrap">
-				<SectionHeading eyebrow="Client Reviews" title="What groups say afterwards" />
+			<div class="wrap wrap-wide">
+				<SectionHeading
+					eyebrow="What Our Customers Say"
+					title="Real experiences from weddings, events and private charters in Lake Geneva"
+					tone="red"
+				/>
 
-				<div class="tstc" data-carousel>
+				<div class="tcar" data-tcar>
 					{many && (
-						<button
-							type="button"
-							class="tstc__arrow"
-							data-carousel-prev
-							aria-label="Previous review"
-						>
+						<button type="button" class="tcar__arrow" data-tcar-prev aria-label="Previous reviews">
 							<Icon name="arrow-left" />
 						</button>
 					)}
-
-					<div class="tstc__viewport" data-carousel-viewport>
-						<div class="tstc__track">
-							{testimonials.map((t) => (
-								<figure class="quote tstc__slide">
-									<span class="quote__mark" aria-hidden="true">
-										&ldquo;
+					<ul class="tst__grid" data-tcar-track>
+					{testimonials.map((t) => (
+						<li class="tcard">
+							<figure class="tcard__figure">
+								{t.rating && (
+									<span class="tcard__stars" role="img" aria-label={`Rated ${t.rating} out of 5`}>
+										{Array.from({ length: 5 }, (_, i) => (
+											<Icon name="star" class={i < (t.rating ?? 0) ? 'tcard__star' : 'tcard__star tcard__star--off'} />
+										))}
 									</span>
-									<blockquote class="quote__text">{t.quote}</blockquote>
-									<span class="quote__rule" aria-hidden="true" />
-									<figcaption class="quote__attribution">
-										<span class="quote__person">{t.person}</span>
-										<span class="quote__role">{t.role}</span>
-									</figcaption>
-								</figure>
-							))}
-						</div>
-					</div>
-
+								)}
+								<blockquote class="tcard__quote">&ldquo;{t.quote}&rdquo;</blockquote>
+								<figcaption class="tcard__by">
+									<span class="tcard__avatar" aria-hidden="true">
+										{initials(t.person)}
+									</span>
+									<span class="tcard__who">
+										<span class="tcard__person">{t.person}</span>
+										<span class="tcard__role">{t.role}</span>
+									</span>
+								</figcaption>
+							</figure>
+						</li>
+					))}
+					</ul>
 					{many && (
-						<button
-							type="button"
-							class="tstc__arrow"
-							data-carousel-next
-							aria-label="Next review"
-						>
+						<button type="button" class="tcar__arrow" data-tcar-next aria-label="Next reviews">
 							<Icon name="arrow-right" />
 						</button>
 					)}
 				</div>
-
-				{many && <div class="tstc__dots" data-carousel-dots />}
+				{many && <div class="tcar__dots" data-tcar-dots />}
 			</div>
 		</section>
 	)
@@ -75,262 +77,310 @@ const many = testimonials.length > 1;
 
 <style>
 	.tst {
-		padding: 48px 5px;
+		padding: 84px 0;
+		background: var(--paper);
 	}
 
 	.tst :global(.sh) {
-		margin-bottom: 34px;
+		margin-bottom: 44px;
 	}
 
-	.tstc {
+	.tst :global(.sh__title) {
+		max-width: 26ch;
+		margin-inline: auto;
+		font-size: clamp(26px, 2.8vw, 36px);
+		line-height: 1.2;
+	}
+
+	.tcar {
+		--per-view: 2;
+		--gap: 22px;
 		display: flex;
 		align-items: center;
-		gap: 12px;
-		max-width: 900px;
-		margin: 0 auto;
+		gap: 14px;
 	}
 
-	/* Sized to the visible review by the script below; without it, the tallest. */
-	.tstc__viewport {
-		flex: auto;
+	/* The scroll-snap track; each card is sized to fit --per-view across it. */
+	.tst__grid {
+		display: flex;
+		flex: 1;
+		gap: var(--gap);
 		min-width: 0;
+		margin: 0;
+		padding: 6px 2px 14px;
 		overflow-x: auto;
-		overflow-y: hidden;
-		transition: height 0.35s ease;
+		list-style: none;
 		scroll-snap-type: x mandatory;
 		scrollbar-width: none;
 		overscroll-behavior-x: contain;
-		-webkit-overflow-scrolling: touch;
 	}
 
-	.tstc__viewport::-webkit-scrollbar {
+	.tst__grid::-webkit-scrollbar {
 		display: none;
 	}
 
-	/* Slides keep their own height rather than stretching to the tallest. */
-	.tstc__track {
-		display: flex;
-		align-items: flex-start;
-	}
-
-	/* The figure carries both .quote and .tstc__slide, so both sets land here. */
-	.tstc__slide {
-		display: flex;
-		flex: 0 0 100%;
-		flex-direction: column;
-		align-items: center;
-		gap: 16px;
-		margin: 0;
-		padding: 0 14px;
+	.tst__grid > .tcard {
+		flex: 0 0 calc((100% - (var(--per-view) - 1) * var(--gap)) / var(--per-view));
 		scroll-snap-align: start;
-		scroll-snap-stop: always;
-		text-align: center;
 	}
 
-	.quote__mark {
-		margin-top: 20px;
-		background: linear-gradient(100deg, var(--gold-dark), var(--gold));
-		background-clip: text;
-		font-family: var(--serif);
-		font-size: 64px;
-		line-height: 0.5;
-		-webkit-text-fill-color: transparent;
-	}
-
-	.quote__text {
-		max-width: 52ch;
-		margin: 0;
-		font-family: var(--serif);
-		font-size: 20px;
-		font-style: italic;
-		font-weight: 400;
-		line-height: 1.6;
-	}
-
-	.quote__rule {
-		width: 40px;
-		height: 1px;
-		background: var(--grad-gold);
-	}
-
-	.quote__attribution {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 5px;
-	}
-
-	.quote__person {
-		color: var(--ink);
-		font-family: var(--serif);
-		font-size: 16px;
-		font-weight: 600;
-	}
-
-	.quote__role {
-		color: var(--muted);
-		font-size: 11.5px;
-		letter-spacing: 0.26em;
-		text-transform: uppercase;
-	}
-
-	.tstc__arrow {
+	.tcar__arrow {
 		display: inline-flex;
 		flex: none;
 		align-items: center;
 		justify-content: center;
-		min-width: 44px;
-		min-height: 44px;
-		padding: 8px;
-		border: 0;
+		width: 48px;
+		height: 48px;
+		padding: 0;
+		border: 1px solid var(--line-2);
 		border-radius: 50%;
-		background: none;
-		color: var(--gold-deep);
-		line-height: 0;
+		background: #fff;
+		color: var(--brand-red);
 		cursor: pointer;
 		transition:
-			color 0.25s,
-			background 0.25s;
+			background 0.25s,
+			border-color 0.25s,
+			color 0.25s;
 	}
 
-	.tstc__arrow:hover {
-		background: var(--cream);
-		color: var(--gold-dark);
+	.tcar__arrow:hover {
+		border-color: var(--brand-red);
+		background: var(--brand-red);
+		color: #fff;
 	}
 
-	.tstc__arrow :global(svg) {
-		width: 26px;
-		height: 26px;
+	.tcar__arrow :global(svg) {
+		width: 20px;
+		height: 20px;
 	}
 
-	/* Dots are expanding bars rather than circles; the active one widens. */
-	.tstc__dots {
+	.tcar__arrow[hidden] {
+		display: none;
+	}
+
+	/* Bars rather than circles; the current one widens. */
+	.tcar__dots {
 		display: flex;
-		align-items: center;
 		justify-content: center;
 		gap: 8px;
+		margin-top: 18px;
 	}
 
-	.tstc__dots :global(.tstc__dot) {
+	.tcar__dots :global(.tcar__dot) {
 		display: flex;
-		flex: none;
 		align-items: center;
-		justify-content: center;
 		width: 24px;
-		height: 44px;
+		height: 32px;
 		padding: 0;
-		border: none;
-		appearance: none;
+		border: 0;
 		background: none;
 		cursor: pointer;
-		transition: width 0.3s ease-in-out;
+		transition: width 0.3s;
 	}
 
-	.tstc__dots :global(.tstc__dot)::after {
+	.tcar__dots :global(.tcar__dot)::after {
 		content: '';
-		display: block;
 		width: 100%;
 		height: 3px;
 		border-radius: 2px;
-		background: rgb(212 175 106 / 0.28);
-		transition: background-color 0.3s ease-in-out;
+		background: rgb(212 175 106 / 0.35);
+		transition: background 0.3s;
 	}
 
-	.tstc__dots :global(.tstc__dot:hover)::after {
-		background: rgb(212 175 106 / 0.5);
-	}
-
-	.tstc__dots :global(.tstc__dot.is-active) {
+	.tcar__dots :global(.tcar__dot.is-active) {
 		width: 44px;
 	}
 
-	.tstc__dots :global(.tstc__dot.is-active)::after {
-		background: var(--gold-dark);
+	.tcar__dots :global(.tcar__dot.is-active)::after {
+		background: var(--brand-red);
 	}
 
-	@media (width <= 640px) {
-		.tstc {
-			gap: 2px;
-		}
+	.tcard {
+		position: relative;
+		overflow: hidden;
+		border: 1px solid var(--line-2);
+		border-radius: 6px;
+		background: #fff;
+		box-shadow: 0 2px 12px rgb(26 26 26 / 0.04);
+	}
 
-		.tstc__slide {
-			padding-inline: 0;
-		}
+	/* An oversized gold quotation mark, set behind the text. */
+	.tcard::before {
+		content: '\201C';
+		position: absolute;
+		top: -18px;
+		right: 18px;
+		color: var(--gold-cream);
+		font-family: var(--serif);
+		font-size: 150px;
+		line-height: 1;
+		pointer-events: none;
+	}
 
-		.tstc__arrow :global(svg) {
-			width: 20px;
-			height: 20px;
+	.tcard__figure {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		margin: 0;
+		padding: 28px 28px 26px;
+	}
+
+	.tcard__stars {
+		display: flex;
+		gap: 3px;
+	}
+
+	.tcard__stars :global(.tcard__star) {
+		width: 17px;
+		height: 17px;
+		color: var(--gold-dark);
+	}
+
+	.tcard__stars :global(.tcard__star--off) {
+		color: var(--line-2);
+	}
+
+	.tcard__quote {
+		flex: 1;
+		margin: 18px 0 0;
+		color: var(--ink);
+		font-family: var(--serif);
+		font-size: 19px;
+		font-style: italic;
+		line-height: 1.55;
+	}
+
+	.tcard__by {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		margin-top: 24px;
+		padding-top: 20px;
+		border-top: 1px solid var(--line);
+	}
+
+	.tcard__avatar {
+		display: grid;
+		flex: none;
+		place-items: center;
+		width: 44px;
+		height: 44px;
+		border-radius: 50%;
+		background: var(--brand-green);
+		color: var(--gold-light);
+		font-family: var(--serif);
+		font-size: 17px;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+	}
+
+	.tcard__who {
+		display: flex;
+		flex-direction: column;
+		gap: 3px;
+	}
+
+	.tcard__person {
+		color: var(--ink);
+		font-family: var(--serif);
+		font-size: 17px;
+		font-weight: 600;
+	}
+
+	.tcard__role {
+		color: var(--muted);
+		font-size: 11px;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+	}
+
+	@media (width <= 900px) {
+		.tcar {
+			--per-view: 1;
+		}
+	}
+
+	@media (width <= 600px) {
+		.tst {
+			padding: 60px 0;
+		}
+		/* Phones swipe; the dots stay as the position marker. */
+		.tcar__arrow {
+			display: none;
 		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.tstc__viewport,
-		.tstc__arrow,
-		.tstc__dots :global(.tstc__dot),
-		.tstc__dots :global(.tstc__dot)::after {
+		.tcar__arrow,
+		.tcar__dots :global(.tcar__dot),
+		.tcar__dots :global(.tcar__dot)::after {
 			transition: none;
 		}
 	}
 </style>
 
 <script>
-	document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
-		const viewport = root.querySelector<HTMLElement>('[data-carousel-viewport]');
-		const slides = Array.from(root.querySelectorAll<HTMLElement>('.tstc__slide'));
-		const dots = root.parentElement?.querySelector<HTMLElement>('[data-carousel-dots]');
-		if (!viewport || slides.length < 2) return;
+	document.querySelectorAll<HTMLElement>('[data-tcar]').forEach((root) => {
+		const track = root.querySelector<HTMLElement>('[data-tcar-track]');
+		const cards = Array.from(track?.children ?? []) as HTMLElement[];
+		const dots = root.parentElement?.querySelector<HTMLElement>('[data-tcar-dots]');
+		const prev = root.querySelector<HTMLButtonElement>('[data-tcar-prev]');
+		const next = root.querySelector<HTMLButtonElement>('[data-tcar-next]');
+		if (!track || cards.length < 2) return;
 
 		const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-		let index = 0;
-		let settle = 0;
+		// One step is a card plus the gap after it.
+		const step = () => (cards[1]?.offsetLeft ?? 0) - cards[0].offsetLeft || track.clientWidth;
+		// The last position that still fills the view.
+		const last = () => Math.max(0, cards.length - Math.round((track.clientWidth + 1) / step()));
+		const current = () => Math.min(last(), Math.round(track.scrollLeft / step()));
 
-		// Fit the strip to one review, so a short quote doesn't sit in a tall box.
-		const fit = () => {
-			viewport.style.height = `${slides[index].offsetHeight}px`;
+		const go = (index: number) => {
+			const max = last();
+			const target = index > max ? 0 : index < 0 ? max : index;
+			track.scrollTo({ left: target * step(), behavior: reduced ? 'auto' : 'smooth' });
 		};
 
-		const go = (next: number) => {
-			index = (next + slides.length) % slides.length;
-			fit();
-			viewport.scrollTo({
-				left: index * viewport.clientWidth,
-				behavior: reduced ? 'auto' : 'smooth',
+		let dotEls: HTMLButtonElement[] = [];
+		const buildDots = () => {
+			const count = last() + 1;
+			if (!dots || dotEls.length === count) return;
+			dots.replaceChildren();
+			dotEls = Array.from({ length: count }, (_, i) => {
+				const dot = document.createElement('button');
+				dot.type = 'button';
+				dot.className = 'tcar__dot';
+				dot.setAttribute('aria-label', `Show review ${i + 1}`);
+				dot.addEventListener('click', () => go(i));
+				dots.append(dot);
+				return dot;
 			});
 		};
 
-		const dotEls = slides.map((_, i) => {
-			const dot = document.createElement('button');
-			dot.type = 'button';
-			dot.className = 'tstc__dot';
-			dot.setAttribute('aria-label', `Review ${i + 1} of ${slides.length}`);
-			dot.addEventListener('click', () => go(i));
-			dots?.append(dot);
-			return dot;
-		});
-
-		/* The scroll position is the source of truth, so a swipe and an arrow
-		   press both land in the same place. */
+		// The scroll position is the source of truth, so swipes and buttons agree.
 		const sync = () => {
-			const at = Math.round(viewport.scrollLeft / Math.max(1, viewport.clientWidth));
-			index = Math.min(slides.length - 1, Math.max(0, at));
-			fit();
-			dotEls.forEach((dot, n) => {
-				dot.classList.toggle('is-active', n === index);
-				if (n === index) dot.setAttribute('aria-current', 'true');
+			buildDots();
+			const scrollable = last() > 0;
+			if (prev) prev.hidden = !scrollable;
+			if (next) next.hidden = !scrollable;
+			if (dots) dots.hidden = !scrollable;
+			const at = current();
+			dotEls.forEach((dot, i) => {
+				dot.classList.toggle('is-active', i === at);
+				if (i === at) dot.setAttribute('aria-current', 'true');
 				else dot.removeAttribute('aria-current');
 			});
 		};
 
-		viewport.addEventListener('scroll', () => {
+		let settle = 0;
+		track.addEventListener('scroll', () => {
 			clearTimeout(settle);
-			settle = window.setTimeout(sync, 90);
+			settle = window.setTimeout(sync, 80);
 		});
-		root.querySelector('[data-carousel-prev]')?.addEventListener('click', () => go(index - 1));
-		root.querySelector('[data-carousel-next]')?.addEventListener('click', () => go(index + 1));
+		prev?.addEventListener('click', () => go(current() - 1));
+		next?.addEventListener('click', () => go(current() + 1));
 		addEventListener('resize', sync);
-		// Text rewraps when fonts load or the width changes; keep the height in step.
-		const observer = new ResizeObserver(fit);
-		slides.forEach((slide) => observer.observe(slide));
 		sync();
 	});
 </script>

@@ -7,12 +7,14 @@ interface Props {
 	align?: 'center' | 'left';
 	id?: string;
 	as?: 'h2' | 'h3';
+	/** 'red' puts the eyebrow in the logo red; 'light' is for the green bands. */
+	tone?: 'gold' | 'red' | 'light';
 }
 
-const { eyebrow, title, lead, align = 'center', id, as: Tag = 'h2' } = Astro.props;
+const { eyebrow, title, lead, align = 'center', id, as: Tag = 'h2', tone = 'gold' } = Astro.props;
 ---
 
-<div class:list={['sh', `sh--${align}`]}>
+<div class:list={['sh', `sh--${align}`, `sh--${tone}`]}>
 	<div class:list={['eyebrow', { center: align === 'center' }]}>
 		<span class="eyebrow__rule"></span>
 		<span class="eyebrow__label">{eyebrow}</span>
@@ -37,6 +39,10 @@ const { eyebrow, title, lead, align = 'center', id, as: Tag = 'h2' } = Astro.pro
 		margin: 16px 0 0;
 	}
 
+	.sh:not(.sh--gold) .sh__title {
+		text-wrap: balance;
+	}
+
 	.sh__lead {
 		max-width: 64ch;
 		margin: 16px 0 0;
@@ -48,5 +54,43 @@ const { eyebrow, title, lead, align = 'center', id, as: Tag = 'h2' } = Astro.pro
 
 	.sh--center .sh__lead {
 		margin-inline: auto;
+	}
+
+	/* Homepage tones: a left-aligned eyebrow keeps only its trailing rule. */
+	.sh--left:not(.sh--gold) .eyebrow__rule:first-child {
+		display: none;
+	}
+
+	.sh--red .eyebrow__label {
+		color: var(--brand-red);
+		font-weight: 600;
+	}
+
+	.sh--light .eyebrow__label {
+		color: var(--gold-light);
+	}
+
+	.sh--light .eyebrow__rule {
+		background: linear-gradient(90deg, transparent, var(--gold));
+	}
+
+	.sh--light .eyebrow__rule--r {
+		background: linear-gradient(90deg, var(--gold), transparent);
+	}
+
+	.sh--light .sh__title {
+		color: var(--paper);
+	}
+
+	.sh--light .sh__lead {
+		color: rgb(253 252 250 / 0.78);
+	}
+
+	/* The reference's wide tracking wraps long homepage eyebrows on a phone. */
+	@media (width <= 560px) {
+		.sh:not(.sh--gold) .eyebrow__label {
+			letter-spacing: 0.26em;
+			line-height: 1.6;
+		}
 	}
 </style>

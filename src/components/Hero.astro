@@ -2,11 +2,15 @@
 import { getImage } from 'astro:assets';
 import { photos, heroAlt } from '../data/images';
 import womenOwnedWordmark from '../assets/women-owned-wordmark.webp';
+import Icon from './Icon.astro';
 
 /**
  * Two art-directed photos: a wide one that leaves the left third open for the
  * headline, and a separate portrait photo for phones. Eager + high priority - this is the
  * largest contentful paint and must never be lazy-loaded.
+ *
+ * The bottom of the hero is left clear: the quote card that follows is pulled
+ * up over it (see QuoteSection).
  */
 const desktop = await getImage({
 	src: photos.heroDesktop,
@@ -35,17 +39,18 @@ const mobile = await getImage({ src: photos.heroMobile, widths: [600, 832], form
 	</picture>
 	<div class="hero__overlay"></div>
 	<div class="hero__content">
-		<h1 class="hero__title">
-			<span class="hero__titleLine">Lake Geneva Trolley &amp; Bus Rental</span>
-			<span class="hero__finalLine">
-				<em class="hero__for">for</em>{' '}
-				<em class="grad">Weddings &amp; Events</em>
-			</span>
-		</h1>
-		<p class="hero__lead">
-			Private trolley and bus charters around Geneva Lake.
+		<p class="hero__eyebrow">
+			<span class="hero__rule" aria-hidden="true"></span>
+			Transportation in Lake Geneva, Wisconsin
 		</p>
-		<span class="hero__divider" aria-hidden="true"><span></span><i></i></span>
+		<h1 class="hero__title">
+			<span class="hero__line">Lake Geneva Trolley Rental</span>
+			<span class="hero__line"><em class="hero__for">for</em> <em class="grad">Weddings, Events</em> &amp;</span>
+			<span class="hero__line">Group Transportation</span>
+		</h1>
+		<p class="hero__tagline">Elegant. Reliable. Local.</p>
+		<p class="hero__lead">The best way to experience Lake Geneva.</p>
+		<span class="hero__divider" aria-hidden="true"><span></span></span>
 		<div class="hero__ownership">
 			<span class="hero__proudly">Proudly</span>
 			<span class="hero__logoCrop">
@@ -60,16 +65,21 @@ const mobile = await getImage({ src: photos.heroMobile, widths: [600, 832], form
 				/>
 			</span>
 		</div>
-		<a class="btn-gold hero__cta" href="/fleet/">View Fleet</a>
+		<div class="hero__actions">
+			<a class="btn-red" href="#getquote">Get a Free Quote <Icon name="arrow-long" /></a>
+			<a class="btn-line" href="/fleet/">View Our Fleet</a>
+		</div>
 	</div>
 </section>
 
 <style>
 	.hero {
 		position: relative;
-		height: 550px;
+		display: flex;
+		align-items: center;
+		min-height: 660px;
 		overflow: hidden;
-		background: #14242e;
+		background: var(--brand-green-deep);
 	}
 
 	.hero__picture,
@@ -84,23 +94,26 @@ const mobile = await getImage({ src: photos.heroMobile, widths: [600, 832], form
 	.hero__image {
 		object-fit: cover;
 		/* The photo is 2:1 and the hero box is wider, so height is what gets cropped.
-		   Just above centre keeps the sunset and the vehicles and drops the least
-		   interesting foreground paving. */
-		object-position: 50% 52%;
+		   Favour the top: the quote card covers the bottom of the frame. */
+		object-position: 50% 40%;
 	}
 
-	/* Shade the text column, then fade completely to the untouched photograph. */
+	/* Shade the text column and the strip the quote card sits on; leave the vehicles clear.
+	   The radial sits behind the headline, whose first line reaches into the bright sky. */
 	.hero__overlay {
 		position: absolute;
 		inset: 0;
-		opacity: 0.8;
-		background: linear-gradient(
-			90deg,
-			rgb(0 0 0 / 0.9) 0%,
-			rgb(0 0 0 / 0.76) 26%,
-			rgb(0 0 0 / 0.4) 44%,
-			rgb(0 0 0 / 0) 65%
-		);
+		background:
+			linear-gradient(180deg, rgb(11 47 32 / 0) 62%, rgb(11 47 32 / 0.55) 100%),
+			radial-gradient(ellipse 46% 44% at 30% 30%, rgb(6 22 15 / 0.5) 0%, rgb(6 22 15 / 0.32) 60%, rgb(6 22 15 / 0) 100%),
+			linear-gradient(
+				90deg,
+				rgb(6 22 15 / 0.86) 0%,
+				rgb(6 22 15 / 0.72) 30%,
+				rgb(6 22 15 / 0.46) 50%,
+				rgb(6 22 15 / 0.14) 64%,
+				rgb(6 22 15 / 0) 76%
+			);
 		pointer-events: none;
 	}
 
@@ -110,60 +123,98 @@ const mobile = await getImage({ src: photos.heroMobile, widths: [600, 832], form
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		justify-content: flex-start;
-		max-width: 1400px;
-		margin-top: 76px;
-		padding: 0 clamp(24px, 6vw, 96px);
-		text-align: left;
+		width: 100%;
+		max-width: 1240px;
+		margin: 0 auto;
+		padding: 64px 28px 150px;
+	}
+
+	.hero__eyebrow {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		margin: 0 0 20px;
+		color: var(--gold-light);
+		font-size: 11.5px;
+		font-weight: 500;
+		letter-spacing: 0.32em;
+		text-transform: uppercase;
+		text-shadow: 0 1px 12px rgb(0 0 0 / 0.5);
+	}
+
+	.hero__rule {
+		flex: none;
+		width: 40px;
+		height: 1px;
+		background: var(--gold);
 	}
 
 	.hero__title {
 		margin: 0;
 		color: #fff;
 		font-family: var(--serif);
-		font-size: clamp(34px, 5vw, 60px);
+		font-size: clamp(40px, 4.6vw, 64px);
 		font-weight: 400;
-		line-height: 1.08;
+		line-height: 1.06;
 		text-shadow: 0 2px 26px rgb(0 0 0 / 0.38);
 	}
 
-	.hero__titleLine,
-	.hero__finalLine {
+	.hero__line {
 		display: block;
+	}
+
+	@media (width > 768px) {
+		.hero__line {
+			white-space: nowrap;
+		}
 	}
 
 	.hero__for {
 		font-style: italic;
 	}
 
-	.hero__lead {
-		max-width: 52ch;
-		margin: 18px 0 0;
-		color: rgb(255 255 255 / 0.9);
-		font-size: clamp(14px, 1.5vw, 17px);
-		font-weight: 300;
-		line-height: 1.65;
+	.hero__tagline {
+		margin: 24px 0 0;
+		color: #fff;
+		font-size: clamp(16px, 1.5vw, 19px);
+		font-weight: 500;
+		letter-spacing: 0.04em;
 		text-shadow: 0 2px 18px rgb(0 0 0 / 0.42);
 	}
 
+	.hero__lead {
+		margin: 4px 0 0;
+		color: rgb(255 255 255 / 0.9);
+		font-size: clamp(15px, 1.4vw, 17px);
+		font-weight: 300;
+		line-height: 1.6;
+		text-shadow: 0 2px 18px rgb(0 0 0 / 0.42);
+	}
+
+	.hero__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 14px;
+		margin-top: 28px;
+	}
+
+	.hero__actions a:focus-visible {
+		outline: 2px solid var(--gold-light);
+		outline-offset: 4px;
+	}
+
+	/* After the reference: a short gold rule, then the credential. */
 	.hero__divider {
 		display: flex;
 		align-items: center;
 		gap: 11px;
-		margin: 22px 0;
+		margin: 24px 0 20px;
 	}
 
 	.hero__divider span {
 		width: 90px;
 		height: 1px;
 		background: var(--gold);
-	}
-
-	.hero__divider i {
-		width: 7px;
-		height: 7px;
-		background: var(--gold);
-		transform: rotate(45deg);
 	}
 
 	.hero__ownership {
@@ -175,7 +226,7 @@ const mobile = await getImage({ src: photos.heroMobile, widths: [600, 832], form
 
 	.hero__proudly {
 		color: var(--gold);
-		font-size: 13px;
+		font-size: 11.5px;
 		font-weight: 600;
 		line-height: 1;
 		letter-spacing: 0.32em;
@@ -186,7 +237,7 @@ const mobile = await getImage({ src: photos.heroMobile, widths: [600, 832], form
 	.hero__logoCrop {
 		position: relative;
 		display: block;
-		width: clamp(120px, 13vw, 155px);
+		width: clamp(120px, 11vw, 150px);
 		aspect-ratio: 515 / 216;
 		overflow: hidden;
 	}
@@ -202,81 +253,63 @@ const mobile = await getImage({ src: photos.heroMobile, widths: [600, 832], form
 		filter: invert(1) hue-rotate(180deg) saturate(1.08) brightness(1.08);
 	}
 
-	.hero__cta {
-		display: inline-flex;
-		align-self: flex-start;
-		align-items: center;
-		min-height: 40px;
-		margin-top: 26px;
-		padding: 11px 28px;
-		font-size: 11.5px;
-		letter-spacing: 0.2em;
-	}
-
-	.hero__cta:focus-visible {
-		outline: 2px solid var(--gold-light);
-		outline-offset: 4px;
-	}
-
-	/* Extend the fade with the wider relative text column on smaller screens. */
+	/* The text column is wider relative to the photo here, so the fade runs further. */
 	@media (769px <= width <= 1023px) {
 		.hero__overlay {
-			background: linear-gradient(
-				90deg,
-				rgb(0 0 0 / 0.9) 0%,
-				rgb(0 0 0 / 0.78) 34%,
-				rgb(0 0 0 / 0.42) 58%,
-				rgb(0 0 0 / 0) 85%
-			);
-		}
-
-		.hero__content {
-			width: min(92%, 620px);
+			background:
+				linear-gradient(180deg, rgb(11 47 32 / 0) 62%, rgb(11 47 32 / 0.55) 100%),
+				linear-gradient(
+					90deg,
+					rgb(6 22 15 / 0.88) 0%,
+					rgb(6 22 15 / 0.74) 40%,
+					rgb(6 22 15 / 0.36) 66%,
+					rgb(6 22 15 / 0) 90%
+				);
 		}
 	}
 
 	@media (width <= 768px) {
 		.hero {
-			height: auto;
-			min-height: clamp(400px, 60svh, 470px);
+			min-height: 0;
 		}
 
 		.hero__image {
-			object-position: 66% center;
+			object-position: 50% 8%;
 		}
 
-		/* The reference's soft paper curve where the hero meets the page. It is cut
-		   out of the hero with a mask rather than painted over it, so no clipped
-		   overlay edge is left to show as a grey seam at fractional zoom levels. */
-		.hero {
-			-webkit-mask-image: radial-gradient(60% 44px at 50% calc(100% + 22px), transparent 97%, #000 100%);
-			mask-image: radial-gradient(60% 44px at 50% calc(100% + 22px), transparent 97%, #000 100%);
-		}
-
-		/* Shade the left, where the text starts, and leave the right of the photo clear. */
+		/* Shade the left, where the text starts, and ease off towards the right edge.
+		   A band across the top keeps the full-width headline legible over the sky. */
 		.hero__overlay {
-			opacity: 1;
-			background: linear-gradient(
-				90deg,
-				rgb(0 0 0 / 0.72) 0%,
-				rgb(0 0 0 / 0.5) 38%,
-				rgb(0 0 0 / 0.18) 72%,
-				rgb(0 0 0 / 0) 100%
-			);
+			background:
+				linear-gradient(180deg, rgb(11 47 32 / 0) 70%, rgb(11 47 32 / 0.6) 100%),
+				linear-gradient(180deg, rgb(6 22 15 / 0.42) 0%, rgb(6 22 15 / 0.36) 46%, rgb(6 22 15 / 0) 60%),
+				linear-gradient(
+					90deg,
+					rgb(6 22 15 / 0.78) 0%,
+					rgb(6 22 15 / 0.52) 45%,
+					rgb(6 22 15 / 0.2) 78%,
+					rgb(6 22 15 / 0.06) 100%
+				);
 		}
 
 		.hero__content {
-			width: 100%;
-			margin: 0;
-			padding: 50px 22px 58px;
+			padding: 52px 20px 96px;
+		}
+
+		.hero__eyebrow {
+			margin-bottom: 16px;
+			font-size: 9.5px;
+			letter-spacing: 0.2em;
+		}
+
+		.hero__rule {
+			display: none;
 		}
 
 		.hero__title {
-			width: 100%;
-			font-size: clamp(2.15rem, 8.5vw, 3.25rem);
-			line-height: 1;
+			font-size: clamp(2.2rem, 9vw, 3.1rem);
+			line-height: 1.02;
 			text-wrap: balance;
-			/* A very light shadow: just enough to lift the text off the bright sky. */
 			text-shadow: 0 1px 2px rgb(0 0 0 / 0.3);
 		}
 
@@ -286,51 +319,27 @@ const mobile = await getImage({ src: photos.heroMobile, widths: [600, 832], form
 			filter: drop-shadow(0 1px 1.5px rgb(0 0 0 / 0.35));
 		}
 
-		.hero__lead {
-			max-width: none;
-			margin-top: 14px;
-			font-size: 14.5px;
-			line-height: 1.55;
-			text-shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+		.hero__tagline {
+			margin-top: 18px;
+		}
+
+		.hero__actions {
+			flex-direction: column;
+			align-self: stretch;
+			gap: 10px;
+			margin-top: 24px;
 		}
 
 		.hero__divider {
-			margin: 18px 0;
-		}
-
-		.hero__ownership {
-			gap: 6px;
+			margin: 20px 0 16px;
 		}
 
 		.hero__logoCrop {
-			width: clamp(110px, 35vw, 130px);
+			width: 120px;
 		}
 
-		.hero__cta {
-			min-height: 40px;
-			margin-top: 20px;
-			letter-spacing: 0.18em;
-		}
-	}
-
-	/* On narrow phones the portrait photo only just overfills the box; show the
-	   top of the frame so the trolley sits lower, below the intro text. */
-	@media (width <= 480px) {
-		.hero__image {
-			object-position: 50% 8%;
-		}
-	}
-
-	@media (width <= 360px) {
-		.hero__content {
-			width: 100%;
-		}
-		.hero__title {
-			width: 100%;
-			font-size: 2.05rem;
-		}
-		.hero__divider span {
-			width: 76px;
+		.hero__ownership {
+			padding-bottom: 20px;
 		}
 	}
 </style>

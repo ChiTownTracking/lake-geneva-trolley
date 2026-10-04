@@ -1,0 +1,67 @@
+---
+import QuoteForm from '../QuoteForm.astro';
+---
+
+<section class="qs">
+	<div class="wrap wrap-wide">
+		<div class="qs__card" id="getquote">
+			<h2 class="visually-hidden">Request a Lake Geneva trolley quote</h2>
+			<QuoteForm
+				layout="tabs"
+				steps={['Trip Information', 'Details', 'Get Your Quote']}
+				submitLabel="Request My Quote"
+			/>
+			<p class="qs__note">
+				Trolley rental pricing varies with the date, the vehicle, how long you need it, the
+				itinerary and the pickup details. Share your plans and you will get an estimate built around
+				them.
+			</p>
+		</div>
+	</div>
+</section>
+
+<style>
+	.qs {
+		padding: 0 0 52px;
+		background: var(--cream);
+	}
+
+	.qs__card {
+		position: relative;
+		z-index: 3;
+		margin-top: -104px;
+		padding: 26px 32px 22px;
+		border: 1px solid rgb(230 222 204 / 0.8);
+		border-radius: 6px;
+		background: var(--paper);
+		box-shadow:
+			0 28px 60px rgb(11 47 32 / 0.16),
+			0 2px 8px rgb(11 47 32 / 0.06);
+		scroll-margin-top: 96px;
+	}
+
+	.qs__note {
+		max-width: 78ch;
+		margin: 16px 0 0;
+		color: #6b6459;
+		font-size: 12.5px;
+		font-weight: 300;
+		line-height: 1.6;
+	}
+
+	@media (width <= 720px) {
+		.qs__card {
+			margin-top: -56px;
+			padding: 6px 20px 20px;
+		}
+	}
+
+	@media (width <= 560px) {
+		.qs {
+			padding-bottom: 40px;
+		}
+		.qs__card {
+			padding-inline: 16px;
+		}
+	}
+</style>

@@ -1,21 +1,6 @@
 ---
 /** Small stroked icon set, sized by the caller via CSS. */
-interface Props {
-	name:
-		| 'phone'
-		| 'mail'
-		| 'pin'
-		| 'chat'
-		| 'arrow-left'
-		| 'arrow-right'
-		| 'instagram'
-		| 'facebook';
-	class?: string;
-}
-
-const { name, class: className } = Astro.props;
-
-const paths: Record<Props['name'], string> = {
+const paths = {
 	phone:
 		'M6.6 2.5 8.4 6l-1.7 1.7a12 12 0 0 0 5.6 5.6L14 11.6l3.5 1.8v3.1a1.5 1.5 0 0 1-1.7 1.5A14.5 14.5 0 0 1 3 6.2 1.5 1.5 0 0 1 4.5 4.5h2.1Z',
 	mail: 'M2.5 5.5h15v9h-15zM2.5 5.5 10 11l7.5-5.5',
@@ -27,18 +12,59 @@ const paths: Record<Props['name'], string> = {
 		'M6.6 3h6.8A3.6 3.6 0 0 1 17 6.6v6.8a3.6 3.6 0 0 1-3.6 3.6H6.6A3.6 3.6 0 0 1 3 13.4V6.6A3.6 3.6 0 0 1 6.6 3Z M12.9 10a2.9 2.9 0 1 1-5.8 0 2.9 2.9 0 0 1 5.8 0Z M14.3 5.8h.01',
 	facebook: 'M12.6 3.4h-1.7a3 3 0 0 0-3 3V9H6.2v2.6h1.7v5h2.6v-5h2l.4-2.6h-2.4V6.9c0-.5.3-.8.8-.8h1.3V3.4Z',
 };
+
+/** Drawn on a 24-unit grid, so they keep their own viewBox and a slightly heavier stroke. */
+const paths24 = {
+	gem: 'M6 3h12l4 6-10 13L2 9Z M11 3 8 9l4 13 4-13-3-6 M2 9h20',
+	users:
+		'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z M22 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75',
+	'map-pin':
+		'M20 10c0 4.99-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 14.99 4 10a8 8 0 0 1 16 0Z M12 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z',
+	shield:
+		'M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z M9 12l2 2 4-4',
+	heart:
+		'M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z',
+	briefcase:
+		'M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16 M4 6h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z',
+	wine: 'M8 22h8 M7 10h10 M12 15v7 M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z',
+	hotel:
+		'M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z M10 22v-4h4v4 M8.5 6.5h.01 M12 6.5h.01 M15.5 6.5h.01 M8.5 10.5h.01 M12 10.5h.01 M15.5 10.5h.01 M8.5 14.5h.01 M12 14.5h.01 M15.5 14.5h.01',
+	plane:
+		'M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2Z',
+	presentation: 'M2 3h20 M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3 M7 21l5-5 5 5',
+	bus: 'M8 6v6 M15 6v6 M2 12h19.6 M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3 M7 16a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z M9 18h5 M16 16a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z',
+	check: 'M20 6 9 17l-5-5',
+	plus: 'M12 5v14 M5 12h14',
+	'arrow-long': 'M4 12h16 M14 6l6 6-6 6',
+};
+
+/** Solid glyphs: filled, no stroke. */
+const solid24 = {
+	star: 'M12 2.5l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.5l-5.87 3.08 1.12-6.54L2.5 9.41l6.56-.95L12 2.5Z',
+};
+
+interface Props {
+	name: keyof typeof paths | keyof typeof paths24 | keyof typeof solid24;
+	class?: string;
+}
+
+const { name, class: className } = Astro.props;
+
+const isSolid = name in solid24;
+const is24 = isSolid || name in paths24;
+const d = { ...paths, ...paths24, ...solid24 }[name];
 ---
 
 <svg
 	class={className}
 	width="20"
 	height="20"
-	viewBox="0 0 20 20"
-	fill="none"
-	stroke="currentColor"
-	stroke-width="1.35"
+	viewBox={is24 ? '0 0 24 24' : '0 0 20 20'}
+	fill={isSolid ? 'currentColor' : 'none'}
+	stroke={isSolid ? 'none' : 'currentColor'}
+	stroke-width={is24 ? '1.6' : '1.35'}
 	stroke-linecap="round"
 	stroke-linejoin="round"
 	aria-hidden="true"
-	focusable="false"><path d={paths[name]}></path></svg
+	focusable="false"><path d={d}></path></svg
 >

@@ -42,18 +42,24 @@ These were not invented. Each needs confirming before it can be published.
   appear anywhere. Copy consistently says pricing is quoted per trip.
 - **Deposit, payment and cancellation policy.** No FAQ covers these. Supply the
   real policy and it can be added to [`src/data/content.ts`](src/data/content.ts).
-- **Service area.** Copy says charters are planned around Geneva Lake and asks
-  for the full route; it does not claim a defined radius or list towns served.
+- **Service area.** The homepage redesign (October 3, 2026) names Lake Geneva,
+  Fontana, Williams Bay, Delavan and Elkhorn, plus southern Wisconsin and
+  Chicago trips on request (see `serviceAreas` and `homeFaqs` in
+  [`src/data/home.ts`](src/data/home.ts)). No radius is claimed. **Confirm the
+  business serves each of those towns**, or trim the list.
 - **Venue and resort names.** No property is named, so nothing implies a
   partnership, endorsement or guaranteed access.
 - **Licensing, insurance and certifications.** No "licensed & insured" or
   women-owned/WBENC badge is shown. Provide documentation and these can go in
   the footer the way the reference site does.
-- **Reviews and testimonials.** The homepage testimonial carousel is **built
-  but carries placeholder quotes** - see the notice above `testimonials` in
+- **Reviews and testimonials.** The homepage review cards ("What Our Customers
+  Say") are **built but carry placeholder quotes and five-star ratings** - see
+  the notice above `testimonials` in
   [`src/data/content.ts`](src/data/content.ts). Every quote reads "Placeholder
   review - replace before launch" and is signed "Client name / Town, WI", so it
-  cannot ship unnoticed. **This is blocking for launch.** Replace the entries
+  cannot ship unnoticed. The section heading says "Real experiences", so it must
+  not launch with these placeholders. **This is blocking for launch.** Copy each
+  rating from its source review, or omit it. Replace the entries
   with real, attributable Lake Geneva Trolley reviews; emptying the array
   removes the section rather than leaving a gap. Nothing was carried over from
   the ChiTown Trolley site - those reviews were written by other people about a

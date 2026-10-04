@@ -1,0 +1,168 @@
+---
+import { Image } from 'astro:assets';
+import SectionHeading from '../SectionHeading.astro';
+import Icon from '../Icon.astro';
+import { weddingServices } from '../../data/home';
+import { photos, alt } from '../../data/images';
+---
+
+<section class="rv wed">
+	<div class="wrap wrap-wide wed__grid">
+		<div class="wed__content">
+			<SectionHeading
+				eyebrow="Wedding Transportation in Lake Geneva"
+				title="Wedding Trolley Rental in Lake Geneva"
+				align="left"
+				tone="red"
+			/>
+			<p class="wed__lead">
+				Make your wedding day even more special with elegant trolley transportation. We provide
+				wedding shuttles, guest transportation and private trolleys for ceremonies, receptions and
+				hotel transfers throughout Lake Geneva.
+			</p>
+			<ul class="wed__list">
+				{
+					weddingServices.map((item) => (
+						<li class="wed__item">
+							<Icon name="check" class="wed__check" />
+							{item}
+						</li>
+					))
+				}
+			</ul>
+			<a class="btn-red wed__cta" href="/weddings/">
+				Plan Your Wedding Transportation
+				<Icon name="arrow-long" />
+			</a>
+		</div>
+
+		<figure class="wed__media">
+			<Image
+				class="wed__img"
+				src={photos.occasions}
+				alt={alt.occasions}
+				widths={[500, 800, 1200]}
+				sizes="(max-width: 900px) 100vw, 46vw"
+				loading="lazy"
+			/>
+		</figure>
+	</div>
+</section>
+
+<style>
+	.wed {
+		padding: 92px 0;
+		background: var(--cream);
+	}
+
+	.wed__grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+		align-items: center;
+		gap: clamp(40px, 6vw, 96px);
+	}
+
+	.wed__content :global(.sh) {
+		margin-bottom: 0;
+	}
+
+	.wed__content :global(.sh__title) {
+		max-width: 20ch;
+		line-height: 1.12;
+		text-wrap: balance;
+	}
+
+	.wed__lead {
+		max-width: 58ch;
+		margin: 20px 0 0;
+		color: var(--muted);
+		font-size: 15px;
+		font-weight: 300;
+		line-height: 1.75;
+	}
+
+	.wed__list {
+		display: grid;
+		gap: 12px;
+		margin: 26px 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.wed__item {
+		display: flex;
+		align-items: flex-start;
+		gap: 12px;
+		color: var(--ink);
+		font-size: 15px;
+		font-weight: 400;
+		line-height: 1.5;
+	}
+
+	.wed__item :global(.wed__check) {
+		flex: none;
+		width: 18px;
+		height: 18px;
+		margin-top: 2px;
+		color: var(--brand-red);
+	}
+
+	.wed__cta {
+		align-self: flex-start;
+		margin-top: 34px;
+	}
+
+	.wed__content {
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* The photo sits inside an offset gold hairline frame. */
+	.wed__media {
+		position: relative;
+		margin: 0 22px 22px 0;
+	}
+
+	.wed__media::before {
+		content: '';
+		position: absolute;
+		inset: 22px -22px -22px 22px;
+		border: 1px solid var(--gold);
+		border-radius: 6px;
+		pointer-events: none;
+	}
+
+	.wed__img {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 6 / 5;
+		border-radius: 6px;
+		object-fit: cover;
+		box-shadow: 0 24px 50px rgb(26 26 26 / 0.14);
+	}
+
+	@media (width <= 900px) {
+		.wed {
+			padding: 60px 0 64px;
+		}
+		.wed__grid {
+			grid-template-columns: 1fr;
+		}
+		.wed__media {
+			order: -1;
+			margin: 0 14px 14px 0;
+		}
+		.wed__media::before {
+			inset: 14px -14px -14px 14px;
+		}
+	}
+
+	@media (width <= 560px) {
+		.wed__cta {
+			align-self: stretch;
+			text-align: center;
+		}
+	}
+</style>

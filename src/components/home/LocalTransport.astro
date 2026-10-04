@@ -1,0 +1,183 @@
+---
+import { Image } from 'astro:assets';
+import SectionHeading from '../SectionHeading.astro';
+import Icon from '../Icon.astro';
+import { localServices } from '../../data/home';
+import harbor from '../../assets/home/lake-geneva-harbor.jpg';
+---
+
+<section class="rv local">
+	<div class="wrap wrap-wide local__grid">
+		<figure class="local__media">
+			<Image
+				class="local__img"
+				src={harbor}
+				alt="Aerial view of the Lake Geneva waterfront at dusk, with boats in the harbor, piers lit along the shore and a Ferris wheel glowing on the beach."
+				widths={[600, 1000]}
+				sizes="(max-width: 900px) 100vw, 62vw"
+				loading="lazy"
+			/>
+		</figure>
+
+		<div class="local__card">
+			<SectionHeading
+				eyebrow="Local Transportation Experts"
+				title="Local Transportation You Can Count On"
+				align="left"
+				tone="red"
+			/>
+			<p class="local__lead">
+				From the Lake Geneva shoreline to nearby towns, we provide dependable trolley and shuttle
+				service for weddings, events, hotels, resorts and private charters. Every route is planned
+				around your venues and your timeline, so your event transportation is seamless and
+				stress-free.
+			</p>
+			<ul class="local__list">
+				{
+					localServices.map((item) => (
+						<li class="local__item">
+							<span class="local__icon">
+								<Icon name={item.icon} />
+							</span>
+							{item.label}
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</div>
+</section>
+
+<style>
+	.local {
+		padding: 92px 0;
+		background: var(--paper);
+	}
+
+	/* The photo takes the first eight of twelve columns; the card overlaps its
+	   right edge from column seven, so the two read as one composition. */
+	.local__grid {
+		display: grid;
+		grid-template-columns: repeat(12, minmax(0, 1fr));
+		align-items: center;
+	}
+
+	.local__media {
+		grid-row: 1;
+		grid-column: 1 / 9;
+		margin: 0;
+		overflow: hidden;
+		border-radius: 6px;
+		box-shadow: 0 24px 50px rgb(26 26 26 / 0.14);
+	}
+
+	.local__img {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 16 / 11;
+		object-fit: cover;
+		object-position: 50% 60%;
+	}
+
+	.local__card {
+		position: relative;
+		z-index: 1;
+		grid-row: 1;
+		grid-column: 7 / 13;
+		padding: 44px 44px 40px;
+		border: 1px solid var(--line-2);
+		border-top: 3px solid var(--brand-red);
+		border-radius: 6px;
+		background: #fff;
+		box-shadow: 0 30px 60px rgb(11 47 32 / 0.14);
+	}
+
+	.local__card :global(.sh) {
+		margin-bottom: 0;
+	}
+
+	.local__card :global(.sh__title) {
+		max-width: 18ch;
+		line-height: 1.12;
+	}
+
+	.local__lead {
+		margin: 18px 0 0;
+		color: var(--muted);
+		font-size: 15px;
+		font-weight: 300;
+		line-height: 1.75;
+	}
+
+	.local__list {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 14px 22px;
+		margin: 26px 0 0;
+		padding: 24px 0 0;
+		border-top: 1px solid var(--line-2);
+		list-style: none;
+	}
+
+	.local__item {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		color: var(--ink);
+		font-size: 14.5px;
+		font-weight: 400;
+		line-height: 1.35;
+	}
+
+	.local__icon {
+		display: grid;
+		flex: none;
+		place-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: var(--cream);
+		box-shadow: inset 0 0 0 1px var(--gold-cream);
+		color: var(--gold-deep);
+	}
+
+	.local__icon :global(svg) {
+		width: 19px;
+		height: 19px;
+	}
+
+	@media (width <= 1100px) {
+		.local__media {
+			grid-column: 1 / 10;
+		}
+		.local__card {
+			grid-column: 6 / 13;
+			padding: 36px 32px 32px;
+		}
+	}
+
+	/* Stacked: the card rises over the bottom of the photo instead. */
+	@media (width <= 900px) {
+		.local {
+			padding: 60px 0 64px;
+		}
+		.local__grid {
+			display: block;
+		}
+		.local__card {
+			margin: -56px 16px 0;
+			padding: 32px 26px 28px;
+		}
+	}
+
+	@media (width <= 480px) {
+		.local__card {
+			margin-inline: 8px;
+			padding: 28px 20px 24px;
+		}
+		.local__list {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

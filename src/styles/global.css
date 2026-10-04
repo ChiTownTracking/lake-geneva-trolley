@@ -42,6 +42,14 @@
 	--fern: #4f6b4e;
 	--fern-soft: #e9efe6;
 
+	/* Logo colours - the homepage's green bands and red calls to action */
+	--brand-green: #01432a;
+	--brand-green-deep: #0b2f20;
+	--brand-green-soft: #e7eee9;
+	--brand-red: #b00f15;
+	--brand-red-deep: #8c0b10;
+	--brand-gold: #ecc357;
+
 	--serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
 	--sans: 'Jost Variable', 'Jost', 'Helvetica Neue', Arial, sans-serif;
 }
@@ -98,6 +106,18 @@ textarea::placeholder {
 
 [hidden] {
 	display: none !important;
+}
+
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	clip-path: inset(50%);
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .skip-link {
@@ -296,6 +316,65 @@ main {
 
 .btn-invert:hover {
 	box-shadow: 0 6px 24px rgb(90 60 0 / 0.4);
+}
+
+/* Logo-red call to action and its light outline partner for dark surfaces. */
+.btn-red,
+.btn-line {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	min-height: 50px;
+	padding: 14px 30px;
+	border-radius: 2px;
+	cursor: pointer;
+	font-family: var(--sans);
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	text-decoration: none;
+	transition: background 0.25s, border-color 0.25s, color 0.25s, box-shadow 0.3s;
+}
+
+.btn-red {
+	border: 1px solid var(--brand-red);
+	background: var(--brand-red);
+	color: #fff;
+	box-shadow: 0 6px 20px rgb(176 15 21 / 0.24);
+}
+
+.btn-red:hover {
+	border-color: var(--brand-red-deep);
+	background: var(--brand-red-deep);
+	box-shadow: 0 8px 26px rgb(176 15 21 / 0.34);
+}
+
+.btn-line {
+	border: 1px solid rgb(240 217 168 / 0.75);
+	background: rgb(1 67 42 / 0.55);
+	color: #fff;
+	backdrop-filter: blur(4px);
+}
+
+.btn-line:hover {
+	border-color: var(--gold-light);
+	background: var(--brand-green);
+}
+
+.btn-red svg,
+.btn-line svg {
+	flex: none;
+	width: 17px;
+	height: 17px;
+}
+
+@media (width <= 768px) {
+	.btn-red,
+	.btn-line {
+		font-size: 12.5px;
+	}
 }
 
 .link-gold {
