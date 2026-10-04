@@ -26,6 +26,7 @@ import harbor from '../../assets/home/lake-geneva-harbor.jpg';
 				align="left"
 				tone="red"
 			/>
+			<div class="local__body">
 			<p class="local__lead">
 				From the Lake Geneva shoreline to nearby towns, we provide dependable trolley and shuttle
 				service for weddings, events, hotels, resorts and private charters. Every route is planned
@@ -44,6 +45,7 @@ import harbor from '../../assets/home/lake-geneva-harbor.jpg';
 					))
 				}
 			</ul>
+			</div>
 		</div>
 	</div>
 </section>
@@ -157,24 +159,49 @@ import harbor from '../../assets/home/lake-geneva-harbor.jpg';
 		}
 	}
 
-	/* Stacked: the card rises over the bottom of the photo instead. */
+	/* Stacked: the heading leads, then the photo, then the copy on a card that
+	   rises over the bottom of the photo. The outer card dissolves so its
+	   heading can move above the photo. */
 	@media (width <= 900px) {
 		.local {
 			padding: 60px 0 64px;
 		}
 		.local__grid {
-			display: block;
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
 		}
 		.local__card {
+			display: contents;
+		}
+		.local__card :global(.sh) {
+			order: 1;
+			margin-bottom: 24px;
+		}
+		.local__media {
+			order: 2;
+		}
+		.local__body {
+			position: relative;
+			z-index: 1;
+			order: 3;
 			margin: -56px 16px 0;
-			padding: 32px 26px 28px;
+			padding: 28px 26px 28px;
+			border: 1px solid var(--line-2);
+			border-top: 3px solid var(--brand-red);
+			border-radius: 6px;
+			background: #fff;
+			box-shadow: 0 30px 60px rgb(11 47 32 / 0.14);
+		}
+		.local__lead {
+			margin-top: 0;
 		}
 	}
 
 	@media (width <= 480px) {
-		.local__card {
+		.local__body {
 			margin-inline: 8px;
-			padding: 28px 20px 24px;
+			padding: 24px 20px 24px;
 		}
 		.local__list {
 			grid-template-columns: 1fr;

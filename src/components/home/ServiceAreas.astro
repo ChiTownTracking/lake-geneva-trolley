@@ -295,9 +295,28 @@ const towns = rest;
 		transform: scale(1.04);
 	}
 
+	/* Stacked: heading and intro, then the tiles, then the links that follow them.
+	   The intro column dissolves so its links can drop below the tiles. */
 	@media (width <= 1100px) {
 		.areas__grid {
 			grid-template-columns: 1fr;
+			row-gap: 0;
+		}
+		.areas__intro {
+			display: contents;
+		}
+		.areas__intro :global(.sh),
+		.areas__lead {
+			order: 1;
+		}
+		.bento {
+			order: 2;
+			margin-top: 32px;
+		}
+		.areas__cta,
+		.areas__aside {
+			order: 3;
+			justify-self: start;
 		}
 	}
 

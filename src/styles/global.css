@@ -293,6 +293,18 @@ main {
 	opacity: 0.6;
 }
 
+/* Form actions - Next and submit on every form - in the logo green. */
+.btn-form {
+	background: var(--brand-green);
+	color: #fff;
+	box-shadow: 0 4px 16px rgb(1 67 42 / 0.25);
+}
+
+.btn-form:hover {
+	background: var(--brand-green-deep);
+	box-shadow: 0 6px 22px rgb(1 67 42 / 0.35);
+}
+
 .btn-ghost {
 	padding: 15px 37px;
 	border: 1px solid var(--gold);

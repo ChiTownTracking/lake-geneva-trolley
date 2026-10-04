@@ -150,9 +150,30 @@ import { photos, alt } from '../../data/images';
 		.wed__grid {
 			grid-template-columns: 1fr;
 		}
+		/* Heading first, then the photo, then the rest of the copy. */
+		.wed__grid {
+			row-gap: 0;
+		}
+		.wed__content {
+			display: contents;
+		}
+		.wed__content :global(.sh) {
+			order: 1;
+		}
 		.wed__media {
-			order: -1;
-			margin: 0 14px 14px 0;
+			order: 2;
+			margin: 26px 14px 14px 0;
+		}
+		.wed__lead,
+		.wed__list,
+		.wed__cta {
+			order: 3;
+		}
+		.wed__lead {
+			margin-top: 34px;
+		}
+		.wed__cta {
+			justify-self: start;
 		}
 		.wed__media::before {
 			inset: 14px -14px -14px 14px;
@@ -161,7 +182,7 @@ import { photos, alt } from '../../data/images';
 
 	@media (width <= 560px) {
 		.wed__cta {
-			align-self: stretch;
+			justify-self: stretch;
 			text-align: center;
 		}
 	}

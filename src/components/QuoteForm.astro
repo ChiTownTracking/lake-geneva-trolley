@@ -93,7 +93,7 @@ const {
 					</div>
 					<LavatoryRequest id={`${idPrefix}-lavatory`} />
 					<div class="step__nav">
-						<button type="button" class="btn-gold" data-step-next="2">Next</button>
+						<button type="button" class="btn-gold btn-form" data-step-next="2">Next</button>
 					</div>
 				</div>
 			</div>
@@ -150,7 +150,7 @@ const {
 					</div>
 					<div class="step__nav">
 						<button type="button" class="btn-ghost" data-step-back="1">Back</button>
-						<button type="button" class="btn-gold" data-step-next="3">Next</button>
+						<button type="button" class="btn-gold btn-form" data-step-next="3">Next</button>
 					</div>
 				</div>
 			</div>
@@ -226,7 +226,7 @@ const {
 					</div>
 					<div class="step__nav">
 						<button type="button" class="btn-ghost" data-step-back="2">Back</button>
-						<button type="submit" class="btn-gold">{submitLabel}</button>
+						<button type="submit" class="btn-gold btn-form">{submitLabel}</button>
 					</div>
 				</div>
 			</div>
@@ -453,12 +453,6 @@ const {
 	.qform--tabs .step__nav :global(.btn-gold) {
 		gap: 10px;
 		border-radius: 2px;
-		background: var(--brand-red);
-		color: #fff;
-	}
-
-	.qform--tabs .step__nav :global(.btn-gold:hover) {
-		background: var(--brand-red-deep);
 	}
 
 	.qform--tabs .step__nav :global(.btn-ghost) {
@@ -480,7 +474,7 @@ const {
 			content: '';
 			grid-row: 1;
 			grid-column: 1 / -1;
-			border-radius: 999px;
+			border-radius: 10px;
 			background: var(--cream);
 		}
 
@@ -492,9 +486,9 @@ const {
 			z-index: 1;
 			grid-row: 1;
 			justify-content: center;
-			gap: 12px;
-			padding: 10px 18px;
-			border-radius: 999px;
+			gap: 10px;
+			padding: 6px 16px;
+			border-radius: 10px;
 			color: var(--muted);
 			transition:
 				background 0.25s,
@@ -522,12 +516,12 @@ const {
 		}
 
 		.qform--tabs .step__num {
-			width: 28px;
-			height: 28px;
+			width: 24px;
+			height: 24px;
 			border-color: var(--line-2);
 			background: #fff;
 			font-family: var(--sans);
-			font-size: 13px;
+			font-size: 12px;
 			font-weight: 500;
 		}
 
