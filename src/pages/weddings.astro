@@ -9,47 +9,47 @@ import weddingVehicles from '../assets/photos/wedding-trolley-coach.webp';
 
 const trolley = fleet.find((vehicle) => vehicle.id === 'classic-trolley')!;
 const coach = fleet.find((vehicle) => vehicle.id === 'super-coach-bus')!;
-const quoteHref = '/?vehicle=Classic%20Trolley#getquote';
+const quoteHref = `/?vehicle=${encodeURIComponent('White Trolley — Classic')}#getquote`;
 
 const routes = [
 	{
 		label: trolley.name,
 		title: 'A trolley for your wedding party',
-		body: 'Make the journey part of the celebration. Travel together from getting ready to the ceremony, with time for photographs around Geneva Lake before your reception.',
+		body: 'Your Lake Geneva wedding trolley rental connects getting ready, the ceremony and reception. Travel together as a wedding party, with Geneva Lake photo stops planned into your route.',
 		steps: [
-			{ title: 'Getting-ready pickup', body: 'Gather at your home, hotel or resort for one planned departure.' },
-			{ title: 'Arrive at the ceremony', body: 'Allow time to board, travel and settle in before the ceremony starts.' },
-			{ title: 'A pause for photographs', body: 'Build your chosen photo locations into the route, with parking and travel time considered.' },
-			{ title: 'On to the reception', body: 'Bring the whole party to the venue, ready to celebrate with your guests.' },
+			{ title: 'Getting-ready pickup', body: 'Start your wedding trolley itinerary with a confirmed home, hotel or resort pickup.' },
+			{ title: 'Arrive at the ceremony', body: 'Plan trolley boarding and travel time for arrival at your Lake Geneva ceremony venue.' },
+			{ title: 'A pause for photographs', body: 'Add Geneva Lake photo locations to your wedding route, allowing time for access, parking and photographs.' },
+			{ title: 'On to the reception', body: 'Travel together by wedding trolley from your photo stops to the reception venue.' },
 		],
 	},
 	{
 		label: coach.name,
 		title: 'A coach for your wedding guests',
-		body: 'Give guests a clear place to meet and a comfortable ride. Coordinate hotel pickups and evening returns around your ceremony and reception schedule.',
+		body: 'Plan Lake Geneva wedding guest transportation with coach shuttles between hotels, the ceremony and reception. Coordinate pickup times and evening return runs around your guest count.',
 		steps: [
-			{ title: 'Hotel and resort pickups', body: 'Share each hotel address and guest count so pickup times can be planned.' },
-			{ title: 'Welcome to the venue', body: 'Schedule arrival with enough time for guests to find their seats.' },
-			{ title: 'Time to celebrate', body: 'Agree the waiting arrangements and return schedule when you book.', note: 'Planned around your evening' },
-			{ title: 'Reception pickup', body: 'Meet at the confirmed loading point for your scheduled return shuttle.' },
-			{ title: 'Back to the hotel', body: 'End the evening with the return stops already arranged.' },
+			{ title: 'Hotel and resort pickups', body: 'Provide each Lake Geneva hotel or resort address and guest count to plan shuttle pickups.' },
+			{ title: 'Welcome to the venue', body: 'Schedule your wedding guest shuttle to arrive before the ceremony begins.' },
+			{ title: 'Time to celebrate', body: 'Confirm coach waiting arrangements and reception return times when booking your wedding transportation.', note: 'Planned around your evening' },
+			{ title: 'Reception pickup', body: 'Meet your wedding guest shuttle at the confirmed reception loading point.' },
+			{ title: 'Back to the hotel', body: 'Finish your guest shuttle itinerary with scheduled returns to each hotel or resort.' },
 		],
 	},
 ];
 
 const questions = [
 	{ q: 'How many people can ride together?', a: `The ${trolley.name} seats ${trolley.capacity} passengers. The ${coach.name} accommodates ${coach.capacityLabel}, depending on the assigned vehicle. Share separate headcounts for the wedding party and hotel guests so we can help you choose the right combination.` },
-	{ q: 'Can we book a trolley and a coach together?', a: 'Yes, you can request both vehicles in one inquiry. The trolley can stay with the wedding party while a coach handles guest transfers. Each vehicle and its schedule are subject to availability and confirmation.' },
+	{ q: 'Can we book a trolley and a coach together?', a: 'Yes. Request a Lake Geneva wedding trolley and coach bus together. The trolley can carry your wedding party while the coach provides hotel and venue guest shuttles. Both vehicles and schedules are subject to availability and confirmation.' },
 	{ q: 'How long should we reserve the vehicles?', a: 'Start with your ceremony time, then allow for boarding, travel, photographs and the reception arrival. Guest shuttles may need a different schedule from the trolley. Include your evening return plans so both services can be quoted accurately.' },
 	{ q: 'Can we include photo stops around Geneva Lake?', a: 'Yes, planned photo stops can be part of your itinerary when the route, vehicle access and charter length allow. Send the locations you have in mind so time for travel, parking and photographs can be included.' },
 	{ q: 'Can you pick up at more than one hotel?', a: 'Multiple pickup points can be considered when planning your route. Include each address, the number of guests at each location and the required arrival time. Confirm loading access with the hotels and wedding venue before finalizing the schedule.' },
-	{ q: 'When should we inquire about our date?', a: 'Get in touch once your date and venues are settled. If your wedding is coming up soon, you can still ask about availability. Your quote will reflect the vehicles, hours and complete route for your day.' },
+	{ q: 'When should we inquire about our date?', a: 'Request your Lake Geneva wedding transportation quote once your date and venues are confirmed. For an upcoming wedding, ask about available trolleys and coaches. Your quote reflects the vehicles, charter hours and full wedding itinerary.' },
 ];
 ---
 
 <BaseLayout
 	title="Lake Geneva Wedding Trolley Rental | Lake Geneva Trolley & Bus Rental"
-	description="Bring your wedding party and guests together with a Lake Geneva trolley and coach package. Plan ceremony transfers, photo stops, hotel pickups and reception returns."
+	description="Lake Geneva wedding trolley rental and guest shuttle transportation. Plan hotel pickups, ceremony transfers, photo stops and reception returns with a quote."
 	canonical="/weddings/"
 	showCtaBand={false}
 >
@@ -59,7 +59,7 @@ const questions = [
 		<div class="wrap wrap-wide whero__content">
 			<p class="whero__eyebrow">Your wedding, beautifully connected</p>
 			<h1>Lake Geneva Wedding Trolley Rental</h1>
-			<p class="whero__lead">From the first pickup to the last dance, bring everyone together for your day around the lake.</p>
+			<p class="whero__lead">Plan Lake Geneva wedding transportation with a private trolley for your wedding party and a coach bus for guests, from hotel pickups to reception returns.</p>
 			<div class="whero__actions">
 				<a class="btn-gold" href={quoteHref} data-wedding-quote>Check Wedding Availability</a>
 				<a class="btn-ghost" href={trolley.detailHref}>Explore the Trolley</a>
@@ -69,7 +69,7 @@ const questions = [
 
 	<section class="wpackage" aria-labelledby="wedding-package-title">
 		<div class="wrap">
-			<SectionHeading eyebrow="The Wedding Package" title="Two vehicles. One wonderful day." id="wedding-package-title" lead="A classic trolley for your closest people. A comfortable coach for your guests. A transportation plan that brings it all together." />
+			<SectionHeading eyebrow="The Wedding Package" title="Two vehicles. One wonderful day." id="wedding-package-title" lead="Pair a Lake Geneva wedding trolley rental with coach bus guest shuttles. Coordinate hotel pickups, ceremony transfers and reception returns for both groups." />
 			<div class="package-card">
 				<div class="package-card__photo">
 					<span class="package-card__badge">The perfect pairing</span>
@@ -89,10 +89,10 @@ const questions = [
 					<div class="package-card__details">
 						<h3>Thoughtfully planned, together</h3>
 						<ul>
-							<li><strong>A schedule that fits</strong><span>Coordinate ceremony arrivals and evening hotel returns.</span></li>
-							<li><strong>Room for every stop</strong><span>Plan your pickup points, photo locations and reception route.</span></li>
+							<li><strong>A schedule that fits</strong><span>Coordinate Lake Geneva ceremony transfers and evening hotel shuttles.</span></li>
+							<li><strong>Room for every stop</strong><span>Plan trolley pickups, Geneva Lake photo stops and reception transfers.</span></li>
 							<li><strong>A comfortable journey</strong><span>A wood-finished trolley cabin and reclining coach seats.</span></li>
-							<li><strong>Your own chauffeurs</strong><span>Professional drivers for both vehicles on your itinerary.</span></li>
+							<li><strong>Your own chauffeurs</strong><span>Professional chauffeurs for your wedding trolley and guest shuttle.</span></li>
 						</ul>
 					</div>
 					<div class="package-card__action">
@@ -106,7 +106,7 @@ const questions = [
 
 	<section class="wroutes" aria-labelledby="wedding-routes-title">
 		<div class="wrap">
-			<SectionHeading eyebrow="Every Part of Your Day" title="Two routes, one celebration" id="wedding-routes-title" align="left" lead="Your wedding party and your guests have different places to be. Give each group a route that works for them." />
+			<SectionHeading eyebrow="Every Part of Your Day" title="Two routes, one celebration" id="wedding-routes-title" align="left" lead="Plan separate Lake Geneva wedding transportation routes for your party and guests, with trolley photo stops and coach shuttles coordinated around the same celebration." />
 			<div class="wroutes__grid">
 				{routes.map((route) => (
 					<article class="wroute">
@@ -136,17 +136,17 @@ const questions = [
 				<article class="wplanning__item wplanning__item--dark">
 					<span class="wplanning__number" aria-hidden="true">01</span>
 					<h3>Start with your timeline</h3>
-					<p>Share the ceremony time and work back from there. Leave a little breathing room for gathering, boarding and the moments you want to linger over.</p>
+					<p>Share your ceremony time to plan wedding trolley pickups, boarding and travel between venues. Include time for Geneva Lake photographs and reception arrival.</p>
 				</article>
 				<article class="wplanning__item">
 					<span class="wplanning__number" aria-hidden="true">02</span>
 					<h3>Put every stop on the map</h3>
-					<p>List hotels, photo spots and venues. Check the loading points with each property so everyone knows exactly where to meet.</p>
+					<p>List every hotel, photo stop and Lake Geneva wedding venue. Confirm trolley and coach loading points with each property before finalizing your route.</p>
 				</article>
 				<article class="wplanning__item">
 					<span class="wplanning__number" aria-hidden="true">03</span>
 					<h3>Count both groups</h3>
-					<p>Send a wedding-party headcount and a separate guest-shuttle count. We can review the vehicle combination around your plans.</p>
+					<p>Send separate passenger counts for your wedding trolley and guest shuttles. We will review coach capacity and vehicle availability for your Lake Geneva wedding.</p>
 				</article>
 			</div>
 		</div>
@@ -169,7 +169,7 @@ const questions = [
 	<section class="wcta">
 		<div class="wrap">
 			<h2>Let’s bring your wedding day together</h2>
-			<p>Tell us when, where and who’s coming. We’ll help you plan the ride.</p>
+			<p>Request a Lake Geneva wedding trolley and guest shuttle quote with your date, venues and passenger counts.</p>
 			<a class="btn-invert" href={quoteHref} data-wedding-quote>Request Your Wedding Quote</a>
 		</div>
 	</section>

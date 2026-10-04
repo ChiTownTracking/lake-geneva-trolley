@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Interim brand mark. Replace with the real logo - see HANDOFF.md. -->
-  <rect width="64" height="64" fill="#10242e"/>
-  <path d="M32 14 38 32 32 50 26 32Z" fill="#d4af6a"/>
-  <rect x="12" y="31" width="40" height="1.6" fill="#d4af6a" opacity="0.65"/>
-</svg>

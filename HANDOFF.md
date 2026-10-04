@@ -52,19 +52,12 @@ These were not invented. Each needs confirming before it can be published.
 - **Licensing, insurance and certifications.** No "licensed & insured" or
   women-owned/WBENC badge is shown. Provide documentation and these can go in
   the footer the way the reference site does.
-- **Reviews and testimonials.** The homepage review cards ("What Our Customers
-  Say") are **built but carry placeholder quotes and five-star ratings** - see
-  the notice above `testimonials` in
-  [`src/data/content.ts`](src/data/content.ts). Every quote reads "Placeholder
-  review - replace before launch" and is signed "Client name / Town, WI", so it
-  cannot ship unnoticed. The section heading says "Real experiences", so it must
-  not launch with these placeholders. **This is blocking for launch.** Copy each
-  rating from its source review, or omit it. Replace the entries
-  with real, attributable Lake Geneva Trolley reviews; emptying the array
-  removes the section rather than leaving a gap. Nothing was carried over from
-  the ChiTown Trolley site - those reviews were written by other people about a
-  different service in another city, and re-signing them with Wisconsin names
-  would invent customers this business has not had.
+- **Reviews and testimonials.** The homepage review carousel shows three
+  reviews supplied by the owner on October 4, 2026 (Emily Carter, Michael
+  Bennett, Rachel Morgan), in `testimonials` in
+  [`src/data/content.ts`](src/data/content.ts). They came without star ratings
+  or towns, so neither is shown; add them only from the source reviews. Nothing
+  was carried over from the ChiTown Trolley site.
 - **Legal pages.** No privacy policy or terms page exists, so the footer has no
   legal row. Both are usually required once a form collects personal data.
 - **Planning guides / journal.** Omitted — the reference has one, but there is
@@ -79,14 +72,21 @@ These were not invented. Each needs confirming before it can be published.
 
 ## 3. Form delivery
 
-The quote, reservation and contact forms are marked up for **Netlify Forms**
-(`data-netlify="true"`, a hidden `form-name`, and a `bot-field` honeypot).
-Because the pages are prerendered, Netlify's build-time parser will detect all
-three.
+All four forms are set up for **Netlify Forms** (`data-netlify="true"`, a
+hidden `form-name`, and a `bot-field` honeypot), and
+[`netlify.toml`](netlify.toml) tells Netlify how to build the site. Because the
+pages are prerendered, Netlify's build-time parser detects every form; each
+form name has the same fields on every page it appears on.
 
-- Form names: `quote-request`, `reservation-request`, `contact-message`.
+| Form name | Where |
+| --- | --- |
+| `quote-request` | Home, Chicago, Southern Wisconsin |
+| `wedding-quote-request` | Weddings |
+| `reservation-request` | Reservation (includes the card fields) |
+| `contact-message` | Contact |
+
 - Submission target is `formEndpoint` in [`src/data/site.ts`](src/data/site.ts)
-  (currently `/`). Point it elsewhere for Formspree, a serverless function, etc.
+  (`/`, which is what Netlify Forms expects).
 - **Success is only reported on a 2xx response.** A failure shows an error and
   tells the visitor to get in touch another way — it never shows a false
   confirmation. This is covered by
@@ -94,12 +94,20 @@ three.
 - During `astro dev` the request is skipped and the form says so, so a local run
   cannot be mistaken for a working submission.
 
-**Action needed:** confirm the host. If the site is not deployed to Netlify,
-set `formEndpoint` to a real endpoint — otherwise every submission will fail
-loudly (by design) and no enquiry will reach anyone.
+**Action needed in the Netlify dashboard** (these cannot be set from the repo):
 
-Also worth adding: a notification recipient for form submissions, and
-`/success`-style redirect handling if you prefer that to the in-page dialog.
+1. **Turn on form detection:** Site configuration → Forms → Enable form
+   detection. Newer Netlify sites have it off by default; until it is on, no
+   form is registered and every submission fails. Redeploy after enabling it.
+2. **Add notifications:** Site configuration → Notifications → Form submission
+   notifications → add the email address that should receive enquiries.
+3. **Send a test submission from each form** on the live site and confirm it
+   appears under Forms and arrives by email.
+
+**Card data:** the reservation form collects card number, expiration and
+security code. Netlify stores submissions and includes them in notification
+emails, so confirm with your security provider that this data path is covered.
+PCI rules do not allow storing the security code after authorization.
 
 ## 4. Photography
 
@@ -148,9 +156,9 @@ A wider original of either photo can be dropped in over the same file name.
 The same photograph would also make a much better `og-default.jpg` (the social
 share image, still a placeholder) than anything else currently available.
 
-Also needed: a **real brand mark**. `public/favicon.svg` and `favicon.ico` are
-an interim gold-on-navy placeholder — enough that the site does not ship with
-Astro's logo, but not a designed identity.
+**Favicons are supplied** (October 4, 2026): the LGT monogram in `public/` at
+16, 32, 180 (Apple touch icon), 192 and 512 pixels, plus `favicon.ico` built
+from the 16 and 32 pixel files and `site.webmanifest` for Android.
 
 ## 5. Analytics and tooling
 
@@ -164,9 +172,9 @@ required depending on where visitors are.
 - [ ] Fill in `contact` and `socials` in `src/data/site.ts`
 - [ ] Review current availability in `src/data/fleet.ts`; capacities and photos are sourced in `docs/fleet-sources.md`
 - [ ] Replace the 10 remaining placeholder photographs (the hero is supplied)
-- [ ] Replace the favicon and add a brand mark
-- [ ] Confirm the host and `formEndpoint`; send a real test submission
+- [x] Replace the favicon (supplied October 4, 2026)
+- [ ] Enable form detection and notifications in Netlify; send a real test submission from each form
 - [ ] Add privacy policy and terms pages, then link them in the footer
-- [ ] Add real testimonials, or leave the section out
+- [x] Add real testimonials (supplied October 4, 2026)
 - [ ] Verify the production domain matches `site` in `astro.config.mjs`
       (`https://lakegenevatrolley.com`) so canonicals and the sitemap are right

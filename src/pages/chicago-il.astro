@@ -34,10 +34,10 @@ const glance = [
 ];
 
 const services = [
-	{ title: 'Chicago Weddings', body: 'Ceremony-to-reception rides for the wedding party, photo stops around the city and shuttles for guests staying downtown.', image: weddingPark, alt: 'A bride and groom embracing among autumn trees beside a pond in a Chicago park.', position: '50% 55%', type: 'Wedding', action: 'Plan your wedding ride' },
-	{ title: 'Corporate Events', body: 'Conference shuttles, team outings and client dinners, coordinated around one schedule for the whole group.', image: riverwalk, alt: 'The Dearborn Street bridge over the Chicago Riverwalk, with café umbrellas along the water.', position: '62% center', type: 'Corporate Event', action: 'Plan team transportation' },
-	{ title: 'O’Hare & Midway Transfers', body: 'Airport arrivals and departures for groups, with room for luggage. Share your flight details and we’ll plan the timing.', image: airportLanding, alt: 'A plane coming in to land above runway approach lights at dusk.', position: '42% center', type: 'Airport Transfer', action: 'Arrange an airport transfer' },
-	{ title: 'Nights Out & Celebrations', body: 'Birthdays, bachelor and bachelorette parties, game days and milestone nights, with a private ride between every stop.', image: skylineNight, alt: 'Chicago’s skyline lit up at night across the water.', position: '46% center', type: 'Night Out', action: 'Plan your night out' },
+	{ title: 'Chicago Weddings', body: 'Chicago wedding trolley rental for ceremony and reception transfers, city photo stops and hotel guest shuttles. Coordinate each route around your wedding timeline.', image: weddingPark, alt: 'A bride and groom embracing among autumn trees beside a pond in a Chicago park.', position: '50% 55%', type: 'Wedding', action: 'Plan your wedding ride' },
+	{ title: 'Corporate Events', body: 'Chicago corporate transportation for conference shuttles, team outings and client dinners. Plan coach or van transfers between hotels and event venues.', image: riverwalk, alt: 'The Dearborn Street bridge over the Chicago Riverwalk, with café umbrellas along the water.', position: '62% center', type: 'Corporate Events', action: 'Plan team transportation' },
+	{ title: 'O’Hare & Midway Transfers', body: 'Request group airport transfers at O’Hare or Midway, including transportation to Lake Geneva. Share flight details, passenger counts and luggage needs to confirm the vehicle and pickup plan.', image: airportLanding, alt: 'A plane coming in to land above runway approach lights at dusk.', position: '42% center', type: 'Airport Transportation', action: 'Arrange an airport transfer' },
+	{ title: 'Nights Out & Celebrations', body: 'Chicago party bus and private charter options for birthdays, bachelor and bachelorette parties, game days and nights out. Plan your stops and return trip with a chauffeur.', image: skylineNight, alt: 'Chicago’s skyline lit up at night across the water.', position: '46% center', type: 'Night Out', action: 'Plan your night out' },
 ];
 
 const questions = [
@@ -52,7 +52,7 @@ const questions = [
 
 <BaseLayout
 	title="Chicago, IL Trolley & Bus Rental | Lake Geneva Trolley & Bus Rental"
-	description="Private trolley and bus rental in Chicago, IL for weddings, corporate events, O’Hare and Midway transfers, nights out, and group trips between Chicago and Lake Geneva."
+	description="Chicago trolley and bus rental for weddings, events and airport transfers. Plan private group transportation between Chicago, IL and Lake Geneva, WI."
 	canonical="/chicago-il/"
 	showCtaBand={false}
 >
@@ -62,7 +62,7 @@ const questions = [
 		<div class="wrap wrap-wide chero__copy">
 			<p class="ckicker"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points={star} /></svg> Serving Chicago, Illinois</p>
 			<h1 id="chicago-title">Chicago Trolley<br /><em>&amp; Bus Rental</em></h1>
-			<p class="chero__lead">Private rides for weddings, corporate events, airport runs and nights out across the city, and for the trip north to Lake Geneva.</p>
+			<p class="chero__lead">Private Chicago trolley and bus rentals for weddings, corporate events and nights out. Plan group airport transfers or transportation between Chicago and Lake Geneva, Wisconsin.</p>
 			<div class="chero__actions">
 				<a class="btn-gold" href="#getquote">Get a Chicago Quote</a>
 				<a class="chero__link" href="/fleet/">Explore the fleet <span aria-hidden="true">→</span></a>
@@ -82,7 +82,7 @@ const questions = [
 				<h2 id="chicago-quote-title">Get a <em>Chicago</em> trolley &amp; bus quote</h2>
 			</div>
 			<QuoteForm idPrefix="chq" />
-			<p class="cquote__note">Pricing depends on the date, the vehicle, how long you need it and every pickup and stop. Share your plans and we’ll put together a quote around them.</p>
+			<p class="cquote__note">Your Chicago trolley or bus rental quote reflects your date, vehicle, charter hours and route. Include passenger counts, pickup addresses and planned stops to review availability.</p>
 		</div>
 	</section>
 
@@ -114,7 +114,7 @@ const questions = [
 			<div>
 				<p class="ckicker ckicker--dark">In the city</p>
 				<h2 id="chicago-intro-title">Private rides across <em>Chicago.</em></h2>
-				<p class="cintro__lead">Lake Geneva Trolley &amp; Bus Rental serves Chicago, too. Whether you’re planning a downtown wedding, moving a conference crowd or collecting friends from O’Hare, we’ll plan the vehicles and the route around your group.</p>
+				<p class="cintro__lead">Lake Geneva Trolley &amp; Bus Rental provides Chicago group transportation for downtown weddings, conference shuttles and airport transfers. Request a trolley, coach bus or Sprinter van with a professional chauffeur and an itinerary planned for your group.</p>
 			</div>
 			<ul class="cintro__glance">
 				{glance.map((item) => (
@@ -157,7 +157,7 @@ const questions = [
 			<div class="croute__copy">
 				<p class="ckicker">Chicago to Lake Geneva</p>
 				<h2 id="chicago-route-title">From the city<br /><em>to the lake.</em></h2>
-				<p class="croute__lead">Heading north for a wedding weekend, a company retreat or a few days on the water? Travel together from Chicago to Lake Geneva, Wisconsin, with one pickup plan for the whole group.</p>
+				<p class="croute__lead">Arrange private transportation from Chicago to Lake Geneva for a wedding weekend, company retreat or group getaway. Request a one-way or round-trip charter with your Chicago pickup addresses and Lake Geneva hotel, resort or venue destinations.</p>
 				<div class="croute__map">
 					<p class="croute__track"><i aria-hidden="true"></i><span>About 80 miles</span><i aria-hidden="true"></i></p>
 					<ol class="croute__stops">
@@ -166,7 +166,7 @@ const questions = [
 					</ol>
 				</div>
 				<div class="croute__actions">
-					<a class="btn-gold" href={quoteLink('Group Transportation')}>Plan a City-to-Lake Trip</a>
+					<a class="btn-gold" href={quoteLink('Out-of-State Trips')}>Plan a City-to-Lake Trip</a>
 					<a class="croute__link" href="/services/">Lake Geneva services <span aria-hidden="true">→</span></a>
 				</div>
 			</div>
@@ -179,7 +179,7 @@ const questions = [
 		<div class="wrap ccta__inner">
 			<span class="cflag__stars ccta__stars" aria-hidden="true">{Array.from({ length: 4 }, () => <svg viewBox="0 0 24 24"><polygon points={star} /></svg>)}</span>
 			<h2 id="chicago-cta-title">Planning something <em>in Chicago?</em></h2>
-			<p>Send the date, your group size and every stop you have in mind. We’ll put together a quote around your itinerary.</p>
+			<p>Request a Chicago trolley or bus rental quote with your date, passenger count and route, including any Lake Geneva transfers.</p>
 			<div class="ccta__actions">
 				<a class="btn-gold" href="#getquote">Request a Chicago Quote</a>
 				{contact.phoneHref && <a class="ccta__phone" href={`tel:${contact.phoneHref}`}>Or call {contact.phoneLabel}</a>}

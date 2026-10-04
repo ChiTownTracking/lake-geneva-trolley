@@ -13,7 +13,7 @@ interface Props { vehicle: Vehicle; }
 const { vehicle } = Astro.props;
 ---
 
-<BaseLayout title={`${vehicle.name} | Lake Geneva Trolley & Bus Rental`} description={vehicle.description} canonical={`/fleet/${vehicle.id}/`}>
+<BaseLayout title={`${vehicle.name} Rental in Lake Geneva, WI | Lake Geneva Trolley`} description={vehicle.description} canonical={`/fleet/${vehicle.id}/`}>
 	<section class="vehicle wrap">
 		<a class="vehicle__back link-gold" href={`/fleet/#${vehicle.category}`}>&larr; Back to the Fleet</a>
 		<div class="vehicle__grid">

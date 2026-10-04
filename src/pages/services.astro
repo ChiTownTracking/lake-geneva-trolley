@@ -18,8 +18,8 @@ const services = [
 	{
 		id: 'weddings', number: '01', nav: 'Weddings', label: 'For the big day',
 		title: 'Wedding Trolley & Guest Transportation',
-		lead: 'Every chapter of your day, beautifully connected.',
-		body: 'A trolley ride gives your wedding party time together between the ceremony, photographs and reception. Add a coach for hotel guests, and plan both routes around the moments that matter.',
+		lead: 'A wedding trolley for your party. Guest shuttles for your guests.',
+		body: 'Plan Lake Geneva wedding transportation with a private trolley for your wedding party and a coach bus for guests. Coordinate hotel pickups, ceremony transfers, photo stops around Geneva Lake and reception returns on routes tailored to each group.',
 		details: ['Wedding-party travel', 'Photo stops', 'Guest transfers'],
 		image: wedding, alt: 'Flowers and glassware on an outdoor wedding table beneath string lights.',
 		action: 'Plan your wedding ride', type: 'Wedding', layout: 'wedding',
@@ -28,8 +28,8 @@ const services = [
 	{
 		id: 'resort-shuttles', number: '02', nav: 'Resort shuttles', label: 'For the whole weekend',
 		title: 'Lake Geneva Resort & Wedding Shuttles',
-		lead: 'From check-in to the last dance.',
-		body: 'Bring the weekend together with scheduled trips between resorts, hotels and wedding venues. Share your room blocks, guest counts and evening return plans so each pickup has a place on the itinerary.',
+		lead: 'Scheduled hotel pickups and wedding venue transfers.',
+		body: 'Arrange Lake Geneva resort and hotel shuttles for your wedding weekend or group event. Share lodging addresses, room blocks, passenger counts and evening return plans so each venue transfer fits your schedule.',
 		details: ['Hotel pickups', 'Venue transfers', 'Evening returns'],
 		image: resort, alt: 'Aerial view of a resort beside a golf course and a pond with fountains, surrounded by rolling Wisconsin countryside.',
 		action: 'Arrange your shuttle', type: 'Wedding Guest Shuttle', layout: 'compact',
@@ -37,30 +37,30 @@ const services = [
 	{
 		id: 'corporate', number: '03', nav: 'Corporate', label: 'For a change of scenery',
 		title: 'Corporate Events & Retreats',
-		lead: 'Bring the team. We’ll connect the stops.',
-		body: 'Make room for conversation on the way to a retreat, conference or company dinner. Coordinate your team’s arrivals and transfers between lodging, meeting spaces and offsite activities around one shared schedule.',
+		lead: 'Private group transportation for your team itinerary.',
+		body: 'Book Lake Geneva corporate transportation for retreats, conferences, team outings and company dinners. Trolleys, coaches and Sprinter vans connect hotels, meeting venues and offsite activities on a shared itinerary.',
 		details: ['Team retreats', 'Conferences', 'Company dinners'],
 		image: corporate, alt: 'Event guests talking over coffee beside tall windows, with tables set for a meeting in the foreground.',
-		action: 'Plan team transportation', type: 'Corporate Event', layout: 'compact',
+		action: 'Plan team transportation', type: 'Corporate Events', layout: 'compact',
 	},
 	{
 		id: 'transfers', number: '04', nav: 'Airport & Chicago', label: 'From city pace to lake days',
 		title: 'Airport & Chicago–Lake Geneva Transfers',
-		lead: 'The getaway begins with the ride.',
-		body: 'Arrange a private transfer between Chicago, your airport and your Lake Geneva destination. Send flight details, passenger numbers and luggage needs so the vehicle and pickup plan fit your group, whether you’re arriving for a weekend or heading home.',
+		lead: 'Private airport and city-to-lake group transfers.',
+		body: 'Request private airport transportation or a Chicago-to-Lake Geneva transfer for your group. Include flight details, pickup addresses, passenger counts and luggage needs so we can review the vehicle, timing and one-way or return route.',
 		details: ['Airport arrivals', 'City-to-lake trips', 'One-way or return'],
 		image: chicago, alt: 'Chicago’s skyline across Lake Michigan in the evening.',
-		action: 'Arrange a private transfer', type: 'Airport Transfer', layout: 'transfer',
+		action: 'Arrange a private transfer', type: 'Airport Transportation', layout: 'transfer',
 		more: { label: 'We serve Chicago, IL', href: '/chicago-il/' },
 	},
 	{
 		id: 'celebrations', number: '05', nav: 'Celebrations', label: 'For no ordinary occasion',
 		title: 'Private Celebrations & Group Outings',
-		lead: 'Good company deserves a great day out.',
-		body: 'Birthdays, anniversaries, bachelor and bachelorette weekends, reunions or simply a reason to get everyone together. Choose the places you want to go and plan a private ride from the first pickup through the final return.',
+		lead: 'A private charter for your Lake Geneva celebration.',
+		body: 'Choose Lake Geneva trolley or party bus rental for birthdays, anniversaries, bachelor and bachelorette parties, or family reunions. Plan a private group outing with your chosen destinations, pickup points and return schedule.',
 		details: ['Milestone moments', 'Nights out', 'Family & friends'],
 		image: celebration, alt: 'Friends raising their glasses around a candlelit dinner table.',
-		action: 'Plan your group outing', type: 'Private Celebration', layout: 'celebration',
+		action: 'Plan your group outing', type: 'General Events', layout: 'celebration',
 	},
 ];
 const quoteLink = (type: string) => `/contact/?type=${encodeURIComponent(type)}#contact-form`;
@@ -68,7 +68,7 @@ const quoteLink = (type: string) => `/contact/?type=${encodeURIComponent(type)}#
 
 <BaseLayout
 	title="Lake Geneva Transportation Services | Weddings, Shuttles & Private Charters"
-	description="Private transportation for Lake Geneva weddings, resort shuttles, corporate retreats, airport and Chicago transfers, and celebrations. Plan your group’s ride."
+	description="Lake Geneva transportation for weddings, hotel shuttles, corporate events and airport transfers. Explore private trolley and bus rentals for your group."
 	canonical="/services/"
 	showCtaBand={false}
 >
@@ -77,7 +77,7 @@ const quoteLink = (type: string) => `/contact/?type=${encodeURIComponent(type)}#
 			<div class="shero__copy">
 				<p class="skicker"><span></span> Lake Geneva transportation</p>
 				<h1>Weddings, events<br />& <em>transfers.</em></h1>
-				<p class="shero__lead">Private transportation for the celebrations, escapes and everyday connections that bring people to the lake.</p>
+				<p class="shero__lead">Lake Geneva transportation for weddings, resort stays, corporate events and private outings. Choose a trolley, bus or van with a professional chauffeur and a route planned for your group.</p>
 				<div class="shero__actions">
 					<a class="sbutton" href="/contact/#contact-form">Plan your ride <span aria-hidden="true">↗</span></a>
 					<a class="shero__explore" href="#our-services">Explore our services <span aria-hidden="true">↓</span></a>
@@ -120,7 +120,7 @@ const quoteLink = (type: string) => `/contact/?type=${encodeURIComponent(type)}#
 				<p class="skicker"><span></span> Our services</p>
 				<h2 id="services-title">Wherever the day<br />takes you.</h2>
 			</div>
-			<p>One celebration or a whole weekend. A close-knit group or a full guest list. Find the service that fits, then make the route your own.</p>
+			<p>Compare Lake Geneva wedding transportation, hotel shuttles, corporate charters and airport transfers. Share your date, group size and destinations to plan a private ride.</p>
 		</div>
 
 		<div class="stories">
@@ -158,8 +158,8 @@ const quoteLink = (type: string) => `/contact/?type=${encodeURIComponent(type)}#
 			<div class="sseason__copy">
 				<p class="skicker"><span></span> Seasonal service</p>
 				<h2 id="season-title">The <em>Christmas Trolley</em></h2>
-				<p class="sseason__lead">Private holiday lights tours for your group.</p>
-				<p class="sseason__body">Gather everyone aboard a heated trolley decorated inside and out, then tour the lights you most want to see with the stops you choose along the way.</p>
+				<p class="sseason__lead">Private Lake Geneva Christmas lights trolley tours.</p>
+				<p class="sseason__body">Plan a private trolley tour of lights in Lake Geneva aboard a heated, decorated Christmas Trolley. Choose your displays and stops, then request a holiday route and pickup schedule for your group.</p>
 				<ul class="story__details" aria-label="Christmas Trolley highlights">
 					<li>{christmas.capacityLabel}</li>
 					<li>Heated cabin</li>
@@ -180,7 +180,7 @@ const quoteLink = (type: string) => `/contact/?type=${encodeURIComponent(type)}#
 				<h2>A little charm.<br />Or a little more room.</h2>
 			</div>
 			<div class="fleet-note__copy">
-				<p>Classic trolleys, comfortable coaches, private sprinters and party buses. Choose a setting that suits your people, and we’ll review the fit for your route.</p>
+				<p>Explore Lake Geneva trolley rental, coach buses, party buses and Sprinter vans. Compare seating and passenger capacity, then request the vehicle that fits your group and route.</p>
 				<div class="fleet-note__links">
 					<a href="/fleet/#trolley">Trolleys <span aria-hidden="true">↗</span></a>
 					<a href="/fleet/#coach-bus">Coaches <span aria-hidden="true">↗</span></a>
@@ -196,13 +196,13 @@ const quoteLink = (type: string) => `/contact/?type=${encodeURIComponent(type)}#
 			<div class="sclosing__invitation">
 				<p class="skicker">Let’s make a plan</p>
 				<h2 id="plan-title">You bring the people.<br /><em>We’ll plan the ride.</em></h2>
-				<p>Tell us what you have in mind. We’ll help turn the stops, schedules and headcounts into one clear itinerary.</p>
+				<p>Request a Lake Geneva transportation quote with your date, pickup addresses, passenger count and destinations. We will review rental availability and your travel schedule.</p>
 				<a class="btn-gold" href="/contact/#contact-form">Start planning your trip <span aria-hidden="true">↗</span></a>
 			</div>
 			<ol class="sclosing__steps">
-				<li><span aria-hidden="true">01</span><div><h3>Share your day</h3><p>Send the date, passenger count, pickup point and places you want to go.</p></div></li>
-				<li><span aria-hidden="true">02</span><div><h3>Find the right fit</h3><p>Review vehicle availability and a quote built around your route and hours.</p></div></li>
-				<li><span aria-hidden="true">03</span><div><h3>Bring it all together</h3><p>Confirm the stops, loading points and timing before your group travels.</p></div></li>
+				<li><span aria-hidden="true">01</span><div><h3>Share your day</h3><p>Send your Lake Geneva event date, passenger count, pickup address and destinations.</p></div></li>
+				<li><span aria-hidden="true">02</span><div><h3>Find the right fit</h3><p>Review trolley, bus or van availability and a charter quote for your route and hours.</p></div></li>
+				<li><span aria-hidden="true">03</span><div><h3>Bring it all together</h3><p>Confirm each pickup, loading point and return time on your group transportation itinerary.</p></div></li>
 			</ol>
 		</div>
 	</section>

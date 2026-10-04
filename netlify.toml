@@ -1,0 +1,11 @@
+# Netlify build settings. Forms are detected from the prerendered HTML in dist/
+# (each <form> carries data-netlify="true", a hidden form-name and a bot-field
+# honeypot) - see HANDOFF.md, section 3.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # package.json requires Node 22.12 or newer.
+  NODE_VERSION = "22"

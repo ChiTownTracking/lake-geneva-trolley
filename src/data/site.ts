@@ -23,9 +23,9 @@ export const site = {
 	url: 'https://lakegenevatrolley.com',
 	/** Used as the default meta description and in structured data. */
 	description:
-		'Private trolley and bus charters for weddings, celebrations and group transportation around Lake Geneva, Wisconsin. Share your date and itinerary for a customized quote.',
+		'Lake Geneva trolley rental and bus charters for weddings, events and group transportation in Lake Geneva, WI. Explore vehicles and request a quote.',
 	/** Short line used where contact details are not yet available. */
-	tagline: 'Private trolley and bus charters by reservation',
+	tagline: 'Private Lake Geneva trolley and bus rentals by reservation',
 	areaServed: 'Lake Geneva, Wisconsin',
 } as const;
 
@@ -66,7 +66,7 @@ export const socials: Social[] = [
 export const credentials = {
 	womenOwned: true,
 	wbenc: true,
-	servingLine: 'Serving Lake Geneva and the surrounding lake country.',
+	servingLine: 'Trolley and bus transportation in Lake Geneva, Fontana, Williams Bay and nearby communities.',
 };
 
 export const hasContact =

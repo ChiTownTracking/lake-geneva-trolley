@@ -27,8 +27,8 @@ const icons = [
 ];
 
 const features = [
-	{ title: 'Reserved for your group', body: 'A private charter for your evening, never sold by the seat.' },
-	{ title: `Seats ${trolley.capacity} guests`, body: 'Room for the whole family, the office party or the neighborhood crew.' },
+	{ title: 'Reserved for your group', body: 'Private Christmas trolley rental for your Lake Geneva group, reserved as one charter.' },
+	{ title: `Seats ${trolley.capacity} guests`, body: 'Bring family, friends or coworkers together for a Lake Geneva holiday lights outing.' },
 	{ title: 'Circular perimeter seating', body: 'Everyone faces one another, so the conversation keeps going.' },
 	{ title: 'Enclosed and heated', body: 'Stay warm between stops, however cold the evening gets.' },
 	{ title: 'Bluetooth sound system', body: 'Bring your holiday playlist along for the ride.' },
@@ -36,28 +36,28 @@ const features = [
 ];
 
 const steps = [
-	{ title: 'Gather everyone', body: 'Start with one pickup at a home, hotel or restaurant, or plan a few stops to collect the group.' },
-	{ title: 'Tour the lights', body: 'Share the neighborhoods and displays on your list. We’ll plan the route and timing around them.' },
-	{ title: 'Pause along the way', body: 'Add a dinner reservation, a warm drink or a photo stop to the itinerary.' },
-	{ title: 'Home for the holidays', body: 'End the evening with every drop-off already arranged.' },
+	{ title: 'Gather everyone', body: 'Start your Lake Geneva Christmas trolley tour at a home, hotel or restaurant. Include any additional group pickups in your route request.' },
+	{ title: 'Tour the lights', body: 'Choose the Lake Geneva neighborhoods and Christmas light displays you want to visit. We will review the route and timing for your private trolley tour.' },
+	{ title: 'Pause along the way', body: 'Request dinner, refreshments or photo stops as part of your Christmas lights trolley itinerary.' },
+	{ title: 'Home for the holidays', body: 'Arrange return stops for your group before your Lake Geneva holiday trolley charter begins.' },
 ];
 
 const occasions = ['Family traditions', 'Office holiday parties', 'Friends’ nights out', 'Holiday date nights', 'Neighborhood gatherings'];
 
 const questions = [
-	{ q: 'Is the Christmas Trolley a private tour?', a: 'Yes. The trolley is reserved for your group for the evening rather than sold by individual seat, so the route, the stops and the playlist are yours to choose.' },
+	{ q: 'Is the Christmas Trolley a private tour?', a: 'Yes. Our Lake Geneva Christmas Trolley tours are private group charters. Reserve the trolley for your party and request your preferred lights route, stops and playlist. Individual seats are not sold.' },
 	{ q: 'How many guests fit on the Christmas Trolley?', a: `The Christmas Trolley seats ${trolley.capacity} guests on circular perimeter seating. If your group is larger, mention it in your request and we’ll review the options with you.` },
-	{ q: 'Can we choose our Christmas lights route?', a: 'Yes. Send the neighborhoods, displays and stops you have in mind. We’ll plan the route around your pickup, your timing and where the trolley can travel and park.' },
+	{ q: 'Can we choose our Christmas lights route?', a: 'Yes. Send the neighborhoods, Christmas displays and stops for your Lake Geneva trolley tour of lights. We will review your pickup location, timing, road access and parking before confirming the itinerary.' },
 	{ q: 'Will we stay warm?', a: 'The cabin is fully enclosed and heated, so your group can stay comfortable between stops. Dress for the weather if you plan to step out for photos.' },
 	{ q: 'Can we bring our own drinks?', a: 'Tell us if your group plans to bring beverages, and we’ll confirm what’s allowed on your charter. Anyone drinking alcohol must be 21 or older.' },
-	{ q: 'Where does the Christmas Trolley pick up?', a: 'Tours are planned around Geneva Lake and the surrounding lake country. Share your pickup address and the places you’d like to see, and we’ll confirm the route for your date.' },
+	{ q: 'Where does the Christmas Trolley pick up?', a: 'Christmas trolley pickups are planned around Lake Geneva and surrounding communities. Send your pickup address and chosen holiday displays so we can confirm the route and availability for your date.' },
 	{ q: 'How early should we reserve?', a: 'The Christmas Trolley is a seasonal vehicle with a limited number of holiday evenings, so request your preferred date as soon as your plans take shape. If your date is coming up soon, you can still ask about availability.' },
 ];
 ---
 
 <BaseLayout
 	title="Lake Geneva Christmas Trolley Tours | Private Holiday Lights Tours"
-	description={`Book a private Christmas lights tour around Lake Geneva aboard a heated, decorated trolley that seats ${trolley.capacity}. Plan your route, stops and pickup for the holiday season.`}
+	description={`Plan a private trolley tour of lights in Lake Geneva for ${trolley.capacity} guests. Ride a heated Christmas Trolley with your chosen stops. Request a quote.`}
 	canonical="/christmas-trolley/"
 	showCtaBand={false}
 >
@@ -130,7 +130,7 @@ const questions = [
 			<div class="xtour__copy">
 				<p class="xkicker">Private holiday lights tour</p>
 				<h2 id="xmas-tour-title">Plan a lights route<br />for your group.</h2>
-				<p class="xtour__lead">Choose the neighborhoods, displays and stops you’d like to see, and we’ll shape them into one relaxed evening around the lake.</p>
+				<p class="xtour__lead">Create a private trolley tour of lights in Lake Geneva with your chosen neighborhoods, holiday displays and stops. We will review the route, pickup schedule and charter hours for your group.</p>
 				<ol class="xtour__steps">
 					{steps.map((step, index) => (
 						<li><span class="xtour__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><div><h3>{step.title}</h3><p>{step.body}</p></div></li>
@@ -154,7 +154,7 @@ const questions = [
 		<div class="wrap xcta__inner">
 			<p class="xkicker">Seasonal dates are limited</p>
 			<h2 id="xmas-cta-title">Reserve your <em>Christmas Trolley</em></h2>
-			<p>Share your group size, pickup location and preferred evening to request availability.</p>
+			<p>Request a Lake Geneva Christmas Trolley rental quote with your group size, pickup address, preferred evening and holiday lights route.</p>
 			<div class="xcta__actions">
 				<a class="btn-gold" href={quoteHref}>Request a Christmas Trolley Quote</a>
 				<a class="xcta__link" href={reserveHref}>Or make a reservation request <span aria-hidden="true">→</span></a>

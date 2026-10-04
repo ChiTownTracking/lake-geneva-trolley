@@ -111,7 +111,7 @@ try {
 	assert.equal(await page.locator('#wedding-name').inputValue(), '');
 	assert.equal(posts.length, 2);
 	assert.deepEqual(Object.fromEntries(posts[1]), {
-		'form-name': 'wedding-quote-request', type: 'Wedding', vehicle: 'Classic Trolley + Super Coach Bus', 'bot-field': '',
+		'form-name': 'wedding-quote-request', type: 'Wedding', vehicle: 'Wedding Package - Trolley & Coach Bus', 'bot-field': '',
 		name: 'Wedding Form Test', email: 'wedding-test@example.com', phone: '6085550101', date: '2027-06-12',
 		passengers: '90', time: '14:00', pickup: 'Test hotel', dropoff: 'Test venue',
 		message: '24 in the wedding party. Two hotel pickups and a 10 pm return.',

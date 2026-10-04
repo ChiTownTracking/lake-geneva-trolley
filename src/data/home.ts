@@ -49,7 +49,7 @@ export const serviceAreas = [
 export const homeFaqs = [
 	{
 		q: 'How much does a trolley rental cost in Lake Geneva?',
-		a: 'Pricing is quoted per trip rather than posted as a flat rate. The estimate is built from the date, the vehicle, the length of the charter, the pickup location and the full route. Send those details through the quote form and you will get a figure specific to your day.',
+		a: 'Lake Geneva trolley rental pricing depends on your date, vehicle, charter hours, pickup location and route. Request a quote with your passenger count and planned stops to receive an estimate for your wedding, event or private outing.',
 	},
 	{
 		q: 'How many people can your trolleys and buses accommodate?',
@@ -57,15 +57,15 @@ export const homeFaqs = [
 	},
 	{
 		q: 'Do you provide wedding transportation in Lake Geneva?',
-		a: 'Yes, subject to availability and route confirmation. A wedding itinerary can include hotel or resort pickup, transportation to the ceremony, photo stops along the way, the reception arrival and a return run, and a coach can shuttle guests while the trolley carries the wedding party.',
+		a: 'Yes. Our Lake Geneva wedding transportation can include hotel and resort pickups, ceremony transfers, Geneva Lake photo stops, reception arrivals and scheduled returns. Request a trolley for the wedding party and a coach bus for guest shuttles, subject to vehicle availability and route confirmation.',
 	},
 	{
 		q: 'What areas do you service?',
-		a: 'Charters are planned around Geneva Lake, including Lake Geneva, Fontana, Williams Bay, Delavan and Elkhorn, with trips across southern Wisconsin and into Chicago on request. Include every pickup and stop with your inquiry so the route and timing can be confirmed.',
+		a: 'Our Lake Geneva transportation service covers Fontana, Williams Bay, Delavan, Elkhorn and surrounding communities. Private charters across southern Wisconsin and to Chicago are available on request. Include all pickup addresses and destinations so we can confirm your route and travel times.',
 	},
 	{
 		q: 'How do I get a quote for my event?',
-		a: 'Use the quote form at the top of this page, or call. Share the date, the number of passengers, the pickup address and every stop you expect to make. The more complete that picture is, the more accurate the quote.',
+		a: 'Request a Lake Geneva trolley or bus rental quote using the form above, or call our team. Include your event date, passenger count, pickup address, destinations and preferred times. These details help us match a vehicle and estimate your charter cost.',
 	},
 ];
 
@@ -76,12 +76,12 @@ export interface Article {
 }
 
 export const localExpertsIntro =
-	'Lake Geneva Trolley provides private trolley rental and transportation services in Lake Geneva, Wisconsin and the surrounding area. Whether you are planning a wedding, a corporate event or a private party, or simply need dependable group transportation around Geneva Lake, our trolleys, buses and vans offer a stylish, comfortable and memorable way to get there. As a women-owned business, we put attentive service, professional chauffeurs and a plan built around your day first.';
+	'Lake Geneva Trolley & Bus Rental provides private trolley rental in Lake Geneva, WI and group transportation around Geneva Lake. Our women-owned business offers trolleys, coach buses, party buses and Sprinter vans for weddings, corporate events, hotel shuttles and private celebrations. Every charter includes a professional chauffeur, with the route and schedule planned around your group.';
 
 export const articles: Article[] = [
 	{
 		title: 'Why Choose Lake Geneva Trolley Rental in Lake Geneva WI',
-		body: 'Every charter is planned around one goal: getting your group where it needs to be, together and on time. Each reservation comes with a professional chauffeur, a vehicle sized to your headcount and an itinerary built around your actual stops, not a generic rate sheet.',
+		body: 'A Lake Geneva trolley rental includes a professional chauffeur and an itinerary planned for your group. Choose a vehicle with the seating you need, then coordinate hotel pickups, venue transfers and return trips around your event schedule. Your quote reflects your date, route and charter hours.',
 		points: [
 			'A professional chauffeur on every charter',
 			'Trolleys, coach buses, a party bus and Sprinter vans',
@@ -92,48 +92,48 @@ export const articles: Article[] = [
 	},
 	{
 		title: 'Private Trolley Rental, Wedding Transportation & Event Shuttle Service',
-		body: 'Reserve a trolley for the whole day or a single transfer. Wedding parties, family celebrations, corporate groups and weekend visitors all follow the same simple process: share the date, the group size and the route, and we put together a quote and a plan that fits.',
+		body: 'Private trolley rental in Lake Geneva, WI gives wedding parties, corporate groups and families a shared ride between their planned stops. Request a transfer or a longer charter for your event, with pickup locations and timing confirmed before travel.',
 		points: [
-			'Private trolley rental for any occasion',
+			'Private Lake Geneva trolley rental for weddings and events',
 			'Wedding transportation and guest shuttles',
 			'Corporate event and convention transportation',
-			'Group transportation around Geneva Lake',
+			'Group transportation in Lake Geneva and nearby towns',
 			'Custom routes and flexible scheduling',
 		],
 	},
 	{
 		title: 'Trolley Rental Near Me and Wedding Transportation Near Me in Lake Geneva',
-		body: 'Searching for “trolley rental near me” or “wedding transportation near me” from Lake Geneva? Our charters are planned around Geneva Lake and its neighboring towns, so we plan pickups from hotels, resorts, rental homes and venues around the lake. Tell us where your group is staying and where it needs to go.',
+		body: 'Planning group transportation near Lake Geneva? Arrange pickups at hotels, resorts, vacation rentals and event venues in Lake Geneva, Fontana, Williams Bay and nearby communities. Send your departure address, destinations and group size so we can review a local trolley rental or shuttle route.',
 	},
 	{
 		title: 'Lake Geneva Wedding Trolley Rental for Ceremonies, Receptions and Guest Shuttles',
-		body: 'A wedding day rarely happens at one address. A trolley keeps the wedding party together from the hotel to the ceremony, through photo stops along the lake and on to the reception, while a coach bus can shuttle guests between hotels and the venue. Share your timeline and we will plan the runs around it.',
+		body: 'Lake Geneva wedding trolley rental keeps your wedding party together for hotel pickups, ceremony arrivals, photographs and reception transfers. Add a coach bus for guest shuttles between lodging and your venue. We review both routes against your timeline, passenger counts and vehicle availability.',
 	},
 	{
 		title: 'Group Transportation, Bus Rental and Charter Services Around Geneva Lake',
-		body: 'For larger groups, our coach buses seat 22 to 57 passengers across three sizes, with reclining seats for longer trips and a lavatory available on request on coaches above 33 passengers. They suit corporate outings, conventions, team events and transfers between Lake Geneva, Milwaukee, Madison and Chicago.',
+		body: 'Lake Geneva charter bus rental accommodates larger groups with three coach sizes seating 22 to 57 passengers. Reclining seats suit corporate outings, conventions and longer transfers to Milwaukee, Madison or Chicago. A lavatory is available on request on coaches above 33 passengers; confirm the assigned vehicle when booking.',
 	},
 	{
 		title: 'Hotel, Resort and Venue Transportation in Lake Geneva Wisconsin',
-		body: 'Hotel shuttles and resort transfers keep guests moving without anyone hunting for parking. We coordinate pickup points, loading times and return runs with your schedule, whether you are moving wedding guests, conference attendees or a family reunion between where they are staying and where they need to be.',
+		body: 'Arrange Lake Geneva hotel and resort transportation for wedding guests, conference attendees or family reunions. Scheduled shuttles connect your lodging and event venues, with pickup points, boarding time and return runs planned around your guest count and itinerary.',
 	},
 	{
 		title: 'Service Areas: Lake Geneva, Fontana, Williams Bay and Nearby Communities',
-		body: 'We serve Lake Geneva, Fontana-on-Geneva Lake, Williams Bay, Delavan, Elkhorn and the communities around them, with trips across southern Wisconsin and into Chicago available on request. Include every pickup and stop with your request so the route and timing can be confirmed.',
+		body: 'Request trolley rental and group transportation in Lake Geneva, Fontana-on-Geneva Lake, Williams Bay, Delavan or Elkhorn. We also review private charter routes across southern Wisconsin and to Chicago. Send every pickup address and stop so we can confirm service for your date.',
 	},
 	{
 		title: 'Best Trolley Rental in Lake Geneva WI for Private Events and Large Groups',
-		body: 'From a 14-passenger limo van to a 57-passenger coach, the fleet covers small private outings and large group events alike. Choose a classic trolley for photographs and charm, a party bus for a night out or a Sprinter van for a smaller group, or pair vehicles when the guest list outgrows any one of them.',
+		body: 'Compare Lake Geneva trolley, bus and van rentals by passenger capacity and seating layout. Choose a classic trolley for a wedding, a party bus for a celebration or a Sprinter van for a smaller group. Coach buses accommodate larger guest lists, and multiple vehicles can be requested for the same event.',
 	},
 ];
 
 export const transportOptions = [
 	{ label: 'Lake Geneva wedding trolley rental', href: '/weddings/' },
 	{ label: 'Corporate event transportation', href: '/services/' },
-	{ label: 'Private trolley rental Lake Geneva Wisconsin', href: '/fleet/#trolley' },
-	{ label: 'Group shuttle Lake Geneva WI', href: '/services/' },
-	{ label: 'Trolley bus rental Lake Geneva WI', href: '/fleet/#trolley' },
+	{ label: 'Private trolley rental in Lake Geneva, WI', href: '/fleet/#trolley' },
+	{ label: 'Lake Geneva group shuttle service', href: '/services/' },
+	{ label: 'Lake Geneva trolley bus rental', href: '/fleet/#trolley' },
 	{ label: 'Lake Geneva hotel transportation', href: '/services/' },
-	{ label: 'Wedding shuttle Lake Geneva WI', href: '/weddings/' },
-	{ label: 'Charter bus rental Lake Geneva WI', href: '/fleet/#coach-bus' },
+	{ label: 'Lake Geneva wedding guest shuttles', href: '/weddings/' },
+	{ label: 'Charter bus rental in Lake Geneva, WI', href: '/fleet/#coach-bus' },
 ];

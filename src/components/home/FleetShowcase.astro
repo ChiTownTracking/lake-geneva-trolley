@@ -19,15 +19,16 @@ interface Card {
 	alternate: ImageMetadata;
 }
 
-// Capacities follow fleet.ts: trolleys 30 and 36, coaches 22-57, party bus 40, Sprinters up to 15.
+// Largest capacity in each category (fleet.ts): Sprinter vans seat up to 15.
+// Party bus range and unit count supplied by the owner, October 4, 2026.
 const cards: Card[] = [
 	{
 		name: 'Trolleys',
 		caption: 'Classic & Limo Seating',
-		capacity: '30–36 passengers',
-		body: 'Our classic trolleys are perfect for weddings, special events and scenic outings around Lake Geneva.',
+		capacity: 'Up to 36',
+		body: 'Choose classic or limo trolley rental in Lake Geneva for wedding parties, special events and private group outings.',
 		href: '/fleet/#trolley',
-		link: 'View Trolley',
+		link: 'Explore Trolley Rentals',
 		image: photos.fleetClassicTrolley,
 		imageAlt: alt.fleetClassicTrolley,
 		alternate: fleetGalleries['limo-trolley'][3].image,
@@ -35,10 +36,10 @@ const cards: Card[] = [
 	{
 		name: 'Coach Buses',
 		caption: 'Small, Mid-Size & Super Coach',
-		capacity: '22–57 passengers',
-		body: 'Spacious, comfortable charter buses for large groups, corporate events and longer-distance trips.',
+		capacity: 'Up to 57',
+		body: 'Lake Geneva charter bus rental for wedding guest shuttles, corporate groups and longer trips, with three coach sizes.',
 		href: '/fleet/#coach-bus',
-		link: 'View Buses',
+		link: 'Explore Coach Rentals',
 		image: photos.fleetCoachBus,
 		imageAlt: alt.fleetCoachBus,
 		alternate: photos.fleetCoachBusInterior,
@@ -46,10 +47,10 @@ const cards: Card[] = [
 	{
 		name: 'Party Bus',
 		caption: 'Lounge Seating & Party Lighting',
-		capacity: 'Up to 40 passengers',
-		body: 'A fun and lively option for birthdays, bachelor and bachelorette parties and celebrations.',
+		capacity: '20–45',
+		body: 'Explore 10 party buses with different sizes and interiors for Lake Geneva birthdays, bachelor and bachelorette parties, and group celebrations.',
 		href: '/fleet/#party-bus',
-		link: 'View Party Bus',
+		link: 'Explore Party Bus Rentals',
 		image: photos.fleetPartyBus,
 		imageAlt: alt.fleetPartyBus,
 		alternate: photos.fleetPartyBusInterior,
@@ -57,10 +58,10 @@ const cards: Card[] = [
 	{
 		name: 'Sprinter Vans',
 		caption: 'Limo & Executive Seating',
-		capacity: 'Up to 15 passengers',
-		body: 'Premium Sprinter vans for smaller groups, hotel shuttles and private transportation.',
+		capacity: 'Up to 15',
+		body: 'Sprinter van rental for small groups, Lake Geneva hotel shuttles, airport transfers and private transportation.',
 		href: '/fleet/#limo-van',
-		link: 'View Vans',
+		link: 'Explore Sprinter Rentals',
 		image: photos.fleetLimoVan,
 		imageAlt: alt.fleetLimoVan,
 		alternate: photos.fleetLimoVanInterior,

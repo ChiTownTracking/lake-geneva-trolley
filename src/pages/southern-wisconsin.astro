@@ -32,10 +32,10 @@ const featured = [
 ];
 
 const services = [
-	{ title: 'Wisconsin Weddings', body: 'Barn venues, lakeside ceremonies and city receptions. Ride together as a wedding party, and shuttle guests between their hotels and the venue.', image: barnWedding, alt: 'A bride and groom kissing in a green field in front of red farm buildings.', position: '70% center', type: 'Wedding', action: 'Plan your wedding ride' },
-	{ title: 'Corporate & Team Events', body: 'Conference shuttles, offsite retreats and client outings in Milwaukee, Madison and at the lake, coordinated around one schedule.', image: milwaukeeRiverwalk, alt: 'An autumn tree beside a boardwalk on the Milwaukee Riverwalk.', position: '50% 60%', type: 'Corporate Event', action: 'Plan team transportation' },
-	{ title: 'MKE & MSN Airport Transfers', body: 'Group arrivals and departures at Milwaukee Mitchell and Dane County Regional, with room for luggage. Share your flights and we’ll plan the timing.', image: airportLanding, alt: 'A plane coming in to land above runway approach lights at dusk.', position: '42% center', type: 'Airport Transfer', action: 'Arrange an airport transfer' },
-	{ title: 'Brewery Tours & Nights Out', body: 'Brewery and winery tours, birthdays, bachelor and bachelorette parties and game days, with a private ride between every stop.', image: breweryToast, alt: 'Three friends raising glasses of beer at a table in a brewery taproom.', position: '58% center', type: 'Night Out', action: 'Plan your night out' },
+	{ title: 'Wisconsin Weddings', body: 'Southern Wisconsin wedding transportation for barn venues, lakeside ceremonies and city receptions. Request a wedding trolley and coach guest shuttles between hotels and venues.', image: barnWedding, alt: 'A bride and groom kissing in a green field in front of red farm buildings.', position: '70% center', type: 'Wedding', action: 'Plan your wedding ride' },
+	{ title: 'Corporate & Team Events', body: 'Corporate transportation in Milwaukee, Madison and Lake Geneva for conferences, retreats and client outings. Coordinate private bus or van transfers around your event schedule.', image: milwaukeeRiverwalk, alt: 'An autumn tree beside a boardwalk on the Milwaukee Riverwalk.', position: '50% 60%', type: 'Corporate Events', action: 'Plan team transportation' },
+	{ title: 'MKE & MSN Airport Transfers', body: 'Request Lake Geneva airport transportation to or from Milwaukee Mitchell International (MKE) or Dane County Regional (MSN). Share flight details, passenger counts and luggage needs to review the vehicle and pickup plan.', image: airportLanding, alt: 'A plane coming in to land above runway approach lights at dusk.', position: '42% center', type: 'Airport Transportation', action: 'Arrange an airport transfer' },
+	{ title: 'Brewery Tours & Nights Out', body: 'Private southern Wisconsin brewery and winery tour transportation, party bus rentals and group nights out. Choose your stops and request a chauffeur-led route for your celebration.', image: breweryToast, alt: 'Three friends raising glasses of beer at a table in a brewery taproom.', position: '58% center', type: 'Night Out', action: 'Plan your night out' },
 ];
 
 /*
@@ -97,7 +97,7 @@ const questions = [
 
 <BaseLayout
 	title="Southern Wisconsin Trolley & Bus Rental | Lake Geneva Trolley & Bus Rental"
-	description="Private trolley and bus rental across Southern Wisconsin, including Milwaukee, Madison, Kenosha, Racine and Janesville, for weddings, corporate events, airport transfers and group trips to Lake Geneva."
+	description="Southern Wisconsin trolley and bus rentals for weddings, events and airport transfers. Plan group transportation from Milwaukee or Madison to Lake Geneva."
 	canonical="/southern-wisconsin/"
 	showCtaBand={false}
 >
@@ -107,7 +107,7 @@ const questions = [
 		<div class="wrap wrap-wide swhero__copy">
 			<p class="swkicker"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={pin} /></svg> Serving Southern Wisconsin</p>
 			<h1 id="sw-title">Southern Wisconsin<br /><em>Trolley &amp; Bus Rental</em></h1>
-			<p class="swhero__lead">Private rides for weddings, corporate events, airport runs and nights out in Milwaukee, Madison and the towns in between, and for the trip down to Lake Geneva.</p>
+			<p class="swhero__lead">Private trolley and bus rental across southern Wisconsin for weddings, corporate events, airport transfers and nights out. Plan group transportation in Milwaukee, Madison and the Lake Geneva area.</p>
 			<div class="swhero__actions">
 				<a class="btn-gold" href="#getquote">Get a Wisconsin Quote</a>
 				<a class="swhero__link" href="/fleet/">Explore the fleet <span aria-hidden="true">→</span></a>
@@ -129,7 +129,7 @@ const questions = [
 				<h2 id="sw-quote-title">Get a <em>Southern Wisconsin</em> trolley &amp; bus quote</h2>
 			</div>
 			<QuoteForm idPrefix="swq" />
-			<p class="swquote__note">Pricing depends on the date, the vehicle, how long you need it and every pickup and stop. Share your plans and we’ll put together a quote around them.</p>
+			<p class="swquote__note">Your southern Wisconsin trolley or bus rental quote reflects your date, vehicle, charter hours and route. Send your group size, pickup locations and stops to review availability.</p>
 		</div>
 	</section>
 
@@ -161,7 +161,7 @@ const questions = [
 			<div class="swcities__head">
 				<p class="swkicker swkicker--dark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={pin} /></svg> Major cities</p>
 				<h2 id="sw-cities-title">Milwaukee, Madison <em>and the miles between.</em></h2>
-				<p class="swcities__lead">Lake Geneva Trolley &amp; Bus Rental serves Southern Wisconsin, from the Lake Michigan shore to the state capital. Wherever your day starts, we’ll plan the vehicles and the route around your group.</p>
+				<p class="swcities__lead">Lake Geneva Trolley &amp; Bus Rental provides group transportation across southern Wisconsin, including Milwaukee, Madison, Kenosha, Racine, Waukesha, Janesville and Beloit. Request a private trolley, coach or van charter for your event and route.</p>
 			</div>
 			<div class="swcities__grid">
 				{featured.map((city) => (
@@ -209,13 +209,13 @@ const questions = [
 			<div class="swmap__copy">
 				<p class="swkicker">Lake Geneva at the center</p>
 				<h2 id="sw-map-title">Southern Wisconsin,<br /><em>within easy reach.</em></h2>
-				<p class="swmap__lead">Lake Geneva sits just north of the Illinois line, close to every major city in the south of the state. Bring a group down to the lake for the weekend, or take the lake crowd up to the city for the day.</p>
+				<p class="swmap__lead">Plan private group transportation between Lake Geneva and southern Wisconsin destinations. Request wedding transfers, weekend resort shuttles or city day trips with pickup addresses and stops confirmed on your charter itinerary.</p>
 				<ul class="swmap__list">
 					{cities.map((city) => <li><strong>{city.name}</strong><span>About {city.miles} mi</span></li>)}
 					<li class="swmap__nearby"><strong>Near the lake</strong><span>{nearby}</span></li>
 				</ul>
 				<div class="swmap__actions">
-					<a class="btn-gold" href={quoteLink('Group Transportation')}>Plan a Trip to the Lake</a>
+					<a class="btn-gold" href={quoteLink('General Events')}>Plan a Trip to the Lake</a>
 					<a class="swmap__link" href="/services/">Lake Geneva services <span aria-hidden="true">→</span></a>
 				</div>
 			</div>
@@ -252,7 +252,7 @@ const questions = [
 		<div class="wrap swcta__inner">
 			<svg class="swcta__pin" viewBox="0 0 24 24" aria-hidden="true"><path d={pin} /></svg>
 			<h2 id="sw-cta-title">Planning something <em>in Wisconsin?</em></h2>
-			<p>Send the date, your group size and every stop you have in mind. We’ll put together a quote around your itinerary.</p>
+			<p>Request a southern Wisconsin trolley or bus rental quote with your date, passenger count, pickup addresses and planned stops.</p>
 			<div class="swcta__actions">
 				<a class="btn-gold" href="#getquote">Request a Wisconsin Quote</a>
 				{contact.phoneHref && <a class="swcta__phone" href={`tel:${contact.phoneHref}`}>Or call {contact.phoneLabel}</a>}

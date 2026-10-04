@@ -1,17 +1,9 @@
 ---
-import { fleetGroups } from '../data/fleet';
-
-interface Props { includeComingSoon?: boolean; }
-const { includeComingSoon = false } = Astro.props;
+import { vehicleChoices } from '../data/fleet';
 ---
 
-{fleetGroups.map((group) => (
-	<optgroup label={group.label}>
-		{group.vehicles.filter((vehicle) => includeComingSoon || vehicle.status !== 'coming-soon').map((vehicle) => (
-			<option value={vehicle.quoteValue} data-lavatory={vehicle.lavatoryOnRequest ? '' : undefined}>
-				{vehicle.name} — {vehicle.status === 'coming-soon' ? 'Coming Soon' : vehicle.capacityLabel}{vehicle.status === 'seasonal' ? ' (Seasonal)' : ''}
-			</option>
-		))}
-	</optgroup>
+{vehicleChoices.map((choice) => (
+	<option value={choice.value} data-lavatory={choice.lavatory ? '' : undefined}>
+		{choice.value}
+	</option>
 ))}
-<option value="Not sure yet">Not sure yet</option>

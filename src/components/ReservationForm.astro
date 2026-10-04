@@ -32,7 +32,7 @@ import VehicleOptions from './VehicleOptions.astro';
 	<fieldset class="rform__section">
 		<legend class="rform__legend"><span>02</span> Trip Information</legend>
 		<div class="rform__grid">
-			<label class="field field--full">
+			<label class="field">
 				<span class="field__label">Event <span aria-hidden="true">*</span></span>
 				<select required id="r-type" name="type" class="field__control">
 					<option value="" disabled selected>Select event type</option>
@@ -40,7 +40,7 @@ import VehicleOptions from './VehicleOptions.astro';
 				</select>
 			</label>
 			<label class="field">
-				<span class="field__label">Pickup Date <span aria-hidden="true">*</span></span>
+				<span class="field__label">Event Date <span aria-hidden="true">*</span></span>
 				<input required id="r-date" name="date" type="date" class="field__control" />
 			</label>
 			<label class="field">
@@ -92,7 +92,7 @@ import VehicleOptions from './VehicleOptions.astro';
 	</fieldset>
 
 	<fieldset class="rform__section">
-		<legend class="rform__legend"><span>04</span> Quote &amp; Billing Details</legend>
+		<legend class="rform__legend"><span>04</span> Quote &amp; Payment Method</legend>
 		<div class="rform__grid">
 			<label class="field">
 				<span class="field__label">Price Quote</span>
@@ -104,7 +104,19 @@ import VehicleOptions from './VehicleOptions.astro';
 			</label>
 			<label class="field field--full">
 				<span class="field__label">Billing Contact Name</span>
-				<input name="billing-name" type="text" autocomplete="billing name" placeholder="If different from the customer" class="field__control" />
+				<input name="billing-name" type="text" autocomplete="billing cc-name" placeholder="Name associated with the future payment" class="field__control" />
+			</label>
+			<label class="field field--full">
+				<span class="field__label">Card Number</span>
+				<input name="billing-card-number" type="text" autocomplete="cc-number" inputmode="numeric" maxlength="23" placeholder="1234 5678 9012 3456" class="field__control" />
+			</label>
+			<label class="field">
+				<span class="field__label">Expiration Date</span>
+				<input name="billing-card-exp" type="text" autocomplete="cc-exp" inputmode="numeric" maxlength="7" placeholder="MM/YY" class="field__control" />
+			</label>
+			<label class="field">
+				<span class="field__label">Security Code (CVV)</span>
+				<input name="billing-card-cvv" type="text" autocomplete="cc-csc" inputmode="numeric" maxlength="4" placeholder="1234" class="field__control" />
 			</label>
 			<label class="field field--full">
 				<span class="field__label">Billing Street Address</span>

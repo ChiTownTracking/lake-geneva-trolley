@@ -142,10 +142,10 @@ const browser = await chromium.launch({ executablePath: CHROME });
 	check('empty form is invalid (required fields enforced)', submitted === false);
 
 	// Deep link preselects a vehicle.
-	await page.goto(base + '/#getquote?vehicle=Coach%20Bus', { waitUntil: 'networkidle' });
+	await page.goto(base + '/#getquote?vehicle=' + encodeURIComponent('Coach Bus — 44 Passengers'), { waitUntil: 'networkidle' });
 	await page.waitForTimeout(400);
 	const selected = await page.locator('select[name="vehicle"]').inputValue();
-	check('deep link preselects vehicle', selected === 'Coach Bus', selected);
+	check('deep link preselects vehicle', selected === 'Coach Bus — 44 Passengers', selected);
 
 	await ctx.close();
 }

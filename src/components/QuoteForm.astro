@@ -66,7 +66,7 @@ const {
 							<label class="field__label" for={`${idPrefix}-vehicle`}>Vehicle</label>
 							<select id={`${idPrefix}-vehicle`} name="vehicle" class="field__control">
 								<option value="" disabled selected>Select vehicle</option>
-								<VehicleOptions includeComingSoon />
+								<VehicleOptions />
 							</select>
 						</div>
 						<div class="qfield">
@@ -84,7 +84,7 @@ const {
 							</select>
 						</div>
 						<div class="qfield">
-							<label class="field__label" for={`${idPrefix}-hours`}>Time Needed</label>
+							<label class="field__label" for={`${idPrefix}-hours`}>Number of Hours</label>
 							<select id={`${idPrefix}-hours`} name="hours" class="field__control">
 								<option value="" disabled selected>Select duration</option>
 								{quoteOptions.durations.map((d) => <option value={d}>{d}</option>)}
@@ -133,7 +133,7 @@ const {
 								id={`${idPrefix}-pickup`}
 								name="pickup"
 								type="text"
-								placeholder="Hotel, resort or address"
+								placeholder="Enter pickup address"
 								class="field__control"
 							/>
 						</div>
@@ -143,7 +143,7 @@ const {
 								id={`${idPrefix}-dropoff`}
 								name="dropoff"
 								type="text"
-								placeholder="Venue or final stop"
+								placeholder="Enter destination"
 								class="field__control"
 							/>
 						</div>
@@ -184,7 +184,7 @@ const {
 								name="name"
 								type="text"
 								autocomplete="name"
-								placeholder="Your full name"
+								placeholder="Enter your full name"
 								class="field__control"
 							/>
 						</div>
@@ -196,7 +196,7 @@ const {
 								name="phone"
 								type="tel"
 								autocomplete="tel"
-								placeholder="Best number to reach you"
+								placeholder="Enter your phone number"
 								class="field__control"
 							/>
 						</div>
@@ -208,19 +208,19 @@ const {
 								name="email"
 								type="email"
 								autocomplete="email"
-								placeholder="Your email address"
+								placeholder="Enter your email address"
 								class="field__control"
 							/>
 						</div>
 						<div class="qfield qfield--wide">
 							<label class="field__label" for={`${idPrefix}-message`}>
-								Anything else we should know?
+								How Did You Find Us?
 							</label>
 							<textarea
 								id={`${idPrefix}-message`}
 								name="message"
 								rows="2"
-								placeholder="Extra stops, timing, how you found us"
+								placeholder="Tell us how you found us"
 								class="field__control"></textarea>
 						</div>
 					</div>
@@ -692,7 +692,7 @@ const {
 
 		steps.forEach((step) => setOpen(step, step.classList.contains('is-open')));
 
-		// Deep links such as /#getquote?vehicle=Classic%20Trolley or #getquote?type=Wedding
+		// Deep links such as /#getquote?vehicle=Christmas%20Trolley or #getquote?type=Wedding
 		// preselect a vehicle or event type. Only existing options are accepted.
 		const applyParam = (name: string) => {
 			const select = form.querySelector<HTMLSelectElement>(`select[name="${name}"]`);

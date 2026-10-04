@@ -8,11 +8,11 @@ import LavatoryRequest from './LavatoryRequest.astro';
 		<button class="wquote__close" type="button" aria-label="Close wedding quote" data-wedding-close>&times;</button>
 		<p class="wquote__eyebrow">Your Lake Geneva Wedding</p>
 		<h2 id="wedding-quote-title">Let’s plan your wedding ride</h2>
-		<p class="wquote__lead" id="wedding-quote-lead">Share a few details to check the trolley and coach availability for your day.</p>
+		<p class="wquote__lead" id="wedding-quote-lead">Request a Lake Geneva wedding trolley and coach bus quote. Share your date, guest count and venue details to check availability.</p>
 		<form name="wedding-quote-request" method="POST" action={formEndpoint} data-netlify="true" netlify-honeypot="bot-field" data-async-form>
 			<input type="hidden" name="form-name" value="wedding-quote-request" />
 			<input type="hidden" name="type" value="Wedding" />
-			<input type="hidden" name="vehicle" value="Classic Trolley + Super Coach Bus" />
+			<input type="hidden" name="vehicle" value="Wedding Package - Trolley & Coach Bus" />
 			<p class="honeypot"><label>Do not fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
 			<div class="wquote__fields">
 				<div><label class="field__label" for="wedding-name">Full name <span aria-hidden="true">*</span></label><input class="field__control" id="wedding-name" name="name" autocomplete="name" required /></div>

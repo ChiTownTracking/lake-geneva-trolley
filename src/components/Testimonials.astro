@@ -3,8 +3,7 @@
  * Client reviews as a card carousel: two cards a view on wide screens, one on
  * phones. The track is a scroll-snap strip, so it still swipes and reads in
  * order if the script never runs; arrows and dots are the enhancement on top.
- * The quotes themselves are placeholders -
- * see the notice above `testimonials` in src/data/content.ts. Emptying that
+ * The reviews live in `testimonials` in src/data/content.ts. Emptying that
  * array removes the section.
  */
 import { testimonials } from '../data/content';
@@ -56,7 +55,7 @@ const initials = (name: string) =>
 									</span>
 									<span class="tcard__who">
 										<span class="tcard__person">{t.person}</span>
-										<span class="tcard__role">{t.role}</span>
+										{t.role && <span class="tcard__role">{t.role}</span>}
 									</span>
 								</figcaption>
 							</figure>
