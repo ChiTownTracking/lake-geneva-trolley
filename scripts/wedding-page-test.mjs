@@ -33,7 +33,8 @@ try {
 		const errors = [];
 		page.on('pageerror', (error) => errors.push(error.message));
 		assert.equal((await page.goto(base + '/weddings/', { waitUntil: 'networkidle' })).status(), 200);
-		await page.locator('main img').evaluateAll((images) => Promise.all(images.map((image) => image.decode())));
+		// Lazy images below the fold never start loading on their own, so decode() would wait forever.
+		await page.locator('main img').evaluateAll((images) => Promise.all(images.map((image) => { image.loading = 'eager'; return image.decode(); })));
 		assert.equal(await page.locator('h1').count(), 1);
 		assert.equal(await page.evaluate(() => document.documentElement.scrollWidth), width, 'page overflow');
 		await page.screenshot({ path: join(output, `wedding-${width}.png`), fullPage: true });
