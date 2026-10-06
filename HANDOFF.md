@@ -99,8 +99,16 @@ form name has the same fields on every page it appears on.
 1. **Turn on form detection:** Site configuration → Forms → Enable form
    detection. Newer Netlify sites have it off by default; until it is on, no
    form is registered and every submission fails. Redeploy after enabling it.
-2. **Add notifications:** Site configuration → Notifications → Form submission
-   notifications → add the email address that should receive enquiries.
+2. **Email delivery is through Resend.**
+   [`netlify/functions/submission-created.mjs`](netlify/functions/submission-created.mjs)
+   runs after every submission that passes Netlify's spam filter. It emails
+   info@lakegenevatrolleys.com, sets the reply-to address to the customer's email,
+   and uses these subjects: `Quote - <name>`, `Wedding Quote - <name>`,
+   `Reservation - <name>` and `Contact - <name>`. Set `RESEND_API_KEY` under
+   Site configuration → Environment variables. You can also set `RESEND_FROM`
+   if the sender should not be `forms@lakegenevatrolleys.com`. The sender's
+   domain must be verified in Resend. Remove any Netlify built-in email
+   notification for these forms, or each enquiry arrives twice.
 3. **Send a test submission from each form** on the live site and confirm it
    appears under Forms and arrives by email.
 
