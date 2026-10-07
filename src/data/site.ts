@@ -20,7 +20,7 @@ export interface ContactDetails {
 
 export const site = {
 	name: 'Lake Geneva Trolley & Bus Rental',
-	url: 'https://lakegenevatrolley.com',
+	url: 'https://lakegenevatrolleys.com',
 	/** Used as the default meta description and in structured data. */
 	description:
 		'Lake Geneva trolley rental and bus charters for weddings, events and group transportation in Lake Geneva, WI. Explore vehicles and request a quote.',

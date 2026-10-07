@@ -1,7 +1,7 @@
 ---
 import { getImage } from 'astro:assets';
 import { site } from '../data/site';
-import { photos } from '../data/images';
+import { photos, alt } from '../data/images';
 import { getHomeHeroImages } from '../data/hero-images';
 import sansFont from '@fontsource-variable/jost/files/jost-latin-wght-normal.woff2?url';
 import headingFont from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-400-normal.woff2?url';
@@ -23,8 +23,12 @@ const { title, description, canonical, structuredData = null } = Astro.props;
 const path = (canonical ?? Astro.url.pathname).replace(/\/*$/, '/');
 const canonicalUrl = new URL(path, site.url).href;
 
-const ogImage = await getImage({ src: photos.ogDefault, width: 1200, height: 630, format: 'jpg' });
+// The classic trolley is the image search engines and social cards should show
+// for the brand. Kept at its own aspect ratio so the whole vehicle stays in frame.
+const ogImage = await getImage({ src: photos.fleetClassicTrolley, width: 1200, format: 'jpg' });
 const ogImageUrl = new URL(ogImage.src, site.url).href;
+const ogImageHeight = Math.round((1200 * photos.fleetClassicTrolley.height) / photos.fleetClassicTrolley.width);
+const schema = structuredData?.['@type'] === 'Organization' ? { ...structuredData, image: ogImageUrl } : structuredData;
 const heroImages = path === '/' ? await getHomeHeroImages() : null;
 ---
 
@@ -61,7 +65,8 @@ const heroImages = path === '/' ? await getHomeHeroImages() : null;
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImageUrl} />
 <meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
+<meta property="og:image:height" content={String(ogImageHeight)} />
+<meta property="og:image:alt" content={alt.fleetClassicTrolley} />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
@@ -69,11 +74,11 @@ const heroImages = path === '/' ? await getHomeHeroImages() : null;
 <meta name="twitter:image" content={ogImageUrl} />
 
 {
-	structuredData && (
+	schema && (
 		<script
 			type="application/ld+json"
 			is:inline
-			set:html={JSON.stringify(structuredData)}
+			set:html={JSON.stringify(schema)}
 		/>
 	)
 }

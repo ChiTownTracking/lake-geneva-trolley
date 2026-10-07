@@ -184,5 +184,5 @@ required depending on where visitors are.
 - [ ] Enable form detection and notifications in Netlify; send a real test submission from each form
 - [ ] Add privacy policy and terms pages, then link them in the footer
 - [x] Add real testimonials (supplied October 4, 2026)
-- [ ] Verify the production domain matches `site` in `astro.config.mjs`
-      (`https://lakegenevatrolley.com`) so canonicals and the sitemap are right
+- [x] Verify the production domain matches `site` in `astro.config.mjs`
+      (`https://lakegenevatrolleys.com`) so canonicals and the sitemap are right

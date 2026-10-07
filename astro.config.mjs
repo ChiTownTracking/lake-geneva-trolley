@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://lakegenevatrolley.com',
+	site: 'https://lakegenevatrolleys.com',
 	trailingSlash: 'ignore',
 	// These static pages have modest CSS bundles. Inlining avoids the stylesheet
 	// round trips that delayed the homepage's first paint on mobile connections.
