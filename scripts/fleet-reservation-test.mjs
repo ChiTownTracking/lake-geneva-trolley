@@ -35,13 +35,14 @@ try {
 	};
 	const visibleIds = () => page.locator('[data-fleet-card]:visible').evaluateAll((cards) => cards.map((card) => card.id));
 	const categories = {
-		trolley: ['classic-trolley', 'limo-trolley', 'christmas-trolley', 'festive-trolley'],
+		// The ChiTown trolleys (November 23, 2026), then the seasonal Christmas Trolley.
+		trolley: ['white-trolley-classic-t3', 'white-limo-trolley-t4', 'white-limo-trolley-t5', 'festive-trolley-t7', 'white-trolley-classic-t8', 'christmas-trolley'],
 		'coach-bus': ['super-coach-bus', 'coach-bus', 'small-coach-bus'],
 		'party-bus': ['party-bus'],
 		'limo-van': ['limo-van', 'executive-sprinter'],
 	};
 	const allIds = Object.values(categories).flat();
-	const photoCounts = [3, 6, 1, 1, 10, 3, 3, 2, 3, 5];
+	const photoCounts = [4, 5, 5, 6, 5, 1, 10, 3, 3, 2, 3, 5];
 
 	await go('/fleet/');
 	assert.deepEqual(await visibleIds(), allIds);
@@ -90,13 +91,23 @@ try {
 		await page.waitForURL('**/reservation/?vehicle=*');
 		assert.equal(await page.locator('#r-vehicle').inputValue(), requested);
 	}
-	console.log('PASS: all 10 listings, category filters, 36 gallery photos, Christmas page link, keyboard access, legacy hashes and booking preselection');
+	console.log('PASS: all 12 listings, category filters, 51 gallery photos, Christmas page link, keyboard access, legacy hashes and booking preselection');
 
 	await go('/reservation/?vehicle=unknown');
 	assert.equal(await page.locator('#r-vehicle').inputValue(), '');
-	// The flat ChiTown list: 16 vehicles plus the placeholder.
-	assert.equal(await page.locator('#r-vehicle option').count(), 17);
-	assert.equal(await page.locator('#r-vehicle option[value="Festive Trolley — Red & Green"]').count(), 1);
+	// The flat ChiTown list: 18 vehicles plus the placeholder.
+	assert.equal(await page.locator('#r-vehicle option').count(), 19);
+	for (const name of ['White Trolley Classic - T3', 'White Limo Trolley - T4', 'White Limo Trolley - T5', 'Festive Trolley - T7', 'White Trolley Classic - T8', 'Christmas Trolley']) {
+		assert.equal(await page.locator(`#r-vehicle option[value="${name}"]`).count(), 1, name);
+	}
+	for (const retired of ['White Trolley — Classic', 'White Trolley — Limo', 'Festive Trolley — Red & Green']) {
+		assert.equal(await page.locator(`#r-vehicle option[value="${retired}"]`).count(), 0, retired);
+	}
+	// Retired trolley pages send visitors to their replacements.
+	for (const [from, to] of [['classic-trolley', 'white-trolley-classic-t3'], ['limo-trolley', 'white-limo-trolley-t4'], ['festive-trolley', 'festive-trolley-t7']]) {
+		await page.goto(`${base}/fleet/${from}/`);
+		await page.waitForURL(`**/fleet/${to}/`);
+	}
 	// The retired "Coming Soon" value from older links is ignored.
 	await go('/reservation/?vehicle=Festive%20Trolley%20(Coming%20Soon)');
 	assert.equal(await page.locator('#r-vehicle').inputValue(), '');
@@ -161,7 +172,7 @@ try {
 
 	for (const width of [1440, 820, 390, 320]) {
 		await page.setViewportSize({ width, height: 900 });
-		for (const path of ['/fleet/', '/reservation/', '/fleet/classic-trolley/', '/fleet/super-coach-bus/', '/']) {
+		for (const path of ['/fleet/', '/reservation/', '/fleet/white-trolley-classic-t3/', '/fleet/super-coach-bus/', '/']) {
 			await go(path);
 			assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, `${path} at ${width}px`);
 		}
@@ -169,7 +180,7 @@ try {
 	const noScript = await browser.newContext({ javaScriptEnabled: false });
 	const fallback = await noScript.newPage();
 	await fallback.goto(base + '/fleet/');
-	assert.equal(await fallback.locator('[data-fleet-card]:visible').count(), 10);
+	assert.equal(await fallback.locator('[data-fleet-card]:visible').count(), allIds.length);
 	assert.equal(await fallback.locator('[data-fleet-filter-controls]').isVisible(), false);
 	await fallback.goto(base + '/fleet/super-coach-bus/');
 	assert.equal(await fallback.locator('[data-gallery-photo]:visible').count(), 10);

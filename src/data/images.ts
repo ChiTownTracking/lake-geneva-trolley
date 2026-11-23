@@ -13,9 +13,8 @@
  */
 import heroDesktop from '../assets/photos/hero-desktop.jpg';
 import heroMobile from '../assets/photos/hero-mobile.jpg';
-import fleetClassicTrolley from '../assets/photos/fleet-classic-trolley.png';
-import fleetClassicTrolleyInterior from '../assets/photos/fleet-classic-trolley-interior.jpg';
-import fleetLimoTrolley from '../assets/photos/fleet-limo-trolley.jpg';
+// The White Trolley Classic - T8 from the trolley fleet; see fleet-images.ts.
+import fleetClassicTrolley from '../assets/fleet/white-trolley-classic-t8-01.webp';
 import fleetCoachBus from '../assets/photos/fleet-coach-bus.jpg';
 import fleetCoachBusInterior from '../assets/photos/fleet-coach-bus-interior.jpg';
 import fleetPartyBus from '../assets/photos/fleet-party-bus.jpg';
@@ -33,8 +32,6 @@ export const photos = {
 	heroDesktop,
 	heroMobile,
 	fleetClassicTrolley,
-	fleetClassicTrolleyInterior,
-	fleetLimoTrolley,
 	fleetCoachBus,
 	fleetCoachBusInterior,
 	fleetPartyBus,
@@ -58,10 +55,7 @@ export const alt = {
 		'A black Sprinter van, a white trolley and a white coach bus parked side by side on a paver drive beside Geneva Lake at sunset.',
 	heroMobile:
 		'A white trolley parked on a paver lakeside drive at sunset, with cypress trees, the water and mountains behind.',
-	fleetClassicTrolley: 'A white trolley parked on a paver drive, front three-quarter view.',
-	fleetClassicTrolleyInterior:
-		'Interior of the trolley - varnished wood ceiling, arched windows and bench seating down both sides.',
-	fleetLimoTrolley: 'Interior of the limo trolley showing its circular perimeter seating.',
+	fleetClassicTrolley: 'A white classic trolley with a green roof and arched windows, front three-quarter view.',
 	fleetCoachBus: 'A white coach bus with its luggage bays open, front three-quarter view.',
 	fleetCoachBusInterior:
 		'Interior of the coach bus - forward-facing reclining seats in tan and brown leather.',

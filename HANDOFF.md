@@ -35,9 +35,8 @@ These were not invented. Each needs confirming before it can be published.
 - **Fleet and passenger capacities.** The combined catalog in
   [`src/data/fleet.ts`](src/data/fleet.ts) now uses capacities and vehicle photos
   from the owner's two sites. See [`docs/fleet-sources.md`](docs/fleet-sources.md)
-  for sources and reconciliation. Festive Trolley is now available, but its
-  capacity is unpublished ("Capacity on request"); supply it so the listing and
-  booking forms can show it. Christmas Trolley is seasonal.
+  for sources and reconciliation. The trolleys are the five ChiTown trolleys
+  (T3, T4, T5, T7, T8, updated November 23, 2026). Christmas Trolley is seasonal.
 - **Prices and minimums.** No rates, hourly minimums or "starting from" figures
   appear anywhere. Copy consistently says pricing is quoted per trip.
 - **Deposit, payment and cancellation policy.** No FAQ covers these. Supply the
@@ -140,8 +139,6 @@ final photographs.
 | --- | --- | --- |
 | `hero-desktop.jpg` | 1774×887 | **Supplied.** Golden-hour lineup beside Geneva Lake. |
 | `hero-mobile.jpg` | 832×1286 | **Supplied** (September 23, 2026). A separate portrait photo: the trolley on a lakeside drive at sunset. **The backdrop shows alpine mountains and a European waterfront, which reads as Lake Geneva, Switzerland rather than Wisconsin** (see the direction note below). Confirm usage rights and that this is intended. |
-| `fleet-classic-trolley.png` | 1200×800 | Three-quarter exterior at a lakeside venue. |
-| `fleet-limo-trolley.jpg` | 1200×800 | Interior showing the circular perimeter seating. |
 | `fleet-coach-bus.jpg` | 1200×800 | Coach at a hotel entrance during loading. |
 | `fleet-limo-van.jpg` | 1200×800 | Limo van on a residential lake road. |
 | `occasions.jpg` | 1200×1400 | Wedding party boarding, lake and mature trees behind. |

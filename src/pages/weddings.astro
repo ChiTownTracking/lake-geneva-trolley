@@ -10,9 +10,9 @@ import weddingVehicles from '../assets/photos/wedding-trolley-coach.webp';
 import lakesideResort from '../assets/services/resort-aerial.jpg';
 import weddingBoarding from '../assets/photos/occasions.jpg';
 
-const trolley = fleet.find((vehicle) => vehicle.id === 'classic-trolley')!;
+const trolley = fleet.find((vehicle) => vehicle.id === 'white-trolley-classic-t3')!;
 const coach = fleet.find((vehicle) => vehicle.id === 'super-coach-bus')!;
-const quoteHref = `/?vehicle=${encodeURIComponent('White Trolley — Classic')}#getquote`;
+const quoteHref = `/?vehicle=${encodeURIComponent(trolley.quoteValue)}#getquote`;
 
 const routes = [
 	{

@@ -12,7 +12,7 @@ import chicago from '../assets/services/chicago.jpg';
 import celebration from '../assets/services/celebration.jpg';
 import christmasTrolley from '../assets/christmas/christmas-exterior.webp';
 
-const trolley = fleet.find((vehicle) => vehicle.id === 'classic-trolley')!;
+const trolley = fleet.find((vehicle) => vehicle.id === 'white-trolley-classic-t8')!;
 const christmas = fleet.find((vehicle) => vehicle.id === 'christmas-trolley')!;
 const services = [
 	{
@@ -89,7 +89,7 @@ const quoteLink = (type: string) => `/contact/?type=${encodeURIComponent(type)}#
 					<Image src={lake} alt="A wooden pier reaching into Geneva Lake, Wisconsin, with a leafy shoreline beyond." widths={[640, 960, 1400, 1800]} sizes="(max-width: 760px) 100vw, 55vw" loading="eager" fetchpriority="high" />
 					<figcaption><Icon name="pin" /> A little closer to the lake.</figcaption>
 				</figure>
-				<a class="shero__trolley" href={trolley.detailHref} aria-label="Explore our Classic Trolley">
+				<a class="shero__trolley" href={trolley.detailHref} aria-label={`Explore the ${trolley.name}`}>
 					<Image src={trolley.image} alt={trolley.imageAlt} widths={[280, 480]} sizes="(max-width: 760px) 160px, 230px" loading="eager" />
 					<span>A classic way to get there <span aria-hidden="true">↗</span></span>
 				</a>

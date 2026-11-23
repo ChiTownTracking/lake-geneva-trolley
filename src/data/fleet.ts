@@ -44,44 +44,104 @@ type FleetEntry = Omit<Vehicle, 'image' | 'imageAlt' | 'interior' | 'gallery' | 
 // Facts and photos reconciled from the owner's two sites; see docs/fleet-sources.md.
 const entries: FleetEntry[] = [
 	{
-		"id": "classic-trolley",
-		"name": "Classic Trolley",
+		"id": "white-trolley-classic-t3",
+		"name": "White Trolley Classic - T3",
 		"category": "trolley",
 		"caption": "Forward-Facing Seating",
 		"capacity": 30,
 		"capacityLabel": "30 passengers",
 		"status": "available",
-		"quoteValue": "White Trolley — Classic",
-		"description": "Classic trolley rental in Lake Geneva, WI for 30 passengers. Enjoy a wood-finished cabin, climate control and a chauffeur for weddings and private events.",
-		"detail": "Our Classic Trolley rental in Lake Geneva, WI seats 30 passengers in forward-facing rows. Its wood-finished cabin, Bluetooth sound and climate control suit wedding parties, photo stops and private group outings. This is the classic model with the rear balcony platform; confirm the vehicle and any planned balcony photos when arranging your date.",
+		"quoteValue": "White Trolley Classic - T3",
+		"description": "Rent the White Trolley Classic - T3 in Lake Geneva for up to 30 passengers, with forward-facing rows, polished rails and a rear balcony made for photos.",
+		"detail": "The White Trolley Classic - T3 turns a simple ride into part of the occasion. Polished rails, forward-facing rows and a rear balcony platform built for photos give it an orderly layout and old-world character, while Bluetooth sound, heat and air conditioning keep 30 passengers comfortable. If rear-balcony photos matter to your day, ask us to confirm this trolley for your date.",
 		"features": [
-			"Forward-facing seating",
 			"Classic-model rear balcony platform",
+			"Forward-facing seating",
 			"Bluetooth sound system",
 			"Heat and air conditioning",
 			"Professional chauffeur included"
 		],
-		"interiorIndex": 1
+		"interiorIndex": 2
 	},
 	{
-		"id": "limo-trolley",
-		"name": "Limo Trolley",
+		"id": "white-limo-trolley-t4",
+		"name": "White Limo Trolley - T4",
 		"category": "trolley",
-		"caption": "Perimeter Limo Seating",
+		"caption": "Circular Limo Seating",
 		"capacity": 36,
 		"capacityLabel": "36 passengers",
 		"status": "available",
-		"quoteValue": "White Trolley — Limo",
-		"description": "Limo trolley rental in Lake Geneva for 36 passengers, with perimeter seating and a chauffeur for weddings, private outings and group celebrations.",
-		"detail": "Our Lake Geneva Limo Trolley rental seats 36 passengers around the perimeter of its wood-finished cabin. The group-facing layout and open center aisle make the ride part of the celebration, whether you are moving between wedding venues, planning a private outing or gathering friends for a night out.",
+		"quoteValue": "White Limo Trolley - T4",
+		"description": "Rent the White Limo Trolley - T4 in Lake Geneva for up to 36 passengers, with circular limo-style seating that keeps your whole group facing each other.",
+		"detail": "The White Limo Trolley - T4 is built for conversation and celebration. Circular limo-style seating runs around the cabin so everyone faces one another, and the wood-finished interior and open center aisle make it a social ride for Lake Geneva weddings, private events and nights out.",
 		"features": [
-			"Perimeter limo-style seating",
+			"Circular limo-style seating",
 			"Group-facing interior layout",
 			"Wood-finished trolley cabin",
 			"Open center aisle",
 			"Professional chauffeur included"
 		],
+		"interiorIndex": 2
+	},
+	{
+		"id": "white-limo-trolley-t5",
+		"name": "White Limo Trolley - T5",
+		"category": "trolley",
+		"caption": "Perimeter Wood Benches",
+		"capacity": 36,
+		"capacityLabel": "36 passengers",
+		"status": "available",
+		"quoteValue": "White Limo Trolley - T5",
+		"description": "Rent the White Limo Trolley - T5 in Lake Geneva for up to 36 passengers: a classic white exterior with a limo-style cabin of perimeter wood benches.",
+		"detail": "The White Limo Trolley - T5 pairs a classic white trolley exterior with a limo-style cabin. Perimeter wood benches line the sides and rear so your group faces one another, while arched windows, brass rails and a wide center aisle keep the ride bright and social for weddings, private events and nights out.",
+		"features": [
+			"Perimeter seating style",
+			"Wide open center aisle",
+			"Bluetooth sound system",
+			"Heat and air conditioning",
+			"Professional chauffeur included"
+		],
 		"interiorIndex": 3
+	},
+	{
+		"id": "festive-trolley-t7",
+		"name": "Festive Trolley - T7",
+		"category": "trolley",
+		"caption": "Red & Green Exterior",
+		"capacity": 30,
+		"capacityLabel": "30 passengers",
+		"status": "available",
+		"quoteValue": "Festive Trolley - T7",
+		"description": "Rent the Festive Trolley - T7 in Lake Geneva for up to 30 passengers, with a red-and-green exterior, gold pinstriping and wraparound wood benches.",
+		"detail": "The Festive Trolley - T7 stands out in every photo with its red-and-green exterior, gold pinstriping and arched windows. Inside, wood benches wrap around both sides and the rear so your group faces one another beneath a warm wood ceiling and brass rails, with a rear-mounted screen. It suits seasonal celebrations, holiday events, private parties and group outings.",
+		"features": [
+			"Red-and-green exterior with gold pinstriping",
+			"Wraparound wood bench seating",
+			"Wood ceiling with brass rails",
+			"Rear-mounted screen",
+			"Professional chauffeur included"
+		],
+		"interiorIndex": 3
+	},
+	{
+		"id": "white-trolley-classic-t8",
+		"name": "White Trolley Classic - T8",
+		"category": "trolley",
+		"caption": "Green Roof & Rear Platform",
+		"capacity": 30,
+		"capacityLabel": "30 passengers",
+		"status": "available",
+		"quoteValue": "White Trolley Classic - T8",
+		"description": "Rent the White Trolley Classic - T8 in Lake Geneva for up to 30 passengers, with a green roof, arched windows and an open rear platform.",
+		"detail": "The White Trolley Classic - T8 brings old-fashioned trolley charm with its green roof, arched windows and open rear balcony. Cushioned, wood-framed benches face forward in tidy rows under a warm wood ceiling and brass rails, for an orderly ride from the first stop to the last. It suits wedding ceremonies, bridal party transportation, winery and brewery tours, and engagement photos.",
+		"features": [
+			"Classic-model forward-facing seating",
+			"Open rear platform",
+			"Bluetooth sound system",
+			"Heat and air conditioning",
+			"Professional chauffeur included"
+		],
+		"interiorIndex": 4
 	},
 	{
 		"id": "christmas-trolley",
@@ -102,26 +162,6 @@ const entries: FleetEntry[] = [
 			"Bluetooth sound system",
 			"Private group charters"
 		]
-	},
-	{
-		"id": "festive-trolley",
-		"name": "Festive Trolley",
-		"category": "trolley",
-		"caption": "Green & Red Exterior",
-		"capacity": null,
-		"capacityLabel": "Capacity on request",
-		"status": "available",
-		"quoteValue": "Festive Trolley — Red & Green",
-		"description": "Rent a green-and-red Festive Trolley for private Lake Geneva events and holiday outings. Request availability and passenger capacity for your group.",
-		"detail": "Our Festive Trolley rental brings a green-and-red exterior and traditional styling to private Lake Geneva group charters. It suits holiday outings, festive celebrations and any occasion that calls for a little extra color. Share your date, group size and route so the team can confirm availability and seating for your plans.",
-		"features": [
-			"Distinctive green-and-red exterior",
-			"Traditional trolley styling",
-			"Private group charters",
-			"Seating confirmed with your quote"
-		],
-		"interiorFrom": "classic-trolley",
-		"interiorIndex": 1
 	},
 	{
 		"id": "super-coach-bus",
@@ -267,16 +307,19 @@ export const fleetGroups = fleetCategories.map((category) => ({
 /**
  * Vehicle options on every booking form, following the owner's ChiTown Trolley
  * quote form (requested October 4, 2026) without the word "Passengers" after
- * the sizes. The value submitted is the label.
+ * the sizes. The value submitted is the label. The trolley options use the
+ * ChiTown fleet names (T3, T4, T5, T7, T8; requested November 23, 2026).
  * Some sizes here - Party Bus 45, 35 and 25, Coach Bus 50 and 40 - have no
  * Lake Geneva fleet listing; see docs/fleet-sources.md. `lavatory` marks the
  * coaches above 33 passengers that offer one on request.
  */
 export const vehicleChoices: { value: string; lavatory?: boolean }[] = [
 	{ value: 'Wedding Package - Trolley & Coach Bus' },
-	{ value: 'White Trolley — Classic' },
-	{ value: 'White Trolley — Limo' },
-	{ value: 'Festive Trolley — Red & Green' },
+	{ value: 'White Trolley Classic - T3' },
+	{ value: 'White Limo Trolley - T4' },
+	{ value: 'White Limo Trolley - T5' },
+	{ value: 'Festive Trolley - T7' },
+	{ value: 'White Trolley Classic - T8' },
 	{ value: 'Christmas Trolley' },
 	{ value: 'Party Bus — 45' },
 	{ value: 'Party Bus — 40' },

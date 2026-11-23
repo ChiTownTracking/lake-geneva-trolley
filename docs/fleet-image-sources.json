@@ -2,85 +2,254 @@
   "retrieved": "2026-09-23",
   "images": [
     {
-      "vehicle": "classic-trolley",
-      "file": "classic-trolley-01.webp",
-      "assetUrl": "https://chitowntrolley.com/_astro/classic-exterior.-BibskJf_1G3Ax.webp",
+      "vehicle": "white-trolley-classic-t3",
+      "file": "white-trolley-classic-t3-01.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/classic-exterior.BkdrlOr3_2lXWUy.webp",
       "pageUrl": "https://chitowntrolley.com/fleet/classic-white-trolley/",
-      "alt": "Classic White Trolley — photo 1",
-      "width": 555,
-      "height": 327
+      "alt": "White Trolley Classic - T3 — photo 1",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
     },
     {
-      "vehicle": "classic-trolley",
-      "file": "classic-trolley-02.webp",
+      "vehicle": "white-trolley-classic-t3",
+      "file": "white-trolley-classic-t3-02.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/classic-Trolley-interior-benches.CxcHOb-N_WEGQm.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/classic-white-trolley/",
+      "alt": "White Trolley Classic - T3 — photo 2",
+      "width": 1086,
+      "height": 1448,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "white-trolley-classic-t3",
+      "file": "white-trolley-classic-t3-03.webp",
       "assetUrl": "https://chitowntrolley.com/_astro/classic-Trolley-interior-frontfacing.CMTQhA7y_Z1IkOUS.webp",
       "pageUrl": "https://chitowntrolley.com/fleet/classic-white-trolley/",
-      "alt": "Classic White Trolley — photo 2",
+      "alt": "White Trolley Classic - T3 — photo 3",
       "width": 871,
-      "height": 1806
+      "height": 1806,
+      "retrieved": "2026-11-23"
     },
     {
-      "vehicle": "classic-trolley",
-      "file": "classic-trolley-03.webp",
+      "vehicle": "white-trolley-classic-t3",
+      "file": "white-trolley-classic-t3-04.webp",
       "assetUrl": "https://chitowntrolley.com/_astro/classic-Trolley-interior-frontfacing2.lROAwIYC_1eScht.webp",
       "pageUrl": "https://chitowntrolley.com/fleet/classic-white-trolley/",
-      "alt": "Classic White Trolley — photo 3",
+      "alt": "White Trolley Classic - T3 — photo 4",
       "width": 941,
-      "height": 1671
+      "height": 1671,
+      "retrieved": "2026-11-23"
     },
     {
-      "vehicle": "limo-trolley",
-      "file": "limo-trolley-01.webp",
-      "assetUrl": "https://chitowntrolley.com/_astro/T4-Trolley-Exterior.BpFCw32n_Z1EeMML.webp",
+      "vehicle": "white-limo-trolley-t4",
+      "file": "white-limo-trolley-t4-01.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T4-Trolley-Exterior-front.BiHYouRh_ZEEMgf.webp",
       "pageUrl": "https://chitowntrolley.com/fleet/white-limo-trolley/",
-      "alt": "White Limo Trolley — photo 1",
+      "alt": "White Limo Trolley - T4 — photo 1",
       "width": 1448,
-      "height": 1086
+      "height": 1086,
+      "retrieved": "2026-11-23"
     },
     {
-      "vehicle": "limo-trolley",
-      "file": "limo-trolley-02.webp",
-      "assetUrl": "https://chitowntrolley.com/_astro/T4-Trolley-Exterior-front.CRfVfdxv_ZILkT0.webp",
+      "vehicle": "white-limo-trolley-t4",
+      "file": "white-limo-trolley-t4-02.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T4-Trolley-Exterior.BcCGI0wE_2sQyUr.webp",
       "pageUrl": "https://chitowntrolley.com/fleet/white-limo-trolley/",
-      "alt": "White Limo Trolley — photo 2",
+      "alt": "White Limo Trolley - T4 — photo 2",
       "width": 1448,
-      "height": 1086
+      "height": 1086,
+      "retrieved": "2026-11-23"
     },
     {
-      "vehicle": "limo-trolley",
-      "file": "limo-trolley-03.webp",
-      "assetUrl": "https://chitowntrolley.com/_astro/T4-Trolley-Exterior-side.CPo-0N_w_1e86po.webp",
-      "pageUrl": "https://chitowntrolley.com/fleet/white-limo-trolley/",
-      "alt": "White Limo Trolley — photo 3",
-      "width": 1870,
-      "height": 841
-    },
-    {
-      "vehicle": "limo-trolley",
-      "file": "limo-trolley-04.webp",
+      "vehicle": "white-limo-trolley-t4",
+      "file": "white-limo-trolley-t4-03.webp",
       "assetUrl": "https://chitowntrolley.com/_astro/T4-Trolley-Interior-1.De5nKqeI_ZPadQX.webp",
       "pageUrl": "https://chitowntrolley.com/fleet/white-limo-trolley/",
-      "alt": "White Limo Trolley — photo 4",
+      "alt": "White Limo Trolley - T4 — photo 3",
       "width": 1086,
-      "height": 1448
+      "height": 1448,
+      "retrieved": "2026-11-23"
     },
     {
-      "vehicle": "limo-trolley",
-      "file": "limo-trolley-05.webp",
+      "vehicle": "white-limo-trolley-t4",
+      "file": "white-limo-trolley-t4-04.webp",
       "assetUrl": "https://chitowntrolley.com/_astro/T4-Trolley-Interior-2.el-9oF3v_UqGJy.webp",
       "pageUrl": "https://chitowntrolley.com/fleet/white-limo-trolley/",
-      "alt": "White Limo Trolley — photo 5",
+      "alt": "White Limo Trolley - T4 — photo 4",
       "width": 1086,
-      "height": 1448
+      "height": 1448,
+      "retrieved": "2026-11-23"
     },
     {
-      "vehicle": "limo-trolley",
-      "file": "limo-trolley-06.webp",
+      "vehicle": "white-limo-trolley-t4",
+      "file": "white-limo-trolley-t4-05.webp",
       "assetUrl": "https://chitowntrolley.com/_astro/T4-Trolley-Interior-Lighting.CPWN-ayT_Z1xhe86.webp",
       "pageUrl": "https://chitowntrolley.com/fleet/white-limo-trolley/",
-      "alt": "White Limo Trolley — photo 6",
+      "alt": "White Limo Trolley - T4 — photo 5",
       "width": 1086,
-      "height": 1448
+      "height": 1448,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "white-limo-trolley-t5",
+      "file": "white-limo-trolley-t5-01.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T5-Trolley-Exterior.ih-_gWns_Z158HzG.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/wedding-trolley-chicago/",
+      "alt": "White Limo Trolley - T5 — photo 1",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "white-limo-trolley-t5",
+      "file": "white-limo-trolley-t5-02.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T5-Trolley-Exterior-front.CTGbK43s_Z1OAyOO.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/wedding-trolley-chicago/",
+      "alt": "White Limo Trolley - T5 — photo 2",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "white-limo-trolley-t5",
+      "file": "white-limo-trolley-t5-03.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T5-Trolley-Exterior-side.nDkKgDFz_Z1LmLma.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/wedding-trolley-chicago/",
+      "alt": "White Limo Trolley - T5 — photo 3",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "white-limo-trolley-t5",
+      "file": "white-limo-trolley-t5-04.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T5-Trolley-Interior.Brv6z_pE_Z1zILny.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/wedding-trolley-chicago/",
+      "alt": "White Limo Trolley - T5 — photo 4",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "white-limo-trolley-t5",
+      "file": "white-limo-trolley-t5-05.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T5-Trolley-Interior-2.D7pQwim1_Z1fyd1j.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/wedding-trolley-chicago/",
+      "alt": "White Limo Trolley - T5 — photo 5",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "festive-trolley-t7",
+      "file": "festive-trolley-t7-01.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/Festive-Trolley-Exterior.b5ABVDzt_Z25G1Q7.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/festive-trolley/",
+      "alt": "Festive Trolley - T7 — photo 1",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "festive-trolley-t7",
+      "file": "festive-trolley-t7-02.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/Festive-Trolley-Exterior-side.BAjG3dRU_1VdmuY.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/festive-trolley/",
+      "alt": "Festive Trolley - T7 — photo 2",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "festive-trolley-t7",
+      "file": "festive-trolley-t7-03.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/Festive-Trolley-Exterior-rear.DKmbG0m2_ZUBb9l.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/festive-trolley/",
+      "alt": "Festive Trolley - T7 — photo 3",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "festive-trolley-t7",
+      "file": "festive-trolley-t7-04.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/Festive-Trolley-Interior-1.DOiewWL__ZyKguv.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/festive-trolley/",
+      "alt": "Festive Trolley - T7 — photo 4",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "festive-trolley-t7",
+      "file": "festive-trolley-t7-05.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/Festive-Trolley-Interior-2.1vxUTyj0_Z2uzFwn.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/festive-trolley/",
+      "alt": "Festive Trolley - T7 — photo 5",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "festive-trolley-t7",
+      "file": "festive-trolley-t7-06.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/Festive-Trolley-Fleet-Lineup.Dozv2NfH_2g1BMC.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/festive-trolley/",
+      "alt": "Festive Trolley - T7 — photo 6",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "white-trolley-classic-t8",
+      "file": "white-trolley-classic-t8-01.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T8-Trolley-Exterior.DUxx9w_l_ZghwMO.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/chicago-trolley/",
+      "alt": "White Trolley Classic - T8 — photo 1",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "white-trolley-classic-t8",
+      "file": "white-trolley-classic-t8-02.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T8-Trolley-Exterior-front.CuDnMgSv_Z1dr6Ep.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/chicago-trolley/",
+      "alt": "White Trolley Classic - T8 — photo 2",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "white-trolley-classic-t8",
+      "file": "white-trolley-classic-t8-03.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T8-Trolley-Exterior-side.BaZsLFhu_ZDI128.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/chicago-trolley/",
+      "alt": "White Trolley Classic - T8 — photo 3",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "white-trolley-classic-t8",
+      "file": "white-trolley-classic-t8-04.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T8-Trolley-Exterior-rear.Bc_nS022_2qEbI6.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/chicago-trolley/",
+      "alt": "White Trolley Classic - T8 — photo 4",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
+    },
+    {
+      "vehicle": "white-trolley-classic-t8",
+      "file": "white-trolley-classic-t8-05.webp",
+      "assetUrl": "https://chitowntrolley.com/_astro/T8-Trolley-Interior.B0S4Zj8i_Z2mEz2s.webp",
+      "pageUrl": "https://chitowntrolley.com/fleet/chicago-trolley/",
+      "alt": "White Trolley Classic - T8 — photo 5",
+      "width": 1448,
+      "height": 1086,
+      "retrieved": "2026-11-23"
     },
     {
       "vehicle": "christmas-trolley",
@@ -90,15 +259,6 @@
       "alt": "White Christmas trolley illuminated with colorful roofline lights",
       "width": 1448,
       "height": 1086
-    },
-    {
-      "vehicle": "festive-trolley",
-      "file": "festive-trolley-01.webp",
-      "assetUrl": "https://chitowntrolley.com/_astro/green-red-festive-trolley.D9mCjRRO_ZWUcEA.webp",
-      "pageUrl": "https://chitowntrolley.com/fleet/festive-trolley/",
-      "alt": "Festive Trolley — photo 1",
-      "width": 1422,
-      "height": 980
     },
     {
       "vehicle": "super-coach-bus",

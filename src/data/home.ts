@@ -53,7 +53,7 @@ export const homeFaqs = [
 	},
 	{
 		q: 'How many people can your trolleys and buses accommodate?',
-		a: `The Classic Trolley seats ${capacity('classic-trolley')} and the Limo Trolley ${capacity('limo-trolley')}. Coach buses come in three sizes: ${capacity('small-coach-bus')}, ${capacity('coach-bus')} and ${capacity('super-coach-bus')}. The party bus carries ${capacity('party-bus')}, the Limo Van ${capacity('limo-van')} and the Executive Sprinter ${capacity('executive-sprinter')}. Bigger groups can be split across more than one vehicle.`,
+		a: `The White Trolley Classic models (T3 and T8) and the Festive Trolley - T7 seat ${capacity('white-trolley-classic-t3')}, and the White Limo Trolleys (T4 and T5) seat ${capacity('white-limo-trolley-t4')}. Coach buses come in three sizes: ${capacity('small-coach-bus')}, ${capacity('coach-bus')} and ${capacity('super-coach-bus')}. The party bus carries ${capacity('party-bus')}, the Limo Van ${capacity('limo-van')} and the Executive Sprinter ${capacity('executive-sprinter')}. Bigger groups can be split across more than one vehicle.`,
 	},
 	{
 		q: 'Do you provide wedding transportation in Lake Geneva?',
