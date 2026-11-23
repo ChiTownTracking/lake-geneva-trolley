@@ -79,6 +79,8 @@ try {
 	let posts = [];
 	let responseStatus = 500;
 	await page.route('**/*', async (route) => {
+		// The Google tag sends its own POST beacons; keep them out of the form count (and out of Google Ads).
+		if (/google|doubleclick/.test(new URL(route.request().url()).hostname)) return route.abort();
 		if (route.request().method() !== 'POST') return route.continue();
 		posts.push(new URLSearchParams(route.request().postData()));
 		return route.fulfill({ status: responseStatus, body: responseStatus === 200 ? 'OK' : 'Test failure' });

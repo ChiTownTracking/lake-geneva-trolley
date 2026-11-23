@@ -216,4 +216,20 @@ import { formEndpoint } from '../data/site';
 			}
 		});
 	});
+
+	// Google Ads "Quote request submitted" conversion. It listens only for
+	// `async-form:success`, which fires after the endpoint answers 2xx - never on
+	// page load, submit clicks, validation errors or failed requests. The event
+	// does not bubble, so each quote form gets its own listener.
+	const CONVERSION_FORMS = new Set(['quote-request', 'wedding-quote-request']);
+	const reportQuoteConversion = () => {
+		if (typeof window.gtag !== 'function') return;
+		window.gtag('event', 'conversion', {
+			send_to: 'AW-18528152709/cLiMCI6Dl74dEIXZ9IJF',
+		});
+	};
+	document.querySelectorAll('form[data-async-form]').forEach((form) => {
+		if (!CONVERSION_FORMS.has(form.getAttribute('name'))) return;
+		form.addEventListener('async-form:success', reportQuoteConversion);
+	});
 </script>
