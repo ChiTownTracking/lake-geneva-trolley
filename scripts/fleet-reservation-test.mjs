@@ -121,6 +121,16 @@ try {
 	assert.equal(await page.locator('.rform').evaluate((form) => form.checkValidity()), false, 'Acknowledgement is required');
 	await page.check('[name="agreement"]');
 	assert.equal(await page.locator('.rform').evaluate((form) => form.checkValidity()), true);
+	// The optional CVV takes 3 digits (Visa, Mastercard, Discover) or 4 (Amex).
+	const cvv = page.locator('[name="billing-card-cvv"]');
+	for (const [value, valid] of [['', true], ['123', true], ['1234', true], ['12', false], ['12a', false]]) {
+		await cvv.fill(value);
+		assert.equal(await cvv.evaluate((field) => field.checkValidity()), valid, `CVV "${value}"`);
+	}
+	await cvv.fill('12345');
+	assert.equal(await cvv.inputValue(), '1234', 'CVV is capped at 4 digits');
+	await cvv.fill('123');
+	assert.equal(await page.locator('.rform').evaluate((form) => form.checkValidity()), true);
 
 	let statusCode = 503;
 	let posts = 0;
@@ -139,6 +149,7 @@ try {
 	assert.equal(posted.get('form-name'), 'reservation-request');
 	assert.equal(posted.get('vehicle'), 'Coach Bus — 44');
 	assert.equal(posted.get('passengers'), '24');
+	assert.equal(posted.get('billing-card-cvv'), '123');
 	statusCode = 200;
 	await page.getByRole('button', { name: 'Submit Reservation Request' }).click();
 	await page.locator('[data-success-dialog][open]').waitFor();
